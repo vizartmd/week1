@@ -10,9 +10,6 @@ public class CommandTaskUpdate implements Command {
 	Task task;
 	int id;
 
-	public CommandTaskUpdate() {
-	}
-
 	public CommandTaskUpdate(MySQLTaskDAO mySQLTaskDAO, Task task, int id) {
 		this.mySQLTaskDAO = mySQLTaskDAO;
 		this.task = task;
