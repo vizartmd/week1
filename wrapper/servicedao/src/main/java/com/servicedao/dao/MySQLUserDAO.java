@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
-import com.mysql.cj.x.protobuf.MysqlxNotice.Warning.Level;
 import com.servicedao.daointf.UserDAO;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.User;
@@ -24,8 +21,8 @@ public class MySQLUserDAO implements UserDAO {
 	static Logger log = Logger.getLogger(MySQLUserDAO.class.getName());
 
 	/**
-	 * method "insert()" allows to insert a new (User) Object in database
-	 * @param user the (User) Object to be inserted in database
+	 * method "insert()" allows to insert a new User Object in database
+	 * @param user the User Object to be inserted in database
 	 */
 	@Override
 	public void insert(User user) {
@@ -63,8 +60,8 @@ public class MySQLUserDAO implements UserDAO {
 	}
 
 	/**
-	 * method "getById()" allows to get a (User) Object from the database by id
-	 * @param id to find a (User) Object from the database by unique id
+	 * method "getById()" allows to get a User Object from the database by id
+	 * @param id to find a User Object from the database by unique id
 	 */
 	@Override
 	public User getById(int id) {
@@ -108,9 +105,9 @@ public class MySQLUserDAO implements UserDAO {
 	}
 
 	/**
-	 * method "update()" allows to update a (User) Object in the database
-	 * @param task the (User) Object to be updated in database
-	 * @param id to find a (User) Object from the database by unique id
+	 * method "update()" allows to update a User Object in the database
+	 * @param user the User Object to be updated in database
+	 * @param id to find a User Object from the database by unique id
 	 */
 	@Override
 	public void update(User user, int id) {
@@ -129,7 +126,7 @@ public class MySQLUserDAO implements UserDAO {
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setInt(3, id);
-			int i = stmt.executeUpdate();
+			stmt.executeUpdate();
 			log.info("User was updated with successfully!");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,8 +147,8 @@ public class MySQLUserDAO implements UserDAO {
 	}
 
 	/**
-	 * method "deleteById()" allows to delete a (User) Object from the database by id
-	 * @param id to find a (User) Object from the database by unique id
+	 * method "deleteById()" allows to delete a User Object from the database by id
+	 * @param id to find a User Object from the database by unique id
 	 */
 	@Override
 	public void deleteById(int id) {
@@ -190,8 +187,8 @@ public class MySQLUserDAO implements UserDAO {
 	}
 
 	/**
-	 * method "getAll()" allows to get all of the  (User) Objects from the database
-	 * @return List<User> of all of the <Task> objects 
+	 * method "getAll()" allows to get all of the  User Objects from the database
+	 * @return {@link List} of all of the User Objects 
 	 */
 	@Override
 	public List<User> getAll() {
