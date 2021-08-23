@@ -1,22 +1,22 @@
 package com.servicedao.dao;
 
 import java.sql.Connection;
-/**
- * This class implements all the methods from DAO interface
- */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import com.servicedao.daointf.TaskDAO;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 
+
+/**
+ * This class implements all the methods from DAO interface
+ */
 public class MySQLTaskDAO implements TaskDAO{
 	/**
 	 * @param "ds" is an instance of "DataSource" Object from which we receive 
