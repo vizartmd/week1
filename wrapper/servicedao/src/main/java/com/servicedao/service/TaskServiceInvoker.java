@@ -1,7 +1,6 @@
 package com.servicedao.service;
 
 import java.util.List;
-
 import com.servicedao.command.taskcommand.CommandTaskDelete;
 import com.servicedao.command.taskcommand.CommandTaskGetAll;
 import com.servicedao.command.taskcommand.CommandTaskGetById;
@@ -10,6 +9,11 @@ import com.servicedao.command.taskcommand.CommandTaskUpdate;
 import com.servicedao.dao.MySQLTaskDAO;
 import com.servicedao.daointf.TaskDAO;
 import com.servicedao.domain.Task;
+
+/**
+ * @author vrobu1
+ * Class-Invoker for TaskDAO class. "Command"-Pattern
+ */
 
 public class TaskServiceInvoker implements TaskDAO {
 	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
