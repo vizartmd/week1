@@ -1,59 +1,59 @@
 package com.servicedao.service;
 
 import java.util.List;
-import com.servicedao.command.taskcommand.CommandTaskDelete;
-import com.servicedao.command.taskcommand.CommandTaskGetAll;
-import com.servicedao.command.taskcommand.CommandTaskGetById;
-import com.servicedao.command.taskcommand.CommandTaskInsert;
-import com.servicedao.command.taskcommand.CommandTaskUpdate;
-import com.servicedao.dao.MySQLTaskDAO;
-import com.servicedao.daointf.TaskDAO;
-import com.servicedao.domain.Task;
 
 /**
  * @author vrobu1
- * Class-Invoker for TaskDAO class. "Command"-Pattern
+ * Class-Invoker UserDAO class. "Command"-Pattern
  */
 
-public class TaskServiceInvoker implements TaskDAO {
-	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
-	CommandTaskInsert commandTaskInsert;
-	CommandTaskUpdate commandTaskUpdate;
-	CommandTaskGetById commandTaskGetById;
-	CommandTaskDelete commandTaskDelete;
-	CommandTaskGetAll commandTaskGetAll;
-	
-	public void insert(Task task) {
-		commandTaskInsert = new CommandTaskInsert(mySQLTaskDAO, task);
-		commandTaskInsert.execute();
+import com.servicedao.command.usercommand.CommandUserDelete;
+import com.servicedao.command.usercommand.CommandUserGetAll;
+import com.servicedao.command.usercommand.CommandUserGetById;
+import com.servicedao.command.usercommand.CommandUserInsert;
+import com.servicedao.command.usercommand.CommandUserUpdate;
+import com.servicedao.dao.MySQLUserDAO;
+import com.servicedao.daointf.UserDAO;
+import com.servicedao.domain.User;
+
+public class UserServiceInvoker implements UserDAO {
+	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
+	CommandUserInsert commandUserInsert;
+	CommandUserGetById commandUserGetById;
+	CommandUserUpdate commandUserUpdate;
+	CommandUserDelete commandUserDelete;
+	CommandUserGetAll commandUserGetAll;
+
+	@Override
+	public void insert(User user) {
+		commandUserInsert = new CommandUserInsert(mySQLUserDAO, user);
+		commandUserInsert.execute();
 	}
 
 	@Override
-	public Task getById(int id) {
-		commandTaskGetById = new CommandTaskGetById(mySQLTaskDAO, id);
-		commandTaskGetById.execute();
-		return commandTaskGetById.getTask();
+	public User getById(int id) {
+		commandUserGetById = new CommandUserGetById(mySQLUserDAO, id);
+		commandUserGetById.execute();
+		return commandUserGetById.getUser();
 	}
 
 	@Override
-	public void update(Task task, int id) {
-		commandTaskUpdate = new CommandTaskUpdate(mySQLTaskDAO, task, id);
-		commandTaskUpdate.execute();
-		
+	public void update(User user, int id) {
+		commandUserUpdate = new CommandUserUpdate(mySQLUserDAO, user, id);
+		commandUserUpdate.execute();
 	}
 
 	@Override
 	public void deleteById(int id) {
-		commandTaskDelete = new CommandTaskDelete(mySQLTaskDAO, id);
-		commandTaskDelete.execute();
+		commandUserDelete = new CommandUserDelete(mySQLUserDAO, id);
+		commandUserDelete.execute();
 	}
 
 	@Override
-	public List<Task> getAll() {
-		commandTaskGetAll = new CommandTaskGetAll(mySQLTaskDAO);
-		commandTaskGetAll.execute();
-		return commandTaskGetAll.getTasks();
+	public List<User> getAll() {
+		commandUserGetAll = new CommandUserGetAll(mySQLUserDAO);
+		commandUserGetAll.execute();
+		return commandUserGetAll.getUsers();
 	}
 
 }
-
