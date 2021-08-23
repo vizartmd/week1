@@ -11,7 +11,6 @@ public class CommandUserUpdate implements Command {
 	int id;
 
 	public CommandUserUpdate(MySQLUserDAO mySQLUserDAO, User user, int id) {
-		super();
 		this.mySQLUserDAO = mySQLUserDAO;
 		this.user = user;
 		this.id = id;
