@@ -27,15 +27,15 @@ public class MySQLTaskDAO implements TaskDAO{
 	static Logger log = Logger.getLogger(MySQLTaskDAO.class.getName());
 	
 	/**
-	 * method "insert()" allows to insert a new (Task) Object in database
-	 * @param task the (Task) Object to be inserted in database
+	 * method "insert()" allows to insert a new Task Object in database
+	 * @param task the Task Object to be inserted in database
 	 */
 	@Override
 	public void insert(Task task) {
 		log.setLevel(Level.ERROR);
 		ds = DataSource.getInstance();
 		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLTaskDAO class insert() method was not created!");
+			log.error("Instance of DataSource in MySQLTaskDAO class insert() method was not created!");
 			return;
 		}
 		Connection con = null;
@@ -69,8 +69,8 @@ public class MySQLTaskDAO implements TaskDAO{
 	}
 
 	/**
-	 * method "getById()" allows to get a (Task) Object from the database by id
-	 * @param id to find a (Task) Object from the database by unique id
+	 * method "getById()" allows to get a Task Object from the database by id
+	 * @param id to find a Task Object from the database by unique id
 	 */
 	@Override
 	public Task getById(int id) {
@@ -115,9 +115,9 @@ public class MySQLTaskDAO implements TaskDAO{
 	}
 
 	/**
-	 * method "update()" allows to update a (Task) Object in the database
-	 * @param task the (Task) Object to be updated in database
-	 * @param id to find a (Task) Object from the database by unique id
+	 * method "update()" allows to update a Task Object in the database
+	 * @param task the Task Object to be updated in database
+	 * @param id to find a Task Object from the database by unique id
 	 */
 	@Override
 	public void update(Task task, int id) {
@@ -159,8 +159,8 @@ public class MySQLTaskDAO implements TaskDAO{
 	}
 
 	/**
-	 * method "deleteById()" allows to delete a (Task) Object from the database by id
-	 * @param id to find a (Task) Object from the database by unique id
+	 * method "deleteById()" allows to delete a Task Object from the database by id
+	 * @param id to find a Task Object from the database by unique id
 	 */
 	@Override
 	public void deleteById(int id) {
@@ -200,8 +200,8 @@ public class MySQLTaskDAO implements TaskDAO{
 	}
 
 	/**
-	 * method "getAll()" allows to get all of the <Task> from the database
-	 * @return List<Task> of all of the <Task> objects 
+	 * method "getAll()" allows to get all of the Task Objects from the database
+	 * @return {@link List} of all of the Task Objects
 	 */
 	@Override
 	public List<Task> getAll() {
