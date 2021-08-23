@@ -6,6 +6,9 @@ import com.servicedao.daointf.TaskDAO;
 import com.servicedao.daointf.UserDAO;
 
 public class OracleDAOFactory extends DAOFactory {
+	/**
+	 * This class is not implemented
+	 */
 
 	@Override
 	public UserDAO getUserDAO() throws SQLException {
