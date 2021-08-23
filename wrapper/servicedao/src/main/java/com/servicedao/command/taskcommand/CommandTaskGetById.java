@@ -14,9 +14,6 @@ public class CommandTaskGetById implements Command {
 		return task;
 	}
 
-	public CommandTaskGetById() {
-	}
-
 	public CommandTaskGetById(MySQLTaskDAO mySQLTaskDAO, int id) {
 		this.mySQLTaskDAO = mySQLTaskDAO;
 		this.id = id;
