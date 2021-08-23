@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * This class provides an instance of "DataSource" Object with configuration
+ * for connection to the database. "Singleton"-Pattern
+ */
 public class DataSource {
 
 	private static DataSource instance = null;
