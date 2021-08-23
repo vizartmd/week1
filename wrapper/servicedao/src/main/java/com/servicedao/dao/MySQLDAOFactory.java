@@ -6,9 +6,11 @@ import com.servicedao.daointf.TaskDAO;
 import com.servicedao.daointf.UserDAO;
 import com.servicedao.service.TaskServiceInvoker;
 import com.servicedao.service.UserServiceInvoker;
-
+/**
+ * This class provides a specified MySQL DAO for concrete entities.
+ *
+ */
 public class MySQLDAOFactory extends DAOFactory {
-	UserDAO userDao;
 
 	@Override
 	public UserDAO getUserDAO() throws SQLException {
