@@ -35,7 +35,7 @@ public class MySQLTaskDAO implements TaskDAO{
 		log.setLevel(Level.ERROR);
 		ds = DataSource.getInstance();
 		if (ds == null) {
-			log.error("Instance of DataSource in MySQLTaskDAO class insert() method was not created!");
+			log.warn("Instance of DataSource in MySQLTaskDAO class insert() method was not created!");
 			return;
 		}
 		Connection con = null;
