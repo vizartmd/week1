@@ -11,10 +11,6 @@ import com.servicedao.daointf.UserDAO;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
-/**
- * @author VROBU1
- *
- */
 public class App {
 	public static void main(String[] args) throws SQLException {
 
@@ -29,15 +25,15 @@ public class App {
 //		userDao.insert(new User("Tolea", "Cucu"));
 //		userDao.insert(new User("Andrei", "Ichim"));
 //		userDao.insert(new User("Ion", "Nita"));
-	    userDao.deleteById(11);
+//	    userDao.deleteById(14);
 
-//	    Task task = new Task(11, "Task tytle1002", "Task description1002");
+//	    Task task = new Task(13, "Task tytle1002", "Task description1002");
 //	    Task task1 = new Task(11, "Task tytle1002", "Task description1002");
 //	    Task task2 = new Task(12, "Task tytle1002", "Task description1002");
 //		taskDao.insert(task);
 //		taskDao.insert(task1);
 //		taskDao.insert(task2);
-//		taskDao.deleteById(8);
+		taskDao.deleteById(14);
 		
 		List<Task> tasks= taskDao.getAll();
 		for (Task t : tasks) {
@@ -49,7 +45,6 @@ public class App {
 		for (User u : users) {
 			System.out.println(u);
 		}
-//	    System.out.println(taskDao.getAll());
 
 	}
 }
