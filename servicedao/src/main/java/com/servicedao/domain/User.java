@@ -1,24 +1,33 @@
 package com.servicedao.domain;
+
+import java.util.Objects;
+
 public class User {
 	private int id;
-	private String userName;
-	private String password;
+	private String firstName;
+	private String lastName;
 
 	public User() {
 		super();
 	}
-	
-	public User(int id, String userName) {
+
+	public User(int id, String firstName) {
 		super();
 		this.id = id;
-		this.userName = userName;
+		this.firstName = firstName;
 	}
 
-	public User(int id, String userName, String password) {
+	public User(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public User(int id, String firstName, String lastName) {
 		super();
 		this.id = id;
-		this.userName = userName;
-		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public int getId() {
@@ -29,25 +38,44 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, id, lastName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
 }

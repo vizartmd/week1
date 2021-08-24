@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * @author VROBU1
- *
+ * This class provides an instance of "DataSource" Object with configuration
+ * for connection to the database. "Singleton"-Pattern
  */
 public class DataSource {
 

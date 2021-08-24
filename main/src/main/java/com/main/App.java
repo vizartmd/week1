@@ -1,47 +1,50 @@
 package com.main;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import org.apache.log4j.BasicConfigurator;
+
+import com.servicedao.dao.DAOFactory;
+import com.servicedao.daointf.TaskDAO;
+import com.servicedao.daointf.UserDAO;
+import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-import com.servicedao.service.UserServiceImpl;
-import com.servicedao.service.UserServiceIntf;
 
-/**
- * @author vrobu1
- *
- */
 public class App {
-	public static void main(String[] args) {
-//    	User newUser = new User(6, "Petea", "0000000");
+	public static void main(String[] args) throws SQLException {
 
-		UserServiceIntf userService = new UserServiceImpl();
-//    	userService.createUser(newUser);
-		List<User> users = userService.getAllUsers();
-//
-		for (User user : users) {
-			System.out.println(user);
+		BasicConfigurator.configure();
+		DAOFactory daoFactory = DAOFactory.getDAOFactory(1);
+		TaskDAO taskDao = daoFactory.getTaskDAO();
+		UserDAO userDao = daoFactory.getUserDAO();
+//		userDao.insert(new User("Vasea", "Potoran"));
+//		userDao.insert(new User("Florin", "Piersic"));
+//		userDao.insert(new User("Galina", "Olaru"));
+//		userDao.insert(new User("Viorel", "Popusoi"));
+//		userDao.insert(new User("Tolea", "Cucu"));
+//		userDao.insert(new User("Andrei", "Ichim"));
+//		userDao.insert(new User("Ion", "Nita"));
+//	    userDao.deleteById(14);
+
+//	    Task task = new Task(13, "Task tytle1002", "Task description1002");
+//	    Task task1 = new Task(11, "Task tytle1002", "Task description1002");
+//	    Task task2 = new Task(12, "Task tytle1002", "Task description1002");
+//		taskDao.insert(task);
+//		taskDao.insert(task1);
+//		taskDao.insert(task2);
+//		taskDao.deleteById(14);
+		
+		List<Task> tasks= taskDao.getAll();
+		for (Task t : tasks) {
+			System.out.println(t);
 		}
 		
-		User findedUser = userService.findUserById(4);
-		System.out.println(findedUser);
 
-//		User updatedUser = new User(2, "Gabriela");
-//		User updatedUser2 = new User(3, "Mihaela");
-//		userService.updateUser(updatedUser);
-//		userService.updateUser(updatedUser2);
+		List<User> users = userDao.getAll();
+		for (User u : users) {
+			System.out.println(u);
+		}
 
-//		System.out.println("------------------------------- after update ----------------------------------");
-
-//		for (User user : users) {
-//			System.out.println(user);
-//		}
-
-//		userService.deleteUser(3);
-//		List<User> users2 = userService.getAllUsers();
-//
-//		System.out.println("------------------------------- after delete ----------------------------------");
-//
-//		for (User user : users2) {
-//			System.out.println(user);
-//		}
 	}
 }
