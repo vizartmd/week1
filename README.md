@@ -1,2 +1,2 @@
-# Task for the first week in the Java internship
+# Task for the first week, Java internship
 
