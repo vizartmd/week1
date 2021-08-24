@@ -3,7 +3,7 @@ CREATE TABLE myusers (
    `first_name`varchar(100) DEFAULT NULL,
    `last_name`varchar(100) DEFAULT NULL,
    INDEX `first_name_ind` (`first_name`),
-   INDEX `last_name` (`last_name`),
+   INDEX `last_name_ind` (`last_name`),
    PRIMARY KEY (`id`)
  ) ENGINE=InnoDB;
 
