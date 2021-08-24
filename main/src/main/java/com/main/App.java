@@ -25,7 +25,7 @@ public class App {
 //		userDao.insert(new User("Tolea", "Cucu"));
 //		userDao.insert(new User("Andrei", "Ichim"));
 //		userDao.insert(new User("Ion", "Nita"));
-//	    userDao.deleteById(14);
+	    userDao.deleteById(14);
 
 //	    Task task = new Task(13, "Task tytle1002", "Task description1002");
 //	    Task task1 = new Task(11, "Task tytle1002", "Task description1002");
