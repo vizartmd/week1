@@ -1,41 +1,49 @@
 package com.servicedao.domain;
 
-import java.util.Objects;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-public class User {
-	private int id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id", length=11)
+	private int user_id;
+	
+	@Column(name="firstName")
 	private String firstName;
+
+	@Column(name="lastName", length=50)
 	private String lastName;
 
+	@Column(name="userName", length=50)
+	private String userName;
+	
+	private Set<Task> tasks = new HashSet<Task>();;
+
 	public User() {
-		super();
 	}
 
-	public User(int id, String firstName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-	}
-
-	public User(String firstName, String lastName) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-
-	public User(int id, String firstName, String lastName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(int user_id) {
+		this.user_id = user_id;
 	}
 
 	public int getId() {
-		return id;
+		return user_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getFirstName() {
@@ -53,29 +61,21 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(firstName, id, lastName);
+	public String getUserName() {
+		return userName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 }

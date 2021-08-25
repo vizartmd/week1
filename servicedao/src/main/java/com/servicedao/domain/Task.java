@@ -1,12 +1,36 @@
 package com.servicedao.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-public class Task {
-	private int id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tasks")
+public class Task implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="task_id", length=11)
+	private int taskId;
+	
+	@Column(name="user_id")
 	private int userId;
+	
+	@Column(name="tytle")
 	private String tytle;
+	
+	@Column(name="description")
 	private String description;
+	
+	private Set<User> users = new HashSet<User>();
 
 	public Task() {
 	}
@@ -17,19 +41,19 @@ public class Task {
 		this.description = description;
 	}
 
-	public Task(int id, int userId, String tytle, String description) {
-		this.id = id;
+	public Task(int taskId, int userId, String tytle, String description) {
+		this.taskId = taskId;
 		this.userId = userId;
 		this.tytle = tytle;
 		this.description = description;
 	}
 
 	public int getId() {
-		return id;
+		return taskId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int taskId) {
+		this.taskId = taskId;
 	}
 
 	public int getUserId() {
@@ -56,9 +80,25 @@ public class Task {
 		this.description = description;
 	}
 
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, tytle, userId);
+		return Objects.hash(description, taskId, tytle, userId);
 	}
 
 	@Override
@@ -70,13 +110,13 @@ public class Task {
 		if (getClass() != obj.getClass())
 			return false;
 		Task other = (Task) obj;
-		return Objects.equals(description, other.description) && id == other.id && Objects.equals(tytle, other.tytle)
+		return Objects.equals(description, other.description) && taskId == other.taskId && Objects.equals(tytle, other.tytle)
 				&& userId == other.userId;
 	}
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", userId=" + userId + ", tytle=" + tytle + ", description=" + description + "]";
+		return "Task [taskId=" + taskId + ", userId=" + userId + ", tytle=" + tytle + ", description=" + description + "]";
 	}
 
 }
