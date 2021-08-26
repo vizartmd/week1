@@ -17,7 +17,6 @@ import com.servicedao.daointf.UserDAO;
 import com.servicedao.domain.User;
 
 public class UserServiceInvoker implements UserDAO {
-	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 	CommandUserInsert commandUserInsert;
 	CommandUserGetById commandUserGetById;
 	CommandUserUpdate commandUserUpdate;
@@ -26,32 +25,32 @@ public class UserServiceInvoker implements UserDAO {
 
 	@Override
 	public void insert(User user) {
-		commandUserInsert = new CommandUserInsert(mySQLUserDAO, user);
+		commandUserInsert = new CommandUserInsert(user);
 		commandUserInsert.execute();
 	}
 
 	@Override
 	public User getById(int id) {
-		commandUserGetById = new CommandUserGetById(mySQLUserDAO, id);
+		commandUserGetById = new CommandUserGetById(id);
 		commandUserGetById.execute();
 		return commandUserGetById.getUser();
 	}
 
 	@Override
 	public void update(User user, int id) {
-		commandUserUpdate = new CommandUserUpdate(mySQLUserDAO, user, id);
+		commandUserUpdate = new CommandUserUpdate(user, id);
 		commandUserUpdate.execute();
 	}
 
 	@Override
 	public void deleteById(int id) {
-		commandUserDelete = new CommandUserDelete(mySQLUserDAO, id);
+		commandUserDelete = new CommandUserDelete(id);
 		commandUserDelete.execute();
 	}
 
 	@Override
 	public List<User> getAll() {
-		commandUserGetAll = new CommandUserGetAll(mySQLUserDAO);
+		commandUserGetAll = new CommandUserGetAll();
 		commandUserGetAll.execute();
 		return commandUserGetAll.getUsers();
 	}

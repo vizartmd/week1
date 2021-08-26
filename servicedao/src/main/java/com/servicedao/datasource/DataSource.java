@@ -7,72 +7,69 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import com.servicedao.dao.MySQLTaskDAO;
+
 /**
- * This class provides an instance of "DataSource" Object with configuration
- * for connection to the database. "Singleton"-Pattern
+ * This class provides an instance of "DataSource" Object with configuration for
+ * connection to the database. "Singleton"-Pattern
  */
 public class DataSource {
 
+	static Logger log = Logger.getLogger(MySQLTaskDAO.class.getName());
 	private static DataSource instance = null;
 	private static String filePathConnectionDB = "resources/db.properties";
 	private String jdbcDriver;
 	private String url;
 	private String user;
 	private String pass;
-	
-	private DataSource(){
+
+	private DataSource() {
 		initDataSource();
 	}
-	
-	public static DataSource getInstance(){
-		if(instance == null)
+
+	public static DataSource getInstance() {
+		if (instance == null)
 			instance = new DataSource();
 		return instance;
 	}
-	
-	private void initDataSource(){
+
+	private void initDataSource() {
 		Properties properties = getPropertiesConnection();
-		
+
 		setJdbcDriver(properties.getProperty("MYSQL_DB_DRIVER_CLASS"));
 		setUrl(properties.getProperty("MYSQL_DB_URL"));
 		setUser(properties.getProperty("MYSQL_DB_USERNAME"));
 		setPass(properties.getProperty("MYSQL_DB_PASSWORD"));
 	}
 
-	private Properties getPropertiesConnection(){
+	private Properties getPropertiesConnection() {
 		Properties properties = new Properties();
-		
-		try{
+
+		try {
 			properties.load(new FileInputStream(getFilePathConnectionDB()));
-		}catch(IOException e){
-			e.printStackTrace();
-		}catch(NullPointerException e){
-			e.printStackTrace();
+		} catch (IOException e) {
+			log.info("IOException in getPropertiesConnection() method: " + e);
+		} catch (NullPointerException e) {
+			log.info("NullPointerException in getPropertiesConnection() method: " + e);
 		}
-		
+
 		return properties;
 	}
-	
-//	@SuppressWarnings("deprecation")
-	public Connection getConnection(){
+
+	public Connection getConnection() {
 		Connection conn = null;
-		
+
 		try {
 			Class.forName(getJdbcDriver()).newInstance();
 			conn = DriverManager.getConnection(getUrl(), getUser(), getPass());
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.warn("Connection was not created", e);
 		}
-		
 		return conn;
 	}
-	
+
 	public static String getFilePathConnectionDB() {
 		return filePathConnectionDB;
 	}
@@ -111,6 +108,5 @@ public class DataSource {
 
 	public void setPass(String pass) {
 		this.pass = pass;
-	}	
+	}
 }
-

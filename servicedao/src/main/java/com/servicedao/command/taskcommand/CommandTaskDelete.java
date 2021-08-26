@@ -5,11 +5,10 @@ import com.servicedao.dao.MySQLTaskDAO;
 
 public class CommandTaskDelete implements Command {
 	
-	MySQLTaskDAO mySQLTaskDAO;
+	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
 	int id;
 
-	public CommandTaskDelete(MySQLTaskDAO mySQLTaskDAO, int id) {
-		this.mySQLTaskDAO = mySQLTaskDAO;
+	public CommandTaskDelete(int id) {
 		this.id = id;
 	}
 

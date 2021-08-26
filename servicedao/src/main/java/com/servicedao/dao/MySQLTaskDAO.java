@@ -41,7 +41,7 @@ public class MySQLTaskDAO implements TaskDAO{
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int userId = task.getUserId();
-		String tytle = task.getTytle();
+		String tytle = task.getTitle();
 		String description = task.getDescription();
 		try {
 			con = ds.getConnection();
@@ -92,7 +92,7 @@ public class MySQLTaskDAO implements TaskDAO{
 			    task = new Task(); 
 			    task.setId(id);
 			    task.setUserId(rs.getInt("user_id"));
-			    task.setTytle(rs.getString("tytle"));
+			    task.setTitle(rs.getString("tytle"));
 			    task.setDescription(rs.getString("description"));
 			    log.info("Task with id: "+ id + " was finded successfully!");
 			}
@@ -134,7 +134,7 @@ public class MySQLTaskDAO implements TaskDAO{
 			log.info("Connection established in MySQLTaskDAO class update() method.");
 			stmt = con.prepareStatement("UPDATE mytasks SET user_id=?, tytle=?, description=? where id=?");
 			stmt.setInt(1, task.getUserId());
-			stmt.setString(2, task.getTytle());
+			stmt.setString(2, task.getTitle());
 			stmt.setString(3, task.getDescription());
 			stmt.setInt(4, id);
 			int i = stmt.executeUpdate();
@@ -222,11 +222,7 @@ public class MySQLTaskDAO implements TaskDAO{
 			rs = stmt.executeQuery("SELECT * FROM mytasks");
 			tasksList = new ArrayList<>();
 			while (rs.next()) {
-				task = new Task();
-				task.setId(rs.getInt("id"));
-				task.setUserId(rs.getInt("user_id"));
-				task.setTytle(rs.getString("tytle"));
-				task.setDescription(rs.getString("description"));
+				task = new Task(rs.getInt("id"),rs.getInt("user_id"), rs.getString("tytle"), rs.getString("description"));
 				tasksList.add(task);
 			}
 			if (tasksList.size() > 0) {

@@ -6,11 +6,10 @@ import com.servicedao.domain.Task;
 
 public class CommandTaskInsert implements Command{
 	
-	MySQLTaskDAO mySQLTaskDAO;
+	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
 	Task task;
 	
-	public CommandTaskInsert(MySQLTaskDAO mySQLUserDAO, Task task) {
-		this.mySQLTaskDAO = mySQLUserDAO;
+	public CommandTaskInsert(Task task) {
 		this.task = task;
 	}
 

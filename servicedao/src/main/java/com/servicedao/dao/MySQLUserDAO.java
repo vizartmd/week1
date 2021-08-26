@@ -47,14 +47,14 @@ public class MySQLUserDAO implements UserDAO {
 			e.printStackTrace();
 			log.info("User was not inserted! " + e.getMessage());
 		} finally {
-			try {
 				if (stmt != null)
-					stmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+					try {
+						stmt.close();
+						log.info("Prepared statement was closed successfully!");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						log.info("Exception in prepared statement: " + e);
+					}
 		}
 
 	}

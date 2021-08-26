@@ -5,11 +5,10 @@ import com.servicedao.dao.MySQLUserDAO;
 
 public class CommandUserDelete implements Command {
 
-	MySQLUserDAO mySQLUserDAO;
+	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 	int id;
 
-	public CommandUserDelete(MySQLUserDAO mySQLUserDAO, int id) {
-		this.mySQLUserDAO = mySQLUserDAO;
+	public CommandUserDelete(int id) {
 		this.id = id;
 	}
 

@@ -8,15 +8,11 @@ import com.servicedao.domain.User;
 
 public class CommandUserGetAll implements Command {
 
-	MySQLUserDAO mySQLUserDAO;
+	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 	List<User> users;
 
 	public List<User> getUsers() {
 		return users;
-	}
-
-	public CommandUserGetAll(MySQLUserDAO mySQLUserDAO) {
-		this.mySQLUserDAO = mySQLUserDAO;
 	}
 
 	@Override

@@ -6,11 +6,10 @@ import com.servicedao.domain.User;
 
 public class CommandUserInsert implements Command{
 	
-	MySQLUserDAO mySQLUserDAO;
+	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 	User user;
 	
-	public CommandUserInsert(MySQLUserDAO mySQLUserDAO, User user) {
-		this.mySQLUserDAO = mySQLUserDAO;
+	public CommandUserInsert(User user) {
 		this.user = user;
 	}
 

@@ -5,22 +5,22 @@ import java.util.Objects;
 public class Task {
 	private int id;
 	private int userId;
-	private String tytle;
+	private String title;
 	private String description;
 
 	public Task() {
 	}
 
-	public Task(int userId, String tytle, String description) {
+	public Task(int userId, String title, String description) {
 		this.userId = userId;
-		this.tytle = tytle;
+		this.title = title;
 		this.description = description;
 	}
 
-	public Task(int id, int userId, String tytle, String description) {
+	public Task(int id, int userId, String title, String description) {
 		this.id = id;
 		this.userId = userId;
-		this.tytle = tytle;
+		this.title = title;
 		this.description = description;
 	}
 
@@ -40,12 +40,12 @@ public class Task {
 		this.userId = userId;
 	}
 
-	public String getTytle() {
-		return tytle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTytle(String tytle) {
-		this.tytle = tytle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -58,7 +58,7 @@ public class Task {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, tytle, userId);
+		return Objects.hash(description, id, title, userId);
 	}
 
 	@Override
@@ -70,13 +70,13 @@ public class Task {
 		if (getClass() != obj.getClass())
 			return false;
 		Task other = (Task) obj;
-		return Objects.equals(description, other.description) && id == other.id && Objects.equals(tytle, other.tytle)
+		return Objects.equals(description, other.description) && id == other.id && Objects.equals(title, other.title)
 				&& userId == other.userId;
 	}
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", userId=" + userId + ", tytle=" + tytle + ", description=" + description + "]";
+		return "Task [id=" + id + ", userId=" + userId + ", title=" + title + ", description=" + description + "]";
 	}
 
 }

@@ -6,7 +6,7 @@ import com.servicedao.domain.User;
 
 public class CommandUserGetById implements Command{
 	
-	MySQLUserDAO mySQLUserDAO;
+	MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 	User user;
 	int id;
 	
@@ -14,8 +14,7 @@ public class CommandUserGetById implements Command{
 		return user;
 	}
 
-	public CommandUserGetById(MySQLUserDAO mySQLUserDAO, int id) {
-		this.mySQLUserDAO = mySQLUserDAO;
+	public CommandUserGetById(int id) {
 		this.id = id;
 	}
 	

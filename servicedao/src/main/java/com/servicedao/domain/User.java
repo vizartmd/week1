@@ -6,28 +6,27 @@ public class User {
 	private int id;
 	private String firstName;
 	private String lastName;
-
+	private String userName;
+	
 	public User() {
-		super();
-	}
-
-	public User(int id, String firstName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
 	}
 
 	public User(String firstName, String lastName) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	
+	public User(String firstName, String lastName, String userName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+	}
 
-	public User(int id, String firstName, String lastName) {
-		super();
+	public User(int id, String firstName, String lastName, String userName) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.userName = userName;
 	}
 
 	public int getId() {
@@ -56,26 +55,22 @@ public class User {
 	
 	
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(firstName, id, lastName);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
-	}
-
-	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
+				+ "]";
 	}
-
 }

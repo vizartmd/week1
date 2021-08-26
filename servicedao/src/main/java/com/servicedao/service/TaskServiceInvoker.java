@@ -15,8 +15,7 @@ import com.servicedao.domain.Task;
  * Class-Invoker for TaskDAO class. "Command"-Pattern
  */
 
-public class TaskServiceInvoker implements TaskDAO {
-	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
+public class TaskServiceInvoker {
 	CommandTaskInsert commandTaskInsert;
 	CommandTaskUpdate commandTaskUpdate;
 	CommandTaskGetById commandTaskGetById;
@@ -24,33 +23,29 @@ public class TaskServiceInvoker implements TaskDAO {
 	CommandTaskGetAll commandTaskGetAll;
 	
 	public void insert(Task task) {
-		commandTaskInsert = new CommandTaskInsert(mySQLTaskDAO, task);
+		commandTaskInsert = new CommandTaskInsert(task);
 		commandTaskInsert.execute();
 	}
-
-	@Override
+ 
 	public Task getById(int id) {
-		commandTaskGetById = new CommandTaskGetById(mySQLTaskDAO, id);
+		commandTaskGetById = new CommandTaskGetById(id);
 		commandTaskGetById.execute();
 		return commandTaskGetById.getTask();
 	}
-
-	@Override
+ 
 	public void update(Task task, int id) {
-		commandTaskUpdate = new CommandTaskUpdate(mySQLTaskDAO, task, id);
+		commandTaskUpdate = new CommandTaskUpdate(task, id);
 		commandTaskUpdate.execute();
 		
 	}
-
-	@Override
+ 
 	public void deleteById(int id) {
-		commandTaskDelete = new CommandTaskDelete(mySQLTaskDAO, id);
+		commandTaskDelete = new CommandTaskDelete(id);
 		commandTaskDelete.execute();
 	}
-
-	@Override
+ 
 	public List<Task> getAll() {
-		commandTaskGetAll = new CommandTaskGetAll(mySQLTaskDAO);
+		commandTaskGetAll = new CommandTaskGetAll();
 		commandTaskGetAll.execute();
 		return commandTaskGetAll.getTasks();
 	}

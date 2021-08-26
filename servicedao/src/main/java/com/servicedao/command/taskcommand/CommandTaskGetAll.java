@@ -8,15 +8,11 @@ import com.servicedao.domain.Task;
 
 public class CommandTaskGetAll implements Command {
 	
-	MySQLTaskDAO mySQLTaskDAO;
+	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
 	List<Task> tasks;
 	
 	public List<Task> getTasks() {
 		return tasks;
-	}
-
-	public CommandTaskGetAll(MySQLTaskDAO mySQLTaskDAO) {
-		this.mySQLTaskDAO = mySQLTaskDAO;
 	}
 
 	@Override

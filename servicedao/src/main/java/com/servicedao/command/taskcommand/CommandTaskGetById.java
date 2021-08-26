@@ -6,7 +6,7 @@ import com.servicedao.domain.Task;
 
 public class CommandTaskGetById implements Command {
 
-	MySQLTaskDAO mySQLTaskDAO;
+	MySQLTaskDAO mySQLTaskDAO = new MySQLTaskDAO();
 	Task task;
 	int id;
 	
@@ -14,8 +14,7 @@ public class CommandTaskGetById implements Command {
 		return task;
 	}
 
-	public CommandTaskGetById(MySQLTaskDAO mySQLTaskDAO, int id) {
-		this.mySQLTaskDAO = mySQLTaskDAO;
+	public CommandTaskGetById(int id) {
 		this.id = id;
 	}
 
