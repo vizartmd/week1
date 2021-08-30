@@ -3,15 +3,20 @@ package com.main;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
-
 import org.apache.log4j.BasicConfigurator;
-
+import com.servicedao.daoimpl.MySQLTaskDAOImpl;
+import com.servicedao.daointf.TaskDAOIntf;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-import com.servicedao.service.TaskServiceInvoker;
-import com.servicedao.service.UserServiceInvoker;
+import com.servicedao.enums.DatabaseTypes;
+import com.servicedao.service.CommandInvoker;
+import com.servicedao.service.ServiceFactory;
+import com.servicedao.service.mysqlservice.MySQLService;
+import com.servicedao.service.mysqlservice.MySQLTaskService;
+import com.servicedao.service.mysqlservice.MySQLUserService;
 
 /**
  * @author vrobu1
@@ -25,30 +30,65 @@ public class App {
 		BasicConfigurator.configure();
 		DataSource ds = DataSource.getInstance();
 		
-		UserServiceInvoker userServiceInvoker = new UserServiceInvoker();
-		TaskServiceInvoker taskServiceInvoker = new TaskServiceInvoker();
-		Scanner scanner = new Scanner(new InputStreamReader(System.in));
+		MySQLService mySQLService = (MySQLService) ServiceFactory.getServiceFactory(DatabaseTypes.MYSQL);
+		MySQLTaskService mySQLTaskService = mySQLService.getMySQLTaskService();
+		MySQLUserService mySQLUserService = mySQLService.getMySQLUserService();
+		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("Enter first name");
-		String firstName = scanner.nextLine();
-		System.out.println("Enter last name");
-		String lastName = scanner.nextLine();
-		System.out.println("Enter userName");
-		String userName = scanner.nextLine();
-		userServiceInvoker.insert(new User(firstName, lastName, userName));
-		for (User u : userServiceInvoker.getAll()) {
-			System.out.println(u.toString());
+//		System.out.println("Enter first name");
+//		String firstName = scanner.nextLine();
+//		System.out.println("Enter last name");
+//		String lastName = scanner.nextLine();
+//		System.out.println("Enter userName");
+//		String userName = scanner.nextLine();
+//		User user = new User(23, firstName, lastName, userName);
+		
+//		mySQLUserService.updateUser(23, firstName, lastName, userName);
+//		User user1 = mySQLUserService.getUserById(25);
+		
+//		System.out.println(user1);
+		
+//		List<User> users = mySQLUserService.gelAllUsers();
+//		for (User u : users) {
+//			System.out.println(u.toString());
+//		}
+		
+//		System.out.println("Enter task id");
+//		int id = scanner.nextInt();
+//		System.out.println("Enter task userId");
+//		int userId = scanner.nextInt();
+//		System.out.println("Enter task title");
+//		String title = scanner.next();
+//		System.out.println("Enter task description");
+//		String description = scanner.next();
+		
+//		mySQLTaskService.updateTask(id, userId, title, description);
+		mySQLTaskService.deleteTask(15);
+		List<Task> tasks= mySQLTaskService.gelAllTasks();
+		for (Task t : tasks) {
+			System.out.println(t);
 		}
 		
-		System.out.println("Enter title");
-		String title = scanner.nextLine();
-		System.out.println("Enter description");
-		String description = scanner.nextLine();
-		taskServiceInvoker.insert(new Task(13, title, description));
-		for (Task t : taskServiceInvoker.getAll()) {
-			System.out.println(t.toString());
-		}
 		
+//		CommandInvoker commandInvoker = new CommandInvoker();
+//		TaskDAOIntf mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+//		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
+//		commandInvoker.execute(taskInsertCommand);
+		
+//		TaskGetAllCommand taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);
+//		commandInvoker.execute(taskGetAllCommand);
+		
+//		mySQLTaskService.updateTask(32, 23, "000000000", "333333333333333");
+//		mySQLTaskService.deleteTask(25);
+		
+//		List<Task> tasks = mySQLTaskService.gelAllTasks();
+//		for (Task t : tasks) {
+//			System.out.println(t.toString());
+//		}
+		
+//		System.out.println("Task with id: 34 = " + mySQLTaskService.getTaskById(34));
+
+		scanner.close();
 		Connection con = ds.getConnection();
 		if (con != null)
 			con.close();
