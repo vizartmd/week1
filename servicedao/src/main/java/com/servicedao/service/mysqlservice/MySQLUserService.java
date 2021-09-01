@@ -21,8 +21,7 @@ public class MySQLUserService extends MySQLService {
 	UserDeleteCommand UserDeleteCommand;
 
 	public void insertUser(String firstName, String lastName, String userName) {
-		User user = new User(firstName, lastName, userName);
-		userInsertCommand = new UserInsertCommand(user);
+		userInsertCommand = new UserInsertCommand(mySQLUserDAOImpl, firstName, lastName, userName);
 		commandInvoker.execute(userInsertCommand);
 	}
 
@@ -44,7 +43,7 @@ public class MySQLUserService extends MySQLService {
 //	}
 
 	public List<User> gelAllUsers() {
-		userGetAllCommand = new UserGetAllCommand();
+		userGetAllCommand = new UserGetAllCommand(mySQLUserDAOImpl);
 		commandInvoker.execute(userGetAllCommand);
 		return userGetAllCommand.getUsers();
 	}
