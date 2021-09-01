@@ -32,36 +32,36 @@ public class App {
 		CommandInvoker commandInvoker = new CommandInvoker();
 		Scanner scanner = new Scanner(System.in);
 		
-//		System.out.println("Enter first name");
-//		String firstName = scanner.nextLine();
-//		System.out.println("Enter last name");
-//		String lastName = scanner.nextLine();
-//		System.out.println("Enter userName");
-//		String userName = scanner.nextLine();
-//		
-//		UserDAOIntf mySQLUserDAOImpl = new MySQLUserDAOImpl();
-//		UserInsertCommand userInsertCommand = new UserInsertCommand(mySQLUserDAOImpl, firstName, lastName, userName);
-//		commandInvoker.execute(userInsertCommand);
-//		
-//		UserGetAllCommand userGetAllCommand = new UserGetAllCommand(mySQLUserDAOImpl);
-//		commandInvoker.execute(userGetAllCommand);
-//		List<User> users = userGetAllCommand.getUsers();
-//		for (User u : users) {
-//			System.out.println(u.toString());
-//		}
+		System.out.println("Enter first name");
+		String firstName = scanner.nextLine();
+		System.out.println("Enter last name");
+		String lastName = scanner.nextLine();
+		System.out.println("Enter userName");
+		String userName = scanner.nextLine();
 		
-//		System.out.println("Enter task id");
-//		int id = scanner.nextInt();
-//		System.out.println("Enter task userId");
-//		int userId = scanner.nextInt();
-//		System.out.println("Enter task title");
-//		String title = scanner.next();
-//		System.out.println("Enter task description");
-//		String description = scanner.next();
+		UserDAOIntf mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		UserInsertCommand userInsertCommand = new UserInsertCommand(mySQLUserDAOImpl, firstName, lastName, userName);
+		commandInvoker.execute(userInsertCommand);
+		
+		UserGetAllCommand userGetAllCommand = new UserGetAllCommand(mySQLUserDAOImpl);
+		commandInvoker.execute(userGetAllCommand);
+		List<User> users = userGetAllCommand.getUsers();
+		for (User u : users) {
+			System.out.println(u.toString());
+		}
+		
+		System.out.println("Enter task id");
+		int id = scanner.nextInt();
+		System.out.println("Enter task userId");
+		int userId = scanner.nextInt();
+		System.out.println("Enter task title");
+		String title = scanner.next();
+		System.out.println("Enter task description");
+		String description = scanner.next();
 		
 		TaskDAOIntf mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
-//		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
-//		commandInvoker.execute(taskInsertCommand);
+		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
+		commandInvoker.execute(taskInsertCommand);
 		
 		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, 43, 23, "title 43 modified", "description 43 modified");
 		commandInvoker.execute(taskUpdateCommand);
