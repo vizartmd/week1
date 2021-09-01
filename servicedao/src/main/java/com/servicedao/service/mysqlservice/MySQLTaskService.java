@@ -8,7 +8,6 @@ import com.servicedao.command.taskcommand.TaskGetByIdCommand;
 import com.servicedao.command.taskcommand.TaskInsertCommand;
 import com.servicedao.command.taskcommand.TaskUpdateCommand;
 import com.servicedao.daoimpl.MySQLTaskDAOImpl;
-import com.servicedao.daointf.TaskDAOIntf;
 import com.servicedao.domain.Task;
 import com.servicedao.service.CommandInvoker;
 

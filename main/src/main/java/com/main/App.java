@@ -1,6 +1,5 @@
 package com.main;
 
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,21 +8,15 @@ import org.apache.log4j.BasicConfigurator;
 
 import com.servicedao.command.taskcommand.TaskGetAllCommand;
 import com.servicedao.command.taskcommand.TaskInsertCommand;
+import com.servicedao.command.taskcommand.TaskUpdateCommand;
 import com.servicedao.daoimpl.MySQLTaskDAOImpl;
 import com.servicedao.daointf.TaskDAOIntf;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
-import com.servicedao.domain.User;
-import com.servicedao.enums.DatabaseTypes;
 import com.servicedao.service.CommandInvoker;
-import com.servicedao.service.ServiceFactory;
-import com.servicedao.service.mysqlservice.MySQLService;
-import com.servicedao.service.mysqlservice.MySQLTaskService;
-import com.servicedao.service.mysqlservice.MySQLUserService;
 
 /**
  * @author vrobu1
- * logger log to target -> apidocs folder
  * class App with main method which is starting point for the application
  */
 
@@ -32,9 +25,6 @@ public class App {
 
 		BasicConfigurator.configure();
 		DataSource ds = DataSource.getInstance();
-
-		
-		
 		Scanner scanner = new Scanner(System.in);
 		
 //		System.out.println("Enter first name");
@@ -60,8 +50,11 @@ public class App {
 		
 		CommandInvoker commandInvoker = new CommandInvoker();
 		TaskDAOIntf mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
-		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
-		commandInvoker.execute(taskInsertCommand);
+//		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
+//		commandInvoker.execute(taskInsertCommand);
+		
+		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, 35, 23, "title 23", "description 23");
+		commandInvoker.execute(taskUpdateCommand);
 		
 		TaskGetAllCommand taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);
 		commandInvoker.execute(taskGetAllCommand);

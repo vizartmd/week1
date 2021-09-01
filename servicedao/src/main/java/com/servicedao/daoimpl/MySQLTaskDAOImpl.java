@@ -118,7 +118,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	/**
 	 * method "update()" allows to update a Task Object in the database
 	 * @param task the Task Object to be updated in database
-	 * @param id to find a Task Object from the database by unique id
 	 */
 	@Override
 	public void update(Task task) {

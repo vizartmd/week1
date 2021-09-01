@@ -115,7 +115,6 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 * method "update()" allows to update a User Object in the database
 	 * 
 	 * @param user the User Object to be updated in database
-	 * @param id   to find a User Object from the database by unique id
 	 */
 	@Override
 	public void update(User user) {
