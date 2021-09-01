@@ -9,9 +9,9 @@ public class TaskInsertCommand implements Command {
 	private TaskDAOIntf taskDAOImpl;
 	private Task task;
 	
-	public TaskInsertCommand(TaskDAOIntf taskDAOImpl, int id, int userId, String title, String description) {
+	public TaskInsertCommand(TaskDAOIntf taskDAOImpl, int userId, String title, String description) {
 		this.taskDAOImpl = taskDAOImpl;
-		this.task = new Task(id, userId, title, description);
+		this.task = new Task(userId, title, description);
 	}
 
 	public void execute() {

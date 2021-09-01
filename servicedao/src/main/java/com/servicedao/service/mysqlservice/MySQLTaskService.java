@@ -22,7 +22,7 @@ public class MySQLTaskService extends MySQLService{
 	TaskDeleteCommand taskDeleteCommand;
 	
 	public void insertTask(int id, int userId, String title, String description) {
-		taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, id, userId, title, description);
+		taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
 		commandInvoker.execute(taskInsertCommand);
 	}
 	
