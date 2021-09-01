@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.servicedao.dao.MySQLTaskDAO;
+import com.servicedao.daoimpl.MySQLTaskDAOImpl;
 
 /**
  * This class provides an instance of "DataSource" Object with configuration for
@@ -17,7 +17,7 @@ import com.servicedao.dao.MySQLTaskDAO;
  */
 public class DataSource {
 
-	static Logger log = Logger.getLogger(MySQLTaskDAO.class.getName());
+	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 	private static DataSource instance = null;
 	private static String filePathConnectionDB = "resources/db.properties";
 	private String jdbcDriver;
