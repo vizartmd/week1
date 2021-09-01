@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.log4j.BasicConfigurator;
-
 import com.servicedao.command.taskcommand.TaskGetAllCommand;
 import com.servicedao.command.taskcommand.TaskInsertCommand;
 import com.servicedao.command.taskcommand.TaskUpdateCommand;
