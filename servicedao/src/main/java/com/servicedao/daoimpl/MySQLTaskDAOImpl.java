@@ -7,17 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
-import com.servicedao.daointf.DAOIntf;
 import com.servicedao.daointf.TaskDAOIntf;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 
-
 /**
- * This class implements all the methods from DAO interface
+ * @inheritDoc
  */
 public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	/**
@@ -29,8 +25,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 	
 	/**
-	 * method "insert()" allows to insert a new Task Object in database
-	 * @param task the Task Object to be inserted in database
+	 * @inheritDoc
 	 */
 	@Override
 	public void insert(Task task) {
@@ -72,8 +67,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	}
 
 	/**
-	 * method "getById()" allows to get a Task Object from the database by id
-	 * @param id to find a Task Object from the database by unique id
+	 * @inheritDoc
 	 */
 	@Override
 	public Task getById(int id) {
@@ -116,8 +110,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	}
 
 	/**
-	 * method "update()" allows to update a Task Object in the database
-	 * @param task the Task Object to be updated in database
+	 * @inheritDoc
 	 */
 	@Override
 	public void update(Task task) {
@@ -159,8 +152,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	}
 
 	/**
-	 * method "deleteById()" allows to delete a Task Object from the database by id
-	 * @param id to find a Task Object from the database by unique id
+	 * @inheritDoc
 	 */
 	@Override
 	public void deleteById(int id) {
@@ -202,8 +194,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	}
 
 	/**
-	 * method "getAll()" allows to get all of the Task Objects from the database
-	 * @return {@link List} of all of the Task Objects
+	 * @inheritDoc
 	 */
 	@Override
 	public List<Task> getAll() {

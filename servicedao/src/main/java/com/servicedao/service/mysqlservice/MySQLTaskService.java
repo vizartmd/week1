@@ -2,6 +2,11 @@ package com.servicedao.service.mysqlservice;
 
 import java.util.List;
 
+/**
+ * This class includes the methods that receive the classes that implements
+ * Command interface as a parameter in execute() method of CommandInvoker class.
+ * This is an element of Command Design Pattern
+ */
 import com.servicedao.command.taskcommand.TaskDeleteCommand;
 import com.servicedao.command.taskcommand.TaskGetAllCommand;
 import com.servicedao.command.taskcommand.TaskGetByIdCommand;

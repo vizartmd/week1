@@ -12,18 +12,19 @@ import com.servicedao.daointf.UserDAOIntf;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.User;
 
+/**
+ * @inheritDoc
+ */
 public class MySQLUserDAOImpl implements UserDAOIntf {
 	/**
 	 * @param "ds" is an instance of "DataSource" Object from which we receive the
-	 *             connection to the database
+	 * connection to the database
 	 */
 	DataSource ds;
 	static Logger log = Logger.getLogger(MySQLUserDAOImpl.class.getName());
 
 	/**
-	 * method "insert()" allows to insert a new User Object in database
-	 * 
-	 * @param user the User Object to be inserted in database
+	 * @inheritDoc
 	 */
 	@Override
 	public void insert(User user) {
@@ -67,9 +68,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	}
 
 	/**
-	 * method "getById()" allows to get a User Object from the database by id
-	 * 
-	 * @param id to find a User Object from the database by unique id
+	 * @inheritDoc
 	 */
 	@Override
 	public User getById(int id) {
@@ -112,9 +111,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	}
 
 	/**
-	 * method "update()" allows to update a User Object in the database
-	 * 
-	 * @param user the User Object to be updated in database
+	 * @inheritDoc
 	 */
 	@Override
 	public void update(User user) {
@@ -156,9 +153,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	}
 
 	/**
-	 * method "deleteById()" allows to delete a User Object from the database by id
-	 * 
-	 * @param id to find a User Object from the database by unique id
+	 * @inheritDoc
 	 */
 	@Override
 	public void deleteById(int id) {
@@ -199,9 +194,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	}
 
 	/**
-	 * method "getAll()" allows to get all of the User Objects from the database
-	 * 
-	 * @return {@link List} of all of the User Objects
+	 * @inheritDoc
 	 */
 	@Override
 	public List<User> getAll() {

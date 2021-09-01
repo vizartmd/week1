@@ -11,6 +11,11 @@ import com.servicedao.daoimpl.MySQLUserDAOImpl;
 import com.servicedao.domain.User;
 import com.servicedao.service.CommandInvoker;
 
+/**
+ * This class includes the methods that receive the classes that implements
+ * Command interface as a parameter in execute() method of CommandInvoker class.
+ * This is an element of Command Design Pattern
+ */
 public class MySQLUserService extends MySQLService {
 	CommandInvoker commandInvoker = new CommandInvoker();
 	MySQLUserDAOImpl mySQLUserDAOImpl = new MySQLUserDAOImpl();
