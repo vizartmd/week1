@@ -40,12 +40,12 @@ public class App {
 		
 //		System.out.println("Enter task id");
 //		int id = scanner.nextInt();
-		System.out.println("Enter task userId");
-		int userId = scanner.nextInt();
-		System.out.println("Enter task title");
-		String title = scanner.next();
-		System.out.println("Enter task description");
-		String description = scanner.next();
+//		System.out.println("Enter task userId");
+//		int userId = scanner.nextInt();
+//		System.out.println("Enter task title");
+//		String title = scanner.next();
+//		System.out.println("Enter task description");
+//		String description = scanner.next();
 		
 		
 		CommandInvoker commandInvoker = new CommandInvoker();
@@ -53,7 +53,7 @@ public class App {
 //		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
 //		commandInvoker.execute(taskInsertCommand);
 		
-		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, 35, 23, "title 23", "description 23");
+		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, 43, 23, "title 23", "description 23");
 		commandInvoker.execute(taskUpdateCommand);
 		
 		TaskGetAllCommand taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);

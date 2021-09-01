@@ -19,7 +19,6 @@ public class DataSource {
 
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 	private static DataSource instance = null;
-	private static String filePathConnectionDB = "resources/db.properties";
 	private String jdbcDriver;
 	private String url;
 	private String user;
@@ -37,7 +36,6 @@ public class DataSource {
 
 	private void initDataSource() {
 		Properties properties = getPropertiesConnection();
-
 		setJdbcDriver(properties.getProperty("MYSQL_DB_DRIVER_CLASS"));
 		setUrl(properties.getProperty("MYSQL_DB_URL"));
 		setUser(properties.getProperty("MYSQL_DB_USERNAME"));
@@ -48,13 +46,12 @@ public class DataSource {
 		Properties properties = new Properties();
 
 		try {
-			properties.load(new FileInputStream(getFilePathConnectionDB()));
+			properties.load(new FileInputStream("resources/db.properties"));
 		} catch (IOException e) {
 			log.info("IOException in getPropertiesConnection() method: " + e);
 		} catch (NullPointerException e) {
 			log.info("NullPointerException in getPropertiesConnection() method: " + e);
 		}
-
 		return properties;
 	}
 
@@ -62,20 +59,12 @@ public class DataSource {
 		Connection conn = null;
 
 		try {
-			Class.forName(getJdbcDriver()).newInstance();
+			Class.forName(getJdbcDriver()).getDeclaredConstructor().newInstance();
 			conn = DriverManager.getConnection(getUrl(), getUser(), getPass());
 		} catch (Exception e) {
 			log.warn("Connection was not created", e);
 		}
 		return conn;
-	}
-
-	public static String getFilePathConnectionDB() {
-		return filePathConnectionDB;
-	}
-
-	public static void setFilePathConnectionDB(String filePathConnectionDB) {
-		DataSource.filePathConnectionDB = filePathConnectionDB;
 	}
 
 	public String getJdbcDriver() {
