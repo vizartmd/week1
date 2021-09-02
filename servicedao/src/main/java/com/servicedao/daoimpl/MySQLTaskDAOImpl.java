@@ -21,6 +21,10 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 * the connection to the database
 	 */
 	DataSource ds;
+	Connection con;
+	PreparedStatement pstmt;
+	Statement stmt;
+	ResultSet rs;
 	
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 	
@@ -29,24 +33,18 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 */
 	@Override
 	public void insert(Task task) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.error("Instance of DataSource in MySQLTaskDAO class insert() method was not created!");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
+		initializePreparedStatement();
 		int userId = task.getUserId();
 		String tytle = task.getTitle();
 		String description = task.getDescription();
 		try {
 			con = ds.getConnection();
 			log.info("Connection established in MySQLTaskDAO class insert() method.");
-			stmt = con.prepareStatement("INSERT INTO mytasks (user_id, title, description) values(?,?,?)");
-			stmt.setInt(1, userId);
-			stmt.setString(2, tytle);
-			stmt.setString(3, description);
-			int i = stmt.executeUpdate();
+			pstmt = con.prepareStatement("INSERT INTO mytasks (user_id, title, description) values(?,?,?)");
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, tytle);
+			pstmt.setString(3, description);
+			int i = pstmt.executeUpdate();
 			if (i == 0) {
 				log.info("Task was not inserted!");
 			} else {
@@ -71,14 +69,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 */
 	@Override
 	public Task getById(int id) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLTaskDAO class getById() method was not created!");
-			return null;
-		}
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		iniializeStatement();
 		Task task = null;
 		try {
 			con = ds.getConnection();
@@ -114,23 +105,16 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 */
 	@Override
 	public void update(Task task) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLTaskDAO class update() method was not created!");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		initializePreparedStatement();
 		try {
 			con = ds.getConnection();
 			log.info("Connection established in MySQLTaskDAO class update() method.");
-			stmt = con.prepareStatement("UPDATE mytasks SET user_id=?, title=?, description=? where id=?");
-			stmt.setInt(4, task.getId());
-			stmt.setInt(1, task.getUserId());
-			stmt.setString(2, task.getTitle());
-			stmt.setString(3, task.getDescription());
-			int i = stmt.executeUpdate();
+			pstmt = con.prepareStatement("UPDATE mytasks SET user_id=?, title=?, description=? where id=?");
+			pstmt.setInt(4, task.getId());
+			pstmt.setInt(1, task.getUserId());
+			pstmt.setString(2, task.getTitle());
+			pstmt.setString(3, task.getDescription());
+			int i = pstmt.executeUpdate();
 			if (i == 0) {
 				log.info("Task was not updated!");
 			} else {
@@ -139,13 +123,11 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 		} catch (SQLException e) {
 			log.warn("Task was not updated! " + e.getMessage());
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
+			try { 
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.info("Statement was not closed in MySQLTaskDAO class update()! " + e);
 			}
 		}
 		
@@ -156,21 +138,16 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 */
 	@Override
 	public void deleteById(int id) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLTaskDAO class deleteById(int id) method was not created!");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
+		iniializeStatement();
+		initializePreparedStatement();
 		Task task = getById(id);
 		if (task != null) {
 		try {
 			con = ds.getConnection();
 			log.info("Connection established in MySQLTaskDAO class deleteById(int id) method.");
-			stmt = con.prepareStatement("DELETE FROM mytasks WHERE id=?");
-			stmt.setInt(1, id);
-			int i = stmt.executeUpdate();
+			pstmt = con.prepareStatement("DELETE FROM mytasks WHERE id=?");
+			pstmt.setInt(1, id);
+			int i = pstmt.executeUpdate();
 			if (i == 0) {
 				log.info("Task was not deleted!");
 			} else {
@@ -184,7 +161,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.info("Statement was not closed in MySQLTaskDAO class deleteById()! " + e);
 			}
 		}
 		} else {
@@ -198,14 +175,7 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 */
 	@Override
 	public List<Task> getAll() {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLTaskDAO class getAll() method was not created!");
-			return null;
-		}
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		iniializeStatement();
 		Task task = null;
 		List<Task> tasksList = null;
 		try {
@@ -233,10 +203,31 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.info("Statement or ResultSet was not closed in MySQLTaskDAO class getAll()! " + e);
 			}
 		}
 		return tasksList;
+	}
+	
+	public void initializePreparedStatement() {
+		ds = DataSource.getInstance();
+		if (ds == null) {
+			log.warn("Instance of DataSource in MySQLTaskDAO class deleteById(int id) method was not created!");
+			return;
+		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	}
+	
+	public void iniializeStatement() {
+		ds = DataSource.getInstance();
+		if (ds == null) {
+			log.warn("Instance of DataSource in MySQLTaskDAO class getAll() method was not created!");
+			return;
+		}
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 	}
 
 }

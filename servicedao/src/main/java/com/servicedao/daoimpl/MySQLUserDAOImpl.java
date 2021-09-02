@@ -21,6 +21,11 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 * connection to the database
 	 */
 	DataSource ds;
+	Connection con;
+	PreparedStatement pstmt;
+	Statement stmt;
+	ResultSet rs;
+	
 	static Logger log = Logger.getLogger(MySQLUserDAOImpl.class.getName());
 
 	/**
@@ -28,24 +33,18 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 */
 	@Override
 	public void insert(User user) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLUserDAO insert() method was not created");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
+		initializePreparedStatement();
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
 		String userName = user.getUserName();
 		try {
 			con = ds.getConnection();
 			log.info("Connection established in MySQLUserDAO insert() method.");
-			stmt = con.prepareStatement("INSERT INTO myusers (first_name,last_name, user_name) values(?,?,?)");
-			stmt.setString(1, firstName);
-			stmt.setString(2, lastName);
-			stmt.setString(3, userName);
-			int i = stmt.executeUpdate();
+			pstmt = con.prepareStatement("INSERT INTO myusers (first_name,last_name, user_name) values(?,?,?)");
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, userName);
+			int i = pstmt.executeUpdate();
 			if (i == 0) {
 				log.info("Task was not inserted!");
 			} else {
@@ -72,14 +71,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 */
 	@Override
 	public User getById(int id) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLUserDAO getById() method was not created");
-			return null;
-		}
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		iniializeStatement();
 		User user = null;
 		try {
 			con = ds.getConnection();
@@ -115,23 +107,16 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 */
 	@Override
 	public void update(User user) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLUserDAO update() method was not created");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		initializePreparedStatement();
 		try {
 			con = ds.getConnection();
 			log.info("Connection established in MySQLUserDAO update() method.");
-			stmt = con.prepareStatement("UPDATE myusers SET first_name=?, last_name=?, user_name=? where id=?");
-			stmt.setInt(4, user.getId());
-			stmt.setString(1, user.getFirstName());
-			stmt.setString(2, user.getLastName());
-			stmt.setString(3, user.getUserName());
-			int i = stmt.executeUpdate();
+			pstmt = con.prepareStatement("UPDATE myusers SET first_name=?, last_name=?, user_name=? where id=?");
+			pstmt.setInt(4, user.getId());
+			pstmt.setString(1, user.getFirstName());
+			pstmt.setString(2, user.getLastName());
+			pstmt.setString(3, user.getUserName());
+			int i = pstmt.executeUpdate();
 			if (i == 0) {
 				log.info("User was not updated!");
 			} else {
@@ -157,21 +142,15 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 */
 	@Override
 	public void deleteById(int id) {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLUserDAO deleteById() method was not created");
-			return;
-		}
-		Connection con = null;
-		PreparedStatement stmt = null;
+		initializePreparedStatement();
 		User user = getById(id);
 		if (user != null) {
 			try {
 				con = ds.getConnection();
 				log.info("Connection established in MySQLUserDAO deleteById() method.");
-				stmt = con.prepareStatement("DELETE FROM myusers WHERE id=?");
-				stmt.setInt(1, id);
-				int i = stmt.executeUpdate();
+				pstmt = con.prepareStatement("DELETE FROM myusers WHERE id=?");
+				pstmt.setInt(1, id);
+				int i = pstmt.executeUpdate();
 				if (i == 0) {
 					log.info("Task was not deleted!");
 				} else {
@@ -198,14 +177,7 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 	 */
 	@Override
 	public List<User> getAll() {
-		ds = DataSource.getInstance();
-		if (ds == null) {
-			log.warn("Instance of DataSource in MySQLUserDAO getAll() method was not created");
-			return null;
-		}
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+		iniializeStatement();
 		User user = null;
 		List<User> usersList = null;
 		try {
@@ -242,5 +214,26 @@ public class MySQLUserDAOImpl implements UserDAOIntf {
 			}
 		}
 		return usersList;
+	}
+	
+	public void initializePreparedStatement() {
+		ds = DataSource.getInstance();
+		if (ds == null) {
+			log.warn("Instance of DataSource in MySQLTaskDAO class deleteById(int id) method was not created!");
+			return;
+		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	}
+	
+	public void iniializeStatement() {
+		ds = DataSource.getInstance();
+		if (ds == null) {
+			log.warn("Instance of DataSource in MySQLTaskDAO class getAll() method was not created!");
+			return;
+		}
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 	}
 }
