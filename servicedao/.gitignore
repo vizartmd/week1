@@ -3,3 +3,6 @@
 .project
 .classpath
 src/test/
+.project
+.classpath
+.settings/
