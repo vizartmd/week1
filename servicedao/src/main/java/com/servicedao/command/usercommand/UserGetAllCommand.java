@@ -8,12 +8,12 @@ import com.servicedao.domain.User;
 
 public class UserGetAllCommand implements Command {
 
-	MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl();
-	List<User> users;
-	
-	public UserGetAllCommand(UserDAOIntf mySQLUserDAOImpl) {
-		super();
-		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAOImpl;
+	private MySQLUserDAOImpl mySQLUserDAO;
+	private List<User> users;
+
+	public UserGetAllCommand(MySQLUserDAOImpl mySQLUserDAO, List<User> users) {
+		this.mySQLUserDAO = mySQLUserDAO;
+		this.users = users;
 	}
 
 	public List<User> getUsers() {
@@ -22,6 +22,6 @@ public class UserGetAllCommand implements Command {
 
 	@Override
 	public void execute() {
-	    this.users = mySQLUserDAO.getAll();
+		this.users = mySQLUserDAO.getAll();
 	}
 }

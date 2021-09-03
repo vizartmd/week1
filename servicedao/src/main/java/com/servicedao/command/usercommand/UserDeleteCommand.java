@@ -4,10 +4,11 @@ import com.servicedao.daoimpl.MySQLUserDAOImpl;
 
 public class UserDeleteCommand {
 
-	MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl();
-	int id;
+	private MySQLUserDAOImpl mySQLUserDAO;
+	private int id;
 
-	public UserDeleteCommand(int id) {
+	public UserDeleteCommand(MySQLUserDAOImpl mySQLUserDAO, int id) {
+		this.mySQLUserDAO = mySQLUserDAO;
 		this.id = id;
 	}
 

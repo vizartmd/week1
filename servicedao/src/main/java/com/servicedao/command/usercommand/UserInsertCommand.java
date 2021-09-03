@@ -5,14 +5,13 @@ import com.servicedao.daoimpl.MySQLUserDAOImpl;
 import com.servicedao.daointf.UserDAOIntf;
 import com.servicedao.domain.User;
 
-public class UserInsertCommand implements Command{
-	
-	MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl();
-	User user;
-	
-	public UserInsertCommand(UserDAOIntf mySQLUserDAOImpl, String firstName, String lastName, String userName) {
-		super();
-		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAOImpl;
+public class UserInsertCommand implements Command {
+
+	private MySQLUserDAOImpl mySQLUserDAO;
+	private User user;
+
+	public UserInsertCommand(MySQLUserDAOImpl mySQLUserDAO, String firstName, String lastName, String userName) {
+		this.mySQLUserDAO = mySQLUserDAO;
 		this.user = new User(firstName, lastName, userName);
 	}
 

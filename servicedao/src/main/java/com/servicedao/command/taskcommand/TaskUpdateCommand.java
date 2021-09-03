@@ -7,7 +7,7 @@ import com.servicedao.domain.Task;
 public class TaskUpdateCommand implements Command {
 
 	private TaskDAOIntf taskDAOImpl;
-	Task task;
+	private Task task;
 
 	public TaskUpdateCommand(TaskDAOIntf taskDAOImpl, int id, int userId, String title, String description) {
 		this.taskDAOImpl = taskDAOImpl;

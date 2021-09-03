@@ -6,11 +6,12 @@ import com.servicedao.domain.User;
 
 public class UserUpdateCommand implements Command {
 
-	MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl();
-	User user;
+	private MySQLUserDAOImpl mySQLUserDAO;
+	private User user;
 
-	public UserUpdateCommand(User user) {
-		this.user = user;
+	public UserUpdateCommand(MySQLUserDAOImpl mySQLUserDAO, String firstName, String lastName, String userName) {
+		this.mySQLUserDAO = mySQLUserDAO;
+		this.user = new User(firstName, lastName, userName);
 	}
 
 	@Override

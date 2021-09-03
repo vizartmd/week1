@@ -5,14 +5,16 @@ import com.servicedao.daoimpl.MySQLUserDAOImpl;
 import com.servicedao.domain.User;
 
 public class UserGetByIdCommand implements Command {
-	
-	MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl();
-	User user;
+
+	private MySQLUserDAOImpl mySQLUserDAO;
+	private User user;
 	int id;
 
-	public UserGetByIdCommand(int id) {
+	public UserGetByIdCommand(MySQLUserDAOImpl mySQLUserDAO, User user, int id) {
+		this.mySQLUserDAO = mySQLUserDAO;
+		this.user = user;
 		this.id = id;
-	} 
+	}
 
 	public User getUser() {
 		return user;
@@ -20,7 +22,7 @@ public class UserGetByIdCommand implements Command {
 
 	@Override
 	public void execute() {
-	    user = mySQLUserDAO.getById(id);
+		user = mySQLUserDAO.getById(id);
 	}
 
 }
