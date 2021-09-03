@@ -10,8 +10,8 @@ public class UserInsertCommand implements Command {
 	private MySQLUserDAOImpl mySQLUserDAO;
 	private User user;
 
-	public UserInsertCommand(MySQLUserDAOImpl mySQLUserDAO, String firstName, String lastName, String userName) {
-		this.mySQLUserDAO = mySQLUserDAO;
+	public UserInsertCommand(UserDAOIntf mySQLUserDAOImpl, String firstName, String lastName, String userName) {
+		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAOImpl;
 		this.user = new User(firstName, lastName, userName);
 	}
 

@@ -31,14 +31,14 @@ public class MySQLUserService extends MySQLService {
 	}
 
 	public User getUserById(int id) {
-		userGetByIdCommand = new UserGetByIdCommand(id);
+		userGetByIdCommand = new UserGetByIdCommand(mySQLUserDAOImpl, id);
 		commandInvoker.execute(userGetByIdCommand);
 		return userGetByIdCommand.getUser();
 	}
 
 	public void updateUser(int id, String firstName, String lastName, String userName) {
 		User user = new User(id, firstName, lastName, userName);
-		userUpdateCommand = new UserUpdateCommand(user);
+		userUpdateCommand = new UserUpdateCommand(mySQLUserDAOImpl,firstName,lastName,userName);
 		commandInvoker.execute(userUpdateCommand);
 	}
 //

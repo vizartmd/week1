@@ -10,9 +10,8 @@ public class UserGetByIdCommand implements Command {
 	private User user;
 	int id;
 
-	public UserGetByIdCommand(MySQLUserDAOImpl mySQLUserDAO, User user, int id) {
+	public UserGetByIdCommand(MySQLUserDAOImpl mySQLUserDAO, int id) {
 		this.mySQLUserDAO = mySQLUserDAO;
-		this.user = user;
 		this.id = id;
 	}
 

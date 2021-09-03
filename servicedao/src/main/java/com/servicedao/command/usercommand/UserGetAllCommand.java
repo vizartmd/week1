@@ -11,9 +11,8 @@ public class UserGetAllCommand implements Command {
 	private MySQLUserDAOImpl mySQLUserDAO;
 	private List<User> users;
 
-	public UserGetAllCommand(MySQLUserDAOImpl mySQLUserDAO, List<User> users) {
-		this.mySQLUserDAO = mySQLUserDAO;
-		this.users = users;
+	public UserGetAllCommand(UserDAOIntf mySQLUserDAO) {
+		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAO;
 	}
 
 	public List<User> getUsers() {

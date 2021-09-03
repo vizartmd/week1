@@ -20,11 +20,11 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 	 * @param "ds" is an instance of "DataSource" Object from which we receive 
 	 * the connection to the database
 	 */
-	DataSource ds;
-	Connection con;
-	PreparedStatement pstmt;
-	Statement stmt;
-	ResultSet rs;
+	private DataSource ds;
+	private Connection con;
+	private PreparedStatement pstmt;
+	private Statement stmt;
+	private ResultSet rs;
 	
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 	
