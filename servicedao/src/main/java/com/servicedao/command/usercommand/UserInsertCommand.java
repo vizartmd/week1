@@ -1,22 +1,21 @@
 package com.servicedao.command.usercommand;
 
 import com.servicedao.command.Command;
-import com.servicedao.daoimpl.MySQLUserDAOImpl;
-import com.servicedao.daointf.UserDAOIntf;
 import com.servicedao.domain.User;
+import com.servicedao.service.mysqlservice.MySQLUserService;
 
 public class UserInsertCommand implements Command {
 
-	private MySQLUserDAOImpl mySQLUserDAO;
+	private MySQLUserService mySQLUserService;
 	private User user;
 
-	public UserInsertCommand(UserDAOIntf mySQLUserDAOImpl, String firstName, String lastName, String userName) {
-		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAOImpl;
-		this.user = new User(firstName, lastName, userName);
+	public UserInsertCommand(MySQLUserService mySQLUserService, String firstName, String lastName, String userName) { 
+		this.mySQLUserService = mySQLUserService;  
+		this.user = new User(firstName, lastName, userName); 
 	}
 
 	@Override
 	public void execute() {
-		mySQLUserDAO.insert(user);
+		mySQLUserService.insert(user);
 	}
 }

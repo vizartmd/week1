@@ -1,11 +1,9 @@
 package com.servicedao.service.mysqlservice;
 
-import com.servicedao.service.ServiceIntf;
-
 /**
  * @return one of several classes that implements interface ServiceIntf
  */
-public class MySQLService implements ServiceIntf{
+public class MySQLServices {
 
 	public MySQLUserService getMySQLUserService() {
 		return new MySQLUserService();
@@ -14,5 +12,4 @@ public class MySQLService implements ServiceIntf{
 	public MySQLTaskService getMySQLTaskService() {
 		return new MySQLTaskService();
 	}
-	
 }

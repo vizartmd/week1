@@ -1,4 +1,4 @@
-package com.servicedao.daoimpl;
+package com.servicedao.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,14 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import com.servicedao.daointf.TaskDAOIntf;
+
+import com.servicedao.dao.TaskDAO;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 
 /**
  * @inheritDoc
  */
-public class MySQLTaskDAOImpl implements TaskDAOIntf{
+public class MySQLTaskDAOImpl implements TaskDAO{
 	/**
 	 * @param "ds" is an instance of "DataSource" Object from which we receive 
 	 * the connection to the database

@@ -2,52 +2,39 @@ package com.servicedao.service.mysqlservice;
 
 import java.util.List;
 
-/**
- * This class includes the methods that receive the classes that implements
- * Command interface as a parameter in execute() method of CommandInvoker class.
- * This is an element of Command Design Pattern
- */
-import com.servicedao.command.taskcommand.TaskDeleteCommand;
-import com.servicedao.command.taskcommand.TaskGetAllCommand;
-import com.servicedao.command.taskcommand.TaskGetByIdCommand;
-import com.servicedao.command.taskcommand.TaskInsertCommand;
-import com.servicedao.command.taskcommand.TaskUpdateCommand;
-import com.servicedao.daoimpl.MySQLTaskDAOImpl;
+import com.servicedao.dao.impl.MySQLTaskDAOImpl;
 import com.servicedao.domain.Task;
-import com.servicedao.service.CommandInvoker;
+import com.servicedao.service.ServiceIntf;
 
-public class MySQLTaskService extends MySQLService{
-	private CommandInvoker commandInvoker;
-	private TaskInsertCommand taskInsertCommand;
-	private TaskGetAllCommand taskGetAllCommand;
-	private TaskGetByIdCommand taskGetByIdCommand;
-	private TaskUpdateCommand taskUpdateCommand;
-	private TaskDeleteCommand taskDeleteCommand;
+/**
+ * This class represents the service layer that works with the Task class
+ * and the MySQL DAO layer
+ */
+public class MySQLTaskService implements ServiceIntf<Task>{
+	MySQLTaskDAOImpl mySQLTaskDAOImpl;
 	
-	public void insertTask(int id, int userId, String title, String description, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
-		taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
-		commandInvoker.execute(taskInsertCommand);
+	public void insert(Task task) {
+		mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+		mySQLTaskDAOImpl.insert(task);
 	}
 	
-	public Task getTaskById(int id, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
-		taskGetByIdCommand = new TaskGetByIdCommand(mySQLTaskDAOImpl, id);
-		commandInvoker.execute(taskGetByIdCommand);
-		return taskGetByIdCommand.getTask();
+	public Task getById(int id) {
+		mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+		return mySQLTaskDAOImpl.getById(id);
 	}
 	
-	public void updateTask(int id, int userId, String title, String description, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
-		taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, id, userId, title, description);
-		commandInvoker.execute(taskUpdateCommand);
+	public void update(Task task) {
+		mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+		mySQLTaskDAOImpl.update(task);
 	}
 	
-	public void deleteTask(int id, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
-		taskDeleteCommand = new TaskDeleteCommand(mySQLTaskDAOImpl, id);
-		commandInvoker.execute(taskDeleteCommand);
+	public void deleteById(int id) {
+		mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+		mySQLTaskDAOImpl.deleteById(id);
 	}
 	
-	public List<Task> gelAllTasks(MySQLTaskDAOImpl mySQLTaskDAOImpl) {
-		taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);
-		commandInvoker.execute(taskGetAllCommand);
-		return taskGetAllCommand.getTasks();
+	public List<Task> getAll() {
+		mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
+		return mySQLTaskDAOImpl.getAll();
 	}
 }

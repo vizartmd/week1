@@ -1,32 +1,32 @@
-package com.servicedao.daointf;
+package com.servicedao.dao;
 
 import java.util.List;
 import com.servicedao.domain.Task;
 
-public interface TaskDAOIntf extends DAOIntf<Task> {
+public interface TaskDAO extends DAO<Task> {
 
 	/**
-	 * @inheritDoc
+	 * @inherited
 	 */
 	public void insert(Task task);
 	
 	/**
-	 * @inheritDoc
+	 * @inherited
 	 */
 	public Task getById(int id);
 
 	/**
-	 * @inheritDoc
+	 * @inherited
 	 */
 	public void update(Task task);
 
 	/**
-	 * @inheritDoc
+	 * @inherited
 	 */
 	public void deleteById(int id);
 
 	/**
-	 * @inheritDoc
+	 * @inherited
 	 */
 	public List<Task> getAll();
 	

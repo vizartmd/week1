@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.servicedao.daoimpl.MySQLTaskDAOImpl;
+import com.servicedao.dao.impl.MySQLTaskDAOImpl;
 
 /**
  * This class provides an instance of "DataSource" Object with configuration for

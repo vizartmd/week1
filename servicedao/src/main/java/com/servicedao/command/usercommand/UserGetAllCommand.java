@@ -2,17 +2,18 @@ package com.servicedao.command.usercommand;
 
 import java.util.List;
 import com.servicedao.command.Command;
-import com.servicedao.daoimpl.MySQLUserDAOImpl;
-import com.servicedao.daointf.UserDAOIntf;
+import com.servicedao.dao.UserDAO;
+import com.servicedao.dao.impl.MySQLUserDAOImpl;
 import com.servicedao.domain.User;
+import com.servicedao.service.mysqlservice.MySQLUserService;
 
 public class UserGetAllCommand implements Command {
 
-	private MySQLUserDAOImpl mySQLUserDAO;
+	private MySQLUserService mySQLUserService;
 	private List<User> users;
 
-	public UserGetAllCommand(UserDAOIntf mySQLUserDAO) {
-		this.mySQLUserDAO = (MySQLUserDAOImpl) mySQLUserDAO;
+	public UserGetAllCommand(MySQLUserService mySQLUserService) {
+		this.mySQLUserService = mySQLUserService;
 	}
 
 	public List<User> getUsers() {
@@ -21,6 +22,6 @@ public class UserGetAllCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.users = mySQLUserDAO.getAll();
+		this.users = mySQLUserService.getAll();
 	}
 }

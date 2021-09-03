@@ -1,4 +1,4 @@
-package com.servicedao.daoimpl;
+package com.servicedao.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,14 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import com.servicedao.daointf.UserDAOIntf;
+
+import com.servicedao.dao.UserDAO;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.User;
 
 /**
  * @inheritDoc
  */
-public class MySQLUserDAOImpl implements UserDAOIntf {
+public class MySQLUserDAOImpl implements UserDAO {
 	/**
 	 * @param "ds" is an instance of "DataSource" Object from which we receive the
 	 * connection to the database

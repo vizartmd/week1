@@ -1,53 +1,44 @@
 package com.servicedao.service.mysqlservice;
 
 import java.util.List;
-
-import com.servicedao.command.usercommand.UserDeleteCommand;
-import com.servicedao.command.usercommand.UserGetAllCommand;
-import com.servicedao.command.usercommand.UserGetByIdCommand;
-import com.servicedao.command.usercommand.UserInsertCommand;
-import com.servicedao.command.usercommand.UserUpdateCommand;
-import com.servicedao.daoimpl.MySQLUserDAOImpl;
+import com.servicedao.dao.impl.MySQLUserDAOImpl;
 import com.servicedao.domain.User;
-import com.servicedao.service.CommandInvoker;
+import com.servicedao.service.ServiceIntf;
 
 /**
- * This class includes the methods that receive the classes that implements
- * Command interface as a parameter in execute() method of CommandInvoker class.
- * This is an element of Command Design Pattern
+ * This class represents the service layer that works with the User class
+ * and the MySQL DAO layer
  */
-public class MySQLUserService extends MySQLService {
-	private CommandInvoker commandInvoker;
-	private UserInsertCommand userInsertCommand;
-	private UserGetAllCommand userGetAllCommand;
-	private UserGetByIdCommand userGetByIdCommand;
-	private UserUpdateCommand userUpdateCommand;
-	private UserDeleteCommand UserDeleteCommand;
+public class MySQLUserService implements ServiceIntf<User> {
+	MySQLUserDAOImpl mySQLUserDAOImpl;
 
-	public void insertUser(String firstName, String lastName, String userName, MySQLUserDAOImpl mySQLUserDAOImpl) {
-		userInsertCommand = new UserInsertCommand(mySQLUserDAOImpl, firstName, lastName, userName);
-		commandInvoker.execute(userInsertCommand);
+	@Override
+	public void insert(User user) {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		mySQLUserDAOImpl.insert(user);
 	}
 
-	public User getUserById(int id, MySQLUserDAOImpl mySQLUserDAOImpl) {
-		userGetByIdCommand = new UserGetByIdCommand(mySQLUserDAOImpl, id);
-		commandInvoker.execute(userGetByIdCommand);
-		return userGetByIdCommand.getUser();
+	@Override
+	public User getById(int id) {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		return mySQLUserDAOImpl.getById(id);
 	}
 
-	public void updateUser(int id, String firstName, String lastName, String userName, MySQLUserDAOImpl mySQLUserDAOImpl) {
-		userUpdateCommand = new UserUpdateCommand(mySQLUserDAOImpl,firstName,lastName,userName);
-		commandInvoker.execute(userUpdateCommand);
+	@Override
+	public void update(User user) {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		mySQLUserDAOImpl.update(user);
 	}
 
-	public void deleteUser(int id, MySQLUserDAOImpl mySQLUserDAOImpl) {
-		UserDeleteCommand = new UserDeleteCommand(mySQLUserDAOImpl, id);
-		commandInvoker.execute(UserDeleteCommand);
+	@Override
+	public void deleteById(int id) {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		mySQLUserDAOImpl.deleteById(id);
 	}
 
-	public List<User> gelAllUsers(MySQLUserDAOImpl mySQLUserDAOImpl) {
-		userGetAllCommand = new UserGetAllCommand(mySQLUserDAOImpl);
-		commandInvoker.execute(userGetAllCommand);
-		return userGetAllCommand.getUsers();
+	@Override
+	public List<User> getAll() {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		return mySQLUserDAOImpl.getAll();
 	}
 }
