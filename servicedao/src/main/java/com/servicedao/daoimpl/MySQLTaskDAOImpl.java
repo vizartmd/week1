@@ -51,7 +51,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 				log.info("Task was inserted successfully!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			log.warn("Task was not inserted! " + e.getMessage());
 		} finally {
 			try {
@@ -85,7 +84,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 			    log.info("Task with id: "+ id + " was found successfully!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			log.warn("Task User not found! " + e.getMessage());
 		} finally {
 			try {
@@ -154,7 +152,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 				log.info("Task with id:" + id + " was deleted successfully!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			log.warn("Task wasn't deleted! " + e.getMessage());
 		} finally {
 			try {
@@ -194,7 +191,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 				log.info("Task list is empty!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			log.warn("Task list was not received successfully! " + e.getMessage());
 		} finally {
 			try {
@@ -215,8 +211,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 			log.warn("Instance of DataSource in MySQLTaskDAO class deleteById(int id) method was not created!");
 			return;
 		}
-		Connection con = null;
-		PreparedStatement pstmt = null;
 	}
 	
 	public void iniializeStatement() {
@@ -225,9 +219,6 @@ public class MySQLTaskDAOImpl implements TaskDAOIntf{
 			log.warn("Instance of DataSource in MySQLTaskDAO class getAll() method was not created!");
 			return;
 		}
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
 	}
 
 }
