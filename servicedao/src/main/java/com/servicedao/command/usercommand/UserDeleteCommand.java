@@ -1,8 +1,9 @@
 package com.servicedao.command.usercommand;
 
+import com.servicedao.command.Command;
 import com.servicedao.daoimpl.MySQLUserDAOImpl;
 
-public class UserDeleteCommand {
+public class UserDeleteCommand implements Command {
 
 	private MySQLUserDAOImpl mySQLUserDAO;
 	private int id;

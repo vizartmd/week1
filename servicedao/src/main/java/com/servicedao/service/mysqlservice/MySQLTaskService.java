@@ -17,36 +17,35 @@ import com.servicedao.domain.Task;
 import com.servicedao.service.CommandInvoker;
 
 public class MySQLTaskService extends MySQLService{
-	CommandInvoker commandInvoker = new CommandInvoker();
-	MySQLTaskDAOImpl mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
-	TaskInsertCommand taskInsertCommand;
-	TaskGetAllCommand taskGetAllCommand;
-	TaskGetByIdCommand taskGetByIdCommand;
-	TaskUpdateCommand taskUpdateCommand;
-	TaskDeleteCommand taskDeleteCommand;
+	private CommandInvoker commandInvoker;
+	private TaskInsertCommand taskInsertCommand;
+	private TaskGetAllCommand taskGetAllCommand;
+	private TaskGetByIdCommand taskGetByIdCommand;
+	private TaskUpdateCommand taskUpdateCommand;
+	private TaskDeleteCommand taskDeleteCommand;
 	
-	public void insertTask(int id, int userId, String title, String description) {
+	public void insertTask(int id, int userId, String title, String description, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
 		taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
 		commandInvoker.execute(taskInsertCommand);
 	}
 	
-	public Task getTaskById(int id) {
-		taskGetByIdCommand = new TaskGetByIdCommand(mySQLTaskDAOImpl,id);
+	public Task getTaskById(int id, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
+		taskGetByIdCommand = new TaskGetByIdCommand(mySQLTaskDAOImpl, id);
 		commandInvoker.execute(taskGetByIdCommand);
 		return taskGetByIdCommand.getTask();
 	}
 	
-	public void updateTask(int id, int userId, String title, String description) {
+	public void updateTask(int id, int userId, String title, String description, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
 		taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, id, userId, title, description);
 		commandInvoker.execute(taskUpdateCommand);
 	}
 	
-	public void deleteTask(int id) {
+	public void deleteTask(int id, MySQLTaskDAOImpl mySQLTaskDAOImpl) {
 		taskDeleteCommand = new TaskDeleteCommand(mySQLTaskDAOImpl, id);
 		commandInvoker.execute(taskDeleteCommand);
 	}
 	
-	public List<Task> gelAllTasks() {
+	public List<Task> gelAllTasks(MySQLTaskDAOImpl mySQLTaskDAOImpl) {
 		taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);
 		commandInvoker.execute(taskGetAllCommand);
 		return taskGetAllCommand.getTasks();

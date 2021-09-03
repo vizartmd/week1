@@ -17,37 +17,35 @@ import com.servicedao.service.CommandInvoker;
  * This is an element of Command Design Pattern
  */
 public class MySQLUserService extends MySQLService {
-	CommandInvoker commandInvoker = new CommandInvoker();
-	MySQLUserDAOImpl mySQLUserDAOImpl = new MySQLUserDAOImpl();
-	UserInsertCommand userInsertCommand;
-	UserGetAllCommand userGetAllCommand;
-	UserGetByIdCommand userGetByIdCommand;
-	UserUpdateCommand userUpdateCommand;
-	UserDeleteCommand UserDeleteCommand;
+	private CommandInvoker commandInvoker;
+	private UserInsertCommand userInsertCommand;
+	private UserGetAllCommand userGetAllCommand;
+	private UserGetByIdCommand userGetByIdCommand;
+	private UserUpdateCommand userUpdateCommand;
+	private UserDeleteCommand UserDeleteCommand;
 
-	public void insertUser(String firstName, String lastName, String userName) {
+	public void insertUser(String firstName, String lastName, String userName, MySQLUserDAOImpl mySQLUserDAOImpl) {
 		userInsertCommand = new UserInsertCommand(mySQLUserDAOImpl, firstName, lastName, userName);
 		commandInvoker.execute(userInsertCommand);
 	}
 
-	public User getUserById(int id) {
+	public User getUserById(int id, MySQLUserDAOImpl mySQLUserDAOImpl) {
 		userGetByIdCommand = new UserGetByIdCommand(mySQLUserDAOImpl, id);
 		commandInvoker.execute(userGetByIdCommand);
 		return userGetByIdCommand.getUser();
 	}
 
-	public void updateUser(int id, String firstName, String lastName, String userName) {
-		User user = new User(id, firstName, lastName, userName);
+	public void updateUser(int id, String firstName, String lastName, String userName, MySQLUserDAOImpl mySQLUserDAOImpl) {
 		userUpdateCommand = new UserUpdateCommand(mySQLUserDAOImpl,firstName,lastName,userName);
 		commandInvoker.execute(userUpdateCommand);
 	}
-//
-//	public void deleteUser(int id) {
-//		UserDeleteCommand = new UserDeleteCommand(mySQLUserDAOImpl, id);
-//		commandInvoker.execute(UserDeleteCommand);
-//	}
 
-	public List<User> gelAllUsers() {
+	public void deleteUser(int id, MySQLUserDAOImpl mySQLUserDAOImpl) {
+		UserDeleteCommand = new UserDeleteCommand(mySQLUserDAOImpl, id);
+		commandInvoker.execute(UserDeleteCommand);
+	}
+
+	public List<User> gelAllUsers(MySQLUserDAOImpl mySQLUserDAOImpl) {
 		userGetAllCommand = new UserGetAllCommand(mySQLUserDAOImpl);
 		commandInvoker.execute(userGetAllCommand);
 		return userGetAllCommand.getUsers();
