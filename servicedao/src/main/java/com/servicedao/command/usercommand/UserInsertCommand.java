@@ -4,15 +4,20 @@ import com.servicedao.command.Command;
 import com.servicedao.domain.User;
 import com.servicedao.service.mysqlservice.MySQLUserService;
 
-public class UserInsertCommand implements Command {
+/**
+ * This class is a part of Command Design Pattern and operating with User class
+ * It has a single method "execute()" that calls the "insert() method on
+ * the MySQLUserService class from the service layer and send a new User as a parameter.   
+ */ 
+public class UserInsertCommand implements Command {    
 
-	private MySQLUserService mySQLUserService;
-	private User user;
+	private MySQLUserService mySQLUserService; 
+	private User user; 
 
-	public UserInsertCommand(MySQLUserService mySQLUserService, String firstName, String lastName, String userName) { 
-		this.mySQLUserService = mySQLUserService;  
+	public UserInsertCommand(MySQLUserService mySQLUserService, String firstName, String lastName, String userName) {  
+		this.mySQLUserService = mySQLUserService;    
 		this.user = new User(firstName, lastName, userName); 
-	}
+	} 
 
 	@Override
 	public void execute() {

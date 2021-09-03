@@ -148,7 +148,7 @@ public class MySQLTaskDAOImpl implements TaskDAO{
 			pstmt.setInt(1, id);
 			int i = pstmt.executeUpdate();
 			if (i == 0) {
-				log.info("Task was not deleted!");
+				log.warn("Task was not deleted!");
 			} else {
 				log.info("Task with id:" + id + " was deleted successfully!");
 			}

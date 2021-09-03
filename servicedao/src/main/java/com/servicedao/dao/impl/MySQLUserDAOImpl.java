@@ -47,12 +47,12 @@ public class MySQLUserDAOImpl implements UserDAO {
 			pstmt.setString(3, userName);
 			int i = pstmt.executeUpdate();
 			if (i == 0) {
-				log.info("Task was not inserted!");
+				log.warn("User was not inserted!");
 			} else {
 				log.info("User was inserted successfully!");
 			}
 		} catch (SQLException e) {
-			log.info("User was not inserted! " + e.getMessage());
+			log.warn("User was not inserted! " + e.getMessage());
 		} finally {
 			if (stmt != null)
 				try {
@@ -60,7 +60,7 @@ public class MySQLUserDAOImpl implements UserDAO {
 					log.info("Prepared statement was closed successfully!");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					log.info("Exception during close of prepared statement: " + e);
+					log.warn("Exception during close of prepared statement: " + e);
 				}
 		}
 
@@ -87,7 +87,7 @@ public class MySQLUserDAOImpl implements UserDAO {
 				log.info("User with id: " + id + " was found successfully!");
 			}
 		} catch (SQLException e) {
-			log.info("User not found! " + e.getMessage());
+			log.warn("User not found! " + e.getMessage());
 		} finally {
 			try {
 				if (rs != null)
@@ -117,7 +117,7 @@ public class MySQLUserDAOImpl implements UserDAO {
 			pstmt.setString(3, user.getUserName());
 			int i = pstmt.executeUpdate();
 			if (i == 0) {
-				log.info("User was not updated!");
+				log.warn("User was not updated!");
 			} else {
 				log.info("User was updated successfully!");
 			}
@@ -150,7 +150,7 @@ public class MySQLUserDAOImpl implements UserDAO {
 				pstmt.setInt(1, id);
 				int i = pstmt.executeUpdate();
 				if (i == 0) {
-					log.info("Task was not deleted!");
+					log.warn("User was not deleted!");
 				} else {
 					log.info("User with id:" + id + " was deleted successfully!");
 				}
