@@ -10,19 +10,16 @@ import com.servicedao.command.taskcommand.TaskInsertCommand;
 import com.servicedao.command.taskcommand.TaskUpdateCommand;
 import com.servicedao.command.usercommand.UserGetAllCommand;
 import com.servicedao.command.usercommand.UserInsertCommand;
-import com.servicedao.dao.TaskDAO;
-import com.servicedao.dao.UserDAO;
-import com.servicedao.dao.impl.MySQLTaskDAOImpl;
-import com.servicedao.dao.impl.MySQLUserDAOImpl;
 import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.CommandInvoker;
+import com.servicedao.service.mysqlservice.MySQLTaskService;
 import com.servicedao.service.mysqlservice.MySQLUserService;
 
 /**
  * @author vrobu1
- * class App with main method which is starting point for the application
+ * class App with main method which is the entry point for the application
  */
 
 public class App {
@@ -51,29 +48,30 @@ public class App {
 			System.out.println(u.toString());
 		}
 		
-//		System.out.println("Enter task id");
-//		int id = scanner.nextInt();
-//		System.out.println("Enter task userId");
-//		int userId = scanner.nextInt();
-//		System.out.println("Enter task title");
-//		String title = scanner.next();
-//		System.out.println("Enter task description");
-//		String description = scanner.next();
-//		
-//		TaskDAO mySQLTaskDAOImpl = new MySQLTaskDAOImpl();
-//		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskDAOImpl, userId, title, description);
-//		commandInvoker.execute(taskInsertCommand);
-//		
-//		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskDAOImpl, 43, 23, "title 43 modified", "description 43 modified");
-//		commandInvoker.execute(taskUpdateCommand);
-//		
-//		TaskGetAllCommand taskGetAllCommand = new TaskGetAllCommand(mySQLTaskDAOImpl);
-//		commandInvoker.execute(taskGetAllCommand);
-//		
-//		List<Task> tasks = taskGetAllCommand.getTasks();
-//		for (Task t : tasks) {
-//			System.out.println(t.toString());
-//		}
+		System.out.println("Enter task id");
+		int id = scanner.nextInt();
+		System.out.println("Enter task userId");
+		int userId = scanner.nextInt();
+		System.out.println("Enter task title");
+		String title = scanner.next();
+		System.out.println("Enter task description");
+		String description = scanner.next();
+
+		MySQLTaskService mySQLTaskService = new MySQLTaskService();
+		
+		TaskInsertCommand taskInsertCommand = new TaskInsertCommand(mySQLTaskService, userId, title, description);
+		commandInvoker.execute(taskInsertCommand);
+		
+		TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(mySQLTaskService, 50, 30, "title 30 modified", "description 30 modified");
+		commandInvoker.execute(taskUpdateCommand);
+		
+		TaskGetAllCommand taskGetAllCommand = new TaskGetAllCommand(mySQLTaskService);
+		commandInvoker.execute(taskGetAllCommand);
+		
+		List<Task> tasks = taskGetAllCommand.getTasks();
+		for (Task t : tasks) {
+			System.out.println(t.toString());
+		}
 
 		scanner.close();
 		Connection con = ds.getConnection();

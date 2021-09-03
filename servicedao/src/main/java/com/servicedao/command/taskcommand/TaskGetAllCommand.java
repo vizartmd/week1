@@ -1,7 +1,6 @@
 package com.servicedao.command.taskcommand;
 
 import java.util.List;
-
 import com.servicedao.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.service.mysqlservice.MySQLTaskService;
