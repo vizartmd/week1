@@ -14,9 +14,9 @@ public class UserUpdateCommand implements Command {
 	private MySQLUserService mySQLUserService;
 	private User user;
 
-	public UserUpdateCommand(MySQLUserService mySQLUserService, String firstName, String lastName, String userName) {
+	public UserUpdateCommand(MySQLUserService mySQLUserService, int id, String firstName, String lastName, String userName) {
 		this.mySQLUserService = mySQLUserService;
-		this.user = new User(firstName, lastName, userName);
+		this.user = new User(id, firstName, lastName, userName);
 	}
 
 	@Override

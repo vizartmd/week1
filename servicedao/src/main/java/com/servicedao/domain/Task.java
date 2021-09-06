@@ -1,12 +1,34 @@
 package com.servicedao.domain;
 
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+//@Entity
+//@Table(name = "task")
 public class Task {
+	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+//	@Column(name = "user_id")
 	private int userId;
+	
+//	@Column(name = "title")
 	private String title;
+	
+//	@Column(name = "description")
 	private String description;
+	
+	@ManyToMany(mappedBy = "tasks")
+	private Set<User> users;
 
 	public Task() {
 	}
@@ -54,6 +76,14 @@ public class Task {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 	@Override

@@ -1,19 +1,44 @@
 package com.servicedao.domain;
 
-import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+//@Entity
+//@Table(name = "user")
 public class User {
-	private int id;
-	private String firstName;
-	private String lastName;
-	private String userName;
-	
-	public User() {
-	}
 
-	public User(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+//	@Column(name = "first_name")
+	private String firstName;
+
+//	@Column(name = "last_name")
+	private String lastName;
+
+//	@Column(name = "user_name")
+	private String userName;
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "user_task",
+			joinColumns = @JoinColumn(name = "id"),
+			inverseJoinColumns = @JoinColumn(name = "task_id"))
+	private Set<Task> tasks;
+
+	public User() {
 	}
 	
 	public User(String firstName, String lastName, String userName) {
@@ -52,8 +77,6 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
 
 	public String getUserName() {
 		return userName;
@@ -63,9 +86,12 @@ public class User {
 		this.userName = userName;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(firstName, id, lastName);
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override
