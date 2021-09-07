@@ -31,9 +31,11 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 	@Override
 	public User getById(int id) {
 		Session session = openTransactionSession();
-		Query query = session.createQuery("from User u where u.id = :id");
-		query.setParameter("id", id);
-		User user = (User) query.getSingleResult();
+//		Query query = session.createQuery("from User u where u.id = :id");
+//		query.setParameter("id", id);
+//		User user = (User) query.getSingleResult();
+		User user = session.get(User.class, id);
+		session.flush();
 		closeTransactionSession();
 		return user;
 	}
@@ -63,6 +65,7 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		Query query = session.createQuery("delete from User u where u.id = :id");
 		query.setParameter("id", id);
 		query.executeUpdate();
+		session.flush();
 		closeTransactionSession();
 	}
 

@@ -19,6 +19,7 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 	public void insert(Task task) {
 		Session session = openTransactionSession();
 		session.save(task);
+		session.flush();
 		closeTransactionSession();
 	}
 
@@ -35,9 +36,8 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 	@Override
 	public void update(Task task) {
 		Session session = openTransactionSession();
-		String hql = "update Task set userId = :userId, title = :title, description = :description where id = :taskId";
+		String hql = "update Task set title = :title, description = :description where id = :taskId";
 		Query query = session.createQuery(hql);
-		query.setParameter("userId", task.getUserId());
 		query.setParameter("title", task.getTitle());
 		query.setParameter("description", task.getDescription());
 		query.setParameter("taskId", task.getId());
@@ -51,6 +51,7 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 		Query query = session.createQuery("delete from Task t where t.id = :id");
 		query.setParameter("id", id);
 		query.executeUpdate();
+		session.flush();
 		closeTransactionSession();
 	}
 

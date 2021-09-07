@@ -1,7 +1,6 @@
 package com.servicedao.domain;
 
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,27 +13,28 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "user")
+@Entity
+@Table(name = "myusers") 
 public class User {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int id;
 
-//	@Column(name = "first_name")
+	@Column(name = "first_name")
 	private String firstName;
 
-//	@Column(name = "last_name")
+	@Column(name = "last_name")
 	private String lastName;
 
-//	@Column(name = "user_name")
+	@Column(name = "user_name")
 	private String userName;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "user_task",
-			joinColumns = @JoinColumn(name = "id"),
+			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "task_id"))
 	private Set<Task> tasks;
 
@@ -96,7 +96,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-				+ "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", tasks=" + tasks + "]";
 	}
+
+	
 }

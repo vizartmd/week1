@@ -14,9 +14,9 @@ public class TaskInsertCommand implements Command {
 	private MySQLTaskService mySQLTaskService;
 	private Task task;
 	
-	public TaskInsertCommand(MySQLTaskService mySQLTaskService, int userId, String title, String description) {
+	public TaskInsertCommand(MySQLTaskService mySQLTaskService, String title, String description) {
 		this.mySQLTaskService = mySQLTaskService;
-		this.task = new Task(userId, title, description);
+		this.task = new Task(title, description);
 	}
 
 	public void execute() {
