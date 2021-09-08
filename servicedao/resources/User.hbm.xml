@@ -12,7 +12,7 @@
       <property name = "lastName" column = "lastName" />
       <property name = "userName" column = "userName" />
       
-	  <set name="tasks" cascade="all">
+	  <set name="tasks" cascade="all" lazy="false">
 	      <key column="userId"/>
 	      <one-to-many class="com.servicedao.domain.Task" />
 	  </set>

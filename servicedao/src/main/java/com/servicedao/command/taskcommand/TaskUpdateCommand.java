@@ -15,9 +15,9 @@ public class TaskUpdateCommand implements Command {
 	private MySQLTaskService mySQLTaskService;
 	private Task task;
 
-	public TaskUpdateCommand(MySQLTaskService mySQLTaskService, int id, String title, String description, User user) {
+	public TaskUpdateCommand(MySQLTaskService mySQLTaskService, int id, String title, String description) {
 		this.mySQLTaskService = mySQLTaskService;
-		this.task = new Task(id, title, description, user);
+		this.task = new Task(id, title, description);
 	}
 	
 	@Override

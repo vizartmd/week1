@@ -15,13 +15,13 @@ import javax.persistence.Table;
 
 public class Task { 
 	
+	private int userId;
+	
 	private int taskId;
 	
 	private String title;
 	
 	private String description;
-	
-	private User  user;
 
 	public Task() {
 	}
@@ -31,17 +31,25 @@ public class Task {
 		this.description = description;
 	}
 
-	public Task(String title, String description, User user) {
-		this.title = title;
-		this.description = description;
-		this.user = user;
-	}
-
-	public Task(int taskId, String title, String description, User user) {
+	public Task(int taskId, String title, String description) {
 		this.taskId = taskId;
 		this.title = title;
 		this.description = description;
-		this.user = user;
+	}
+
+	public Task(int userId, int taskId, String title, String description) {
+		this.userId = userId;
+		this.taskId = taskId;
+		this.title = title;
+		this.description = description;
+	}
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public int getTaskId() {
@@ -68,17 +76,9 @@ public class Task {
 		this.description = description;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, taskId, title, user);
+		return Objects.hash(description, taskId, title, userId);
 	}
 
 	@Override
@@ -91,14 +91,16 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 		return Objects.equals(description, other.description) && taskId == other.taskId
-				&& Objects.equals(title, other.title) && Objects.equals(user, other.user);
+				&& Objects.equals(title, other.title) && userId == other.userId;
 	}
 
 	@Override
 	public String toString() {
-		return "Task [task_id=" + taskId + ", title=" + title + ", description=" + description + ", user=" + user
+		return "Task [userId=" + userId + ", taskId=" + taskId + ", title=" + title + ", description=" + description
 				+ "]";
 	}
+
+	
 
 	
 	
