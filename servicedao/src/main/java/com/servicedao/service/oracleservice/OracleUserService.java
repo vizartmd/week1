@@ -1,6 +1,8 @@
 package com.servicedao.service.oracleservice;
 
 import java.util.List;
+
+import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.ServiceIntf;
 

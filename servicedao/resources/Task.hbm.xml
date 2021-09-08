@@ -3,29 +3,12 @@
 "-//Hibernate/Hibernate Mapping DTD//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
-<hibernate-mapping>
+<hibernate-mapping package="com.servicedao.domain">
    <class name = "com.servicedao.domain.Task" table = "mytasks">
-      
-      <meta attribute = "class-description">
-         This class contains the employee detail. 
-      </meta>
-      
-      <id name = "id" type = "int" column = "id">
-         <generator class="identity"/>
+      <id name = "taskId" column = "taskId">
+         <generator class="identity" />
       </id>
-
-      <property name = "title" column = "title" type = "string"/>
-      <property name = "description" column = "description" type = "string"/>
-      
-	  <set name="users" table="users_tasks" fetch="join" cascade="none">
-	      <key>
-	          <column name="task_id" not-null="true" />
-	      </key>
-	      
-	      <many-to-many class="com.servicedao.domain.User">
-	          <column name="user_id" not-null="true" />
-	      </many-to-many>
-	  </set>
-      
+      <property name = "title" column = "title" />
+      <property name = "description" column = "description" />
    </class>
 </hibernate-mapping>

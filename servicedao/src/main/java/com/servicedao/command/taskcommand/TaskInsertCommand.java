@@ -2,6 +2,7 @@ package com.servicedao.command.taskcommand;
 
 import com.servicedao.command.Command;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 import com.servicedao.service.mysqlservice.MySQLTaskService;
 
 /**
@@ -14,9 +15,9 @@ public class TaskInsertCommand implements Command {
 	private MySQLTaskService mySQLTaskService;
 	private Task task;
 	
-	public TaskInsertCommand(MySQLTaskService mySQLTaskService, String title, String description) {
+	public TaskInsertCommand(MySQLTaskService mySQLTaskService, String title, String description, User user) {
 		this.mySQLTaskService = mySQLTaskService;
-		this.task = new Task(title, description);
+		this.task = new Task(title, description, user);
 	}
 
 	public void execute() {

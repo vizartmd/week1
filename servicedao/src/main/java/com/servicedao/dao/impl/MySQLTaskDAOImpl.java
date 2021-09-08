@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import com.servicedao.dao.TaskDAO;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
 /**
@@ -19,7 +20,6 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 	public void insert(Task task) {
 		Session session = openTransactionSession();
 		session.save(task);
-		session.flush();
 		closeTransactionSession();
 	}
 
@@ -35,12 +35,15 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 
 	@Override
 	public void update(Task task) {
+		MySQLUserDAOImpl mySQLUserDAOImpl = new MySQLUserDAOImpl();
 		Session session = openTransactionSession();
-		String hql = "update Task set title = :title, description = :description where id = :taskId";
+		String hql = "update Task set title = :title, description = :description, user = :user, where id = :taskId";
 		Query query = session.createQuery(hql);
 		query.setParameter("title", task.getTitle());
 		query.setParameter("description", task.getDescription());
-		query.setParameter("taskId", task.getId());
+		User user = mySQLUserDAOImpl.getById(task.getTaskId());
+		query.setParameter("user", user);
+		query.setParameter("taskId", task.getTaskId());
 		query.executeUpdate();
 		closeTransactionSession();
 	}

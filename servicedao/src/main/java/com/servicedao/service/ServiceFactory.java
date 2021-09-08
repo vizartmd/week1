@@ -7,7 +7,7 @@ import com.servicedao.service.oracleservice.OracleServices;
 public abstract class ServiceFactory {
 	
 	@SuppressWarnings("unchecked")
-	public static <T> ServiceIntf<T> getServiceFactory(DatabaseTypes type) {
+	public static <T, U> ServiceIntf<T> getServiceFactory(DatabaseTypes type) {
 
 		switch (type) {
 		case MYSQL:

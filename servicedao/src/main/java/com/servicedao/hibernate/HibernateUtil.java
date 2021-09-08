@@ -5,18 +5,31 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 	
-	private static final SessionFactory sessionFactory;
-	 
-	static {
-		try {
-			sessionFactory = new Configuration().configure().buildSessionFactory();
-		} catch (Throwable ex) {
-			System.out.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
- 
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+	private HibernateUtil() {
+
+    }
+    private static SessionFactory sessionFactory;
+
+    public static synchronized SessionFactory getInstnce() {
+        if (sessionFactory == null) {
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        }
+        return sessionFactory;
+
+    }
+	
+//	private static final SessionFactory sessionFactory;
+//	 
+//	static {
+//		try {
+//			sessionFactory = new Configuration().configure().buildSessionFactory();
+//		} catch (Throwable ex) {
+//			System.out.println("Initial SessionFactory creation failed." + ex);
+//			throw new ExceptionInInitializerError(ex);
+//		}
+//	}
+// 
+//	public static SessionFactory getSessionFactory() {
+//		return sessionFactory;
+//	}
 }

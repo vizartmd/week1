@@ -1,7 +1,10 @@
 package com.servicedao.service.mysqlservice;
 
 import java.util.List;
+import java.util.Set;
+
 import com.servicedao.dao.impl.MySQLUserDAOImpl;
+import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.ServiceIntf;
 
@@ -40,5 +43,10 @@ public class MySQLUserService implements ServiceIntf<User> {
 	public List<User> getAll() {
 		mySQLUserDAOImpl = new MySQLUserDAOImpl();
 		return mySQLUserDAOImpl.getAll();
+	}
+
+	public void createUserAndAddHimTasks(User user, Set<Task> tasks) {
+		mySQLUserDAOImpl = new MySQLUserDAOImpl();
+		mySQLUserDAOImpl.createUserAndAddHimTasks(user, tasks);
 	}
 }

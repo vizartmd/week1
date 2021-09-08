@@ -1,6 +1,8 @@
 package com.servicedao.command.usercommand;
 
+import java.util.Set;
 import com.servicedao.command.Command;
+import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.mysqlservice.MySQLUserService;
 
@@ -14,9 +16,9 @@ public class UserUpdateCommand implements Command {
 	private MySQLUserService mySQLUserService;
 	private User user;
 
-	public UserUpdateCommand(MySQLUserService mySQLUserService, int id, String firstName, String lastName, String userName) {
+	public UserUpdateCommand(MySQLUserService mySQLUserService, int id, String firstName, String lastName, String userName, Set<Task> tasks) {
 		this.mySQLUserService = mySQLUserService;
-		this.user = new User(id, firstName, lastName, userName);
+		this.user = new User(id, firstName, lastName, userName, tasks);
 	}
 
 	@Override

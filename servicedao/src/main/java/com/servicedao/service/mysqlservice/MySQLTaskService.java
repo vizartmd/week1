@@ -3,7 +3,9 @@ package com.servicedao.service.mysqlservice;
 import java.util.List;
 
 import com.servicedao.dao.impl.MySQLTaskDAOImpl;
+import com.servicedao.dao.impl.MySQLUserDAOImpl;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 import com.servicedao.service.ServiceIntf;
 
 /**

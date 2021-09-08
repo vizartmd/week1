@@ -5,28 +5,16 @@
 
 <hibernate-mapping>
    <class name = "com.servicedao.domain.User" table = "myusers">
-      
-      <meta attribute = "class-description">
-         This class contains the employee detail. 
-      </meta>
-      
-      <id name = "id" type = "int" column = "id">
-         <generator class="identity"/>
+      <id name = "userId" column = "userId">
+         <generator class="identity" />
       </id>
+      <property name = "firstName" column = "firstName" />
+      <property name = "lastName" column = "lastName" />
+      <property name = "userName" column = "userName" />
       
-      <property name = "firstName" column = "first_name" type = "string"/>
-      <property name = "lastName" column = "last_name" type = "string"/>
-      <property name = "userName" column = "user_name" type = "string"/>
-      
-	  <set name="tasks" table="users_tasks" fetch="join" cascade="none">
-	      <key>
-	          <column name="user_id" not-null="true" />
-	      </key>
-	      
-	      <many-to-many class="com.servicedao.domain.Task">
-	          <column name="task_id" not-null="true" />
-	      </many-to-many>
+	  <set name="tasks" cascade="all">
+	      <key column="userId"/>
+	      <one-to-many class="com.servicedao.domain.Task" />
 	  </set>
-	  
    </class>
 </hibernate-mapping>
