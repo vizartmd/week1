@@ -18,7 +18,10 @@ public class CreateUserAndAddHimTasksCommand implements Command {
 		this.user = user;
 		this.tasks = tasks;
 	}
-
+	public User getUser() {
+		return user;
+	}
+	
 	@Override
 	public void execute() {
 		mySQLUserService.createUserAndAddHimTasks(user, tasks);
