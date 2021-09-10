@@ -1,12 +1,13 @@
 package com.servicedao.dao.impl;
 
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import com.servicedao.dao.TaskDAO;
 import com.servicedao.domain.Task;
-import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
 public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {

@@ -16,7 +16,7 @@ import com.servicedao.service.mysqlservice.MySQLUserService;
 
 public class Main {
 	
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException, NoSuchMethodException, InvocationTargetException {
 
         BasicConfigurator.configure();
         

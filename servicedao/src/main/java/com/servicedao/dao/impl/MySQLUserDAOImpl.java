@@ -1,22 +1,14 @@
 package com.servicedao.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import com.servicedao.dao.UserDAO;
-import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
-import com.servicedao.reflection.AvailableForReflection;
 
 public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 	
