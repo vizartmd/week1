@@ -1,29 +1,24 @@
 package com.main;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import com.servicedao.command.usertaskcommand.CreateUserAndAddHimTasksCommand;
-import com.servicedao.dao.impl.MySQLTaskDAOImpl;
-import com.servicedao.dao.impl.MySQLUserDAOImpl;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.email.MailSender;
-import com.servicedao.reflection.DynamicReflect;
 import com.servicedao.service.CommandInvoker;
 import com.servicedao.service.mysqlservice.MySQLUserService;
 
 public class Main {
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
 
         BasicConfigurator.configure();
-        
         
         Scanner scanner = new Scanner(System.in);
 		
