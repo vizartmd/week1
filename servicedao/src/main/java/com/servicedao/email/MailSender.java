@@ -6,6 +6,9 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import com.servicedao.domain.ReadyForReflection;
+
+@ReadyForReflection
 public class MailSender {
 
 	final String fromEmail = "vizart.md@gmail.com";

@@ -6,29 +6,14 @@ import com.servicedao.domain.User;
 
 public interface TaskDAO extends DAO<Task> {
 
-	/**
-	 * @inherited
-	 */
 	public void insert(Task task);
-	
-	/**
-	 * @inherited
-	 */
+
 	public Task getById(int id);
 
-	/**
-	 * @inherited
-	 */
 	public void update(Task task);
 
-	/**
-	 * @inherited
-	 */
 	public void deleteById(int id);
 
-	/**
-	 * @inherited
-	 */
 	public List<Task> getAll();
 	
 }

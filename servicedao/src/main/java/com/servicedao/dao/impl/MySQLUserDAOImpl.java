@@ -16,23 +16,12 @@ import com.servicedao.datasource.DataSource;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
+import com.servicedao.reflection.AvailableForReflection;
 
-/**
- * @inheritDoc
- */
 public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 	
-	private DataSource ds;
-	private Connection con;
-	private PreparedStatement pstmt;
-	private Statement stmt;
-	private ResultSet rs;
-
 	static Logger log = Logger.getLogger(MySQLUserDAOImpl.class.getName());
 
-	/**
-	 * @inheritDoc
-	 */
 	@Override
 	public void insert(User user) {
 		Session session = openTransactionSession();
@@ -45,6 +34,7 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 			log.warn("User not inserted! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
+	        System.out.println("NOT IN ASPECT! in insert(User user) meth parameters");
 		}
 	}
 	
@@ -62,10 +52,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 	        closeTransactionSession();
 		}
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	public User getById(int userId) {
 		Session session = openTransactionSession();
@@ -88,9 +74,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		return user;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	@Override
 	public void update(User user) {
 		
@@ -107,9 +90,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	@Override
 	public void deleteById(int id) {
 		Session session = openTransactionSession();
@@ -127,9 +107,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	@Override
 	public List<User> getAll() {
 		Session session = openTransactionSession();

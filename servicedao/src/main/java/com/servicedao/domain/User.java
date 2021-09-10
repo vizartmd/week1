@@ -1,9 +1,8 @@
 package com.servicedao.domain;
 
 import java.util.Set;
-import com.servicedao.reflection.AvailableForEmail;
 
-@AvailableForEmail
+@ReadyForReflection
 public class User {
 	
 	private int userId;
@@ -90,13 +89,13 @@ public class User {
 	}
 	
 	public String toStringForEmail() {
-		return "User (" + firstName + ") / {" + lastName + "} identified by {" + userName + "} has been created\n" + printTasks(tasks);
+		return "User (first name: " + firstName + ") / {last name: " + lastName + "} identified by {user name: " + userName + "} has been created\n\n" + printTasks(tasks);
 	}
 	
 	private String printTasks(Set<Task> tasks) {
 		StringBuilder sb = new StringBuilder();
 		for (Task task : tasks) {
-			sb.append("Task {" + task.getTitle() + "} {" + task.getDescription() + "} has been assigned to {" + getUserName() + "}\n");
+			sb.append("Task {task title: " + task.getTitle() + "} {task description: " + task.getDescription() + "} has been assigned to {user name: " + getUserName() + "}\n\n");
 		}
 		return sb.toString();
 	}

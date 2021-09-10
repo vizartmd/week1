@@ -9,9 +9,6 @@ import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
-/**
- * @inheritDoc
- */
 public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());

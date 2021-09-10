@@ -1,9 +1,8 @@
 package com.servicedao.domain;
 
 import java.util.Objects;
-import com.servicedao.reflection.AvailableForEmail;
 
-@AvailableForEmail
+@ReadyForReflection
 public class Task { 
 	
 	private int userId;

@@ -11,7 +11,6 @@ import com.servicedao.service.mysqlservice.MySQLUserService;
  * This class is a part of Command Design Pattern and operating with User class
  * It has a single method "execute()" that calls the "getAll()" method on
  * the MySQLUserService class from the service layer
- * @return a list of Users 
  */
 public class UserGetAllCommand implements Command {
 
