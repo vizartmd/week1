@@ -1,4 +1,4 @@
-package com.servicedao.dao.impl;
+package com.servicedao.dao.impl.mysqldao;
 
 import java.util.List;
 
@@ -6,15 +6,13 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import com.servicedao.dao.TaskDAO;
 import com.servicedao.domain.Task;
 import com.servicedao.hibernate.SessionUtil;
 
-public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
+public class MySQLTaskDAOImpl extends SessionUtil {
 
 	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
 
-	@Override
 	public void insert(Task task) {
 		Session session = openTransactionSession();
 		try {
@@ -29,7 +27,6 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 		}
 	}
 
-	@Override
 	public Task getById(int id) {
 		Session session = openTransactionSession();
 		Task task = null;
@@ -49,7 +46,6 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 		return task;
 	}
 
-	@Override
 	public void update(Task task) {
 		Session session = openTransactionSession();
 		try {
@@ -69,7 +65,6 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 		}
 	}
 
-	@Override
 	public void deleteById(int taskId) {
 		Session session = openTransactionSession();
 		try {
@@ -87,7 +82,6 @@ public class MySQLTaskDAOImpl extends SessionUtil implements TaskDAO {
 		}
 	}
 
-	@Override
 	public List<Task> getAll() {
 		Session session = openTransactionSession();
 		List<Task> tasks = null;

@@ -1,4 +1,4 @@
-package com.servicedao.command;
+package com.main.command;
 
 @FunctionalInterface
 public interface Command {
@@ -6,3 +6,4 @@ public interface Command {
 	public void execute();
 
 }
+

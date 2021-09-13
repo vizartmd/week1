@@ -6,11 +6,11 @@ public interface DAO<T> {
 
 	public void insert(T t);
 
-	public T getById(int id); 
+	public T getById(int id, T t); 
 
 	public void update(T t);
 
-	public void deleteById(int id);
+	public void deleteById(int id, T t);
 
-	public List<T> getAll();
+	public List<T> getAll(T t);
 }

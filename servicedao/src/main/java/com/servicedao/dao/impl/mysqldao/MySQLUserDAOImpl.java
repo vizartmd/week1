@@ -1,20 +1,17 @@
-package com.servicedao.dao.impl;
+package com.servicedao.dao.impl.mysqldao;
 
 import java.util.List;
-import java.util.Set;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import com.servicedao.dao.UserDAO;
-import com.servicedao.domain.Task;
+import com.servicedao.annotations.ReadyForReflection;
 import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
-public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
+public class MySQLUserDAOImpl extends SessionUtil {
 	
 	static Logger log = Logger.getLogger(MySQLUserDAOImpl.class.getName());
 
-	@Override
 	public void insert(User user) {
 		Session session = openTransactionSession();
 		try {
@@ -24,16 +21,16 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		catch (Exception e) {
 			session.getTransaction().rollback();
 			log.warn("User not inserted! " + e.getMessage());
+	        System.out.println("NOT IN ASPECT! in insert(User user) meth parameters");
 		} finally {
 	        closeTransactionSession();
-	        System.out.println("NOT IN ASPECT! in insert(User user) meth parameters");
 		}
 	}
 	
-	public void createUserAndAddHimTasks(User user, Set<Task> tasks) {
+	@ReadyForReflection
+	public void createUserAndAddHimTasks(User user) {
 		Session session = openTransactionSession();
 		try {
-			user.setTasks(tasks);
 	        session.save(user);
 	        log.info("The user has been created and a tasks list has been added!");
 		}
@@ -66,7 +63,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		return user;
 	}
 
-	@Override
 	public void update(User user) {
 		
 		Session session = openTransactionSession();
@@ -82,7 +78,6 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		}
 	}
 
-	@Override
 	public void deleteById(int id) {
 		Session session = openTransactionSession();
 		try {
@@ -99,12 +94,11 @@ public class MySQLUserDAOImpl extends SessionUtil implements UserDAO {
 		}
 	}
 
-	@Override
 	public List<User> getAll() {
 		Session session = openTransactionSession();
 		List<User> users = null;
 		try {
-			users = session.createQuery("from User", User.class).list();
+			users = (List<User>) session.createQuery("from User", User.class).list();
 			log.info("User list was recieved successfully!");
 		}
 		catch (Exception e) {
