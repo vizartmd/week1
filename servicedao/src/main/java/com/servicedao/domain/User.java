@@ -1,10 +1,9 @@
 package com.servicedao.domain;
 
 import java.util.Set;
+import com.servicedao.annotations.AvailableForReflection;
 
-import com.servicedao.annotations.AvailableForAOP;
-
-@AvailableForAOP
+@AvailableForReflection
 public class User {
 	
 	private int userId;

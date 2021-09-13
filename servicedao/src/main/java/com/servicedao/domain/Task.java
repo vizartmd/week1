@@ -1,10 +1,9 @@
 package com.servicedao.domain;
 
 import java.util.Objects;
+import com.servicedao.annotations.AvailableForReflection;
 
-import com.servicedao.annotations.AvailableForAOP;
-
-@AvailableForAOP
+@AvailableForReflection
 public class Task { 
 	
 	private int userId;
