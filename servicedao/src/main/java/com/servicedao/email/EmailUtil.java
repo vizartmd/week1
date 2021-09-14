@@ -14,14 +14,13 @@ public class EmailUtil {
 		try
 	    {
 	      MimeMessage msg = new MimeMessage(session);
-	      //set message headers
 	      msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 	      msg.addHeader("format", "flowed");
 	      msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-	      msg.setFrom(new InternetAddress("no_reply@example.com", "NoReply-JD"));
+	      msg.setFrom(new InternetAddress("vizart.md@gmail.com", "NoReply"));
 
-	      msg.setReplyTo(InternetAddress.parse("no_reply@example.com", false));
+	      msg.setReplyTo(InternetAddress.parse("vizart.md@gmail.com", false));
 
 	      msg.setSubject(subject, "UTF-8");
 
@@ -33,7 +32,7 @@ public class EmailUtil {
 	      System.out.println("Message is ready");
     	  Transport.send(msg);  
 
-	      System.out.println("EMail Sent Successfully!!");
+	      System.out.println("Email Sent Successfully!!");
 	    }
 	    catch (Exception e) {
 	      e.printStackTrace();

@@ -1,17 +1,26 @@
 package com.servicedao.domain;
 
 import java.util.Objects;
-import com.servicedao.annotations.AvailableForReflection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@AvailableForReflection
+@Entity
+@Table(name = "mytasks")
 public class Task { 
 	
-	private int userId;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "taskId")
 	private int taskId;
 	
+	@Column(name = "title", unique = false, nullable = false, length = 100)
 	private String title;
 	
+	@Column(name = "description", unique = false, nullable = false, length = 250)
 	private String description;
 
 	public Task() {
@@ -26,21 +35,6 @@ public class Task {
 		this.taskId = taskId;
 		this.title = title;
 		this.description = description;
-	}
-
-	public Task(int userId, int taskId, String title, String description) {
-		this.userId = userId;
-		this.taskId = taskId;
-		this.title = title;
-		this.description = description;
-	}
-	
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 	public int getTaskId() {
@@ -69,7 +63,7 @@ public class Task {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, taskId, title, userId);
+		return Objects.hash(description, taskId, title);
 	}
 
 	@Override
@@ -82,13 +76,12 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 		return Objects.equals(description, other.description) && taskId == other.taskId
-				&& Objects.equals(title, other.title) && userId == other.userId;
+				&& Objects.equals(title, other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "Task [userId=" + userId + ", taskId=" + taskId + ", title=" + title + ", description=" + description
-				+ "]";
+		return "Task [taskId=" + taskId + ", title=" + title + ", description=" + description + "]";
 	}
 
 	

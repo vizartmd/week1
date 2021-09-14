@@ -4,7 +4,6 @@
 <hibernate-configuration>
    <session-factory>
       <property name ="hibernate.current_session_context_class">thread</property>
-      <property name = "hibernate.bytecode.use.reflection_optimiser">false</property>
       <property name = "hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
       <property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
       <property name = "hibernate.connection.url">jdbc:mysql://localhost/testdb</property>

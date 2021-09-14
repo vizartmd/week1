@@ -1,19 +1,34 @@
 package com.servicedao.domain;
 
 import java.util.Set;
-import com.servicedao.annotations.AvailableForReflection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@AvailableForReflection
+@Entity
+@Table(name = "myusers")
 public class User {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "userId", unique = true, nullable = false)
 	private int userId;
 
+	@Column(name = "firstName", unique = false, nullable = false, length = 100)
 	private String firstName;
 
+	@Column(name = "lastName", unique = false, nullable = false, length = 100)
 	private String lastName;
 
+	@Column(name = "userName", unique = true, nullable = false, length = 100)
 	private String userName;
 
+	@OneToMany(cascade=CascadeType.ALL)
 	private Set<Task> tasks;
 
 	public User() {
@@ -35,7 +50,6 @@ public class User {
 	}
 
 	public User(int userId, String firstName, String lastName, String userName, Set<Task> tasks) {
-		super();
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -85,8 +99,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-				+ userName + ", tasks=" + tasks + "]";
+		return "User [userId =" + userId + ", firstName =" + firstName + ", lastName =" + lastName + ", userName ="
+				+ userName + "]";
 	}
 	
 	

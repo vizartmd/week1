@@ -19,7 +19,7 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 	        session.save(task);
 	        log.info("Task has been inserted successfully!");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task not inserted! " + e.getMessage());
 		} finally {
@@ -37,7 +37,7 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 			task = session.get(Task.class, id);
 	        log.info("Task by id: " + id + " has been found successfully");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task with id: " + id + " not found! " + e.getMessage());
 		} finally {
@@ -74,7 +74,7 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 			query.executeUpdate();
 	        log.info("Task with id: " + taskId + " has been deleted successfully!");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task with id: " + taskId + " not deleted! " + e.getMessage());
 		} finally {
@@ -89,7 +89,7 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 			tasks = session.createQuery("from Task", Task.class).list();
 			log.info("List of tasks has been recieved successfully!");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task list not received!" + e.getMessage());
 		} finally {

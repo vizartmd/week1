@@ -4,6 +4,8 @@ import java.util.List;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+
+import com.servicedao.annotations.AvailableForAspect;
 import com.servicedao.annotations.ReadyForReflection;
 import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
@@ -12,36 +14,22 @@ public class MySQLUserDAOImpl extends SessionUtil {
 	
 	static Logger log = Logger.getLogger(MySQLUserDAOImpl.class.getName());
 
+	@AvailableForAspect
 	public void insert(User user) {
 		Session session = openTransactionSession();
 		try {
 	        session.save(user);
 	        log.info("User has been inserted successfully!");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
-			log.warn("User not inserted! " + e.getMessage());
-	        System.out.println("NOT IN ASPECT! in insert(User user) meth parameters");
-		} finally {
-	        closeTransactionSession();
-		}
-	}
-	
-	@ReadyForReflection
-	public void createUserAndAddHimTasks(User user) {
-		Session session = openTransactionSession();
-		try {
-	        session.save(user);
-	        log.info("The user has been created and a tasks list has been added!");
-		}
-		catch (Exception e) {
-			session.getTransaction().rollback();
-			log.warn("User not created and a tasks list not added!" + e.getMessage());
+			log.warn("User not inserted! Message: " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
 	}
 
+	@AvailableForAspect
 	public User getById(int userId) {
 		Session session = openTransactionSession();
 		User user = null;
@@ -63,6 +51,7 @@ public class MySQLUserDAOImpl extends SessionUtil {
 		return user;
 	}
 
+	@AvailableForAspect
 	public void update(User user) {
 		
 		Session session = openTransactionSession();
@@ -78,6 +67,7 @@ public class MySQLUserDAOImpl extends SessionUtil {
 		}
 	}
 
+	@AvailableForAspect
 	public void deleteById(int id) {
 		Session session = openTransactionSession();
 		try {
@@ -94,6 +84,7 @@ public class MySQLUserDAOImpl extends SessionUtil {
 		}
 	}
 
+	@AvailableForAspect
 	public List<User> getAll() {
 		Session session = openTransactionSession();
 		List<User> users = null;

@@ -2,10 +2,12 @@ package com.main;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import com.main.command.CommandInvoker;
+import com.main.command.GetByIdCommand;
 import com.main.command.InsertCommand;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
@@ -13,11 +15,12 @@ import com.servicedao.enums.DatabaseTypes;
 import com.servicedao.service.impl.ServiceImpl;
 
 public class Main {
-	
+
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchFieldException,
 			SecurityException, NoSuchMethodException, InvocationTargetException {
 
 		BasicConfigurator.configure();
+		CommandInvoker commandInvoker = new CommandInvoker();
 
 		Scanner scanner = new Scanner(System.in);
 
@@ -53,12 +56,19 @@ public class Main {
 		Set<Task> tasks = new HashSet<Task>();
 		tasks.add((Task) task1);
 		tasks.add((Task) task2);
-		
-		user.setTasks(tasks);
 
-		ServiceImpl serviceImpl = new ServiceImpl();
-		CommandInvoker commandInvoker = new CommandInvoker();
+		user.setTasks(tasks);
 		InsertCommand insertCommand = new InsertCommand(DatabaseTypes.MYSQL, user);
-        commandInvoker.execute(insertCommand);
+		commandInvoker.execute(insertCommand);
+
+//		GetByIdCommand getByIdCommandUser = new GetByIdCommand(DatabaseTypes.MYSQL, 6, new User());
+//		commandInvoker.execute(getByIdCommandUser);
+//		User user1 = (User) getByIdCommandUser.getItem();
+//		System.out.println(user1);
+//
+//		GetByIdCommand getByIdCommandTask = new GetByIdCommand(DatabaseTypes.MYSQL, 10, new Task());
+//		commandInvoker.execute(getByIdCommandTask);
+//		Task task = (Task) getByIdCommandTask.getItem();
+//		System.out.println(task);
 	}
 }

@@ -8,12 +8,12 @@ import javax.mail.Session;
 
 public class MailSender {
 
-	final String fromEmail = "vizart.md@gmail.com";
-	final String password = "duvxalrpoiamdeoy";
-	final String toEmail = "vizart.md@gmail.com";
-	
-	public void sendEmail(String text) {
-		System.out.println("TLSEmail Start");
+	final static String fromEmail = "vizart.md@gmail.com";
+	final static String password = "duvxalrpoiamdeoy";
+	final static String toEmail = "vizart.md@gmail.com";
+
+	public static void sendEmail(String mail, String userName) {
+		System.out.println("Email with saved user started...");
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
@@ -26,6 +26,7 @@ public class MailSender {
 			}
 		};
 		Session session = Session.getInstance(props, auth);
-		EmailUtil.sendEmail(session, toEmail,"TLSEmail Testing Subject", text);
+		EmailUtil.sendEmail(session, toEmail,"User with username \"" + userName + "\" has been saved successfully!", mail);
+		
 	}
 }

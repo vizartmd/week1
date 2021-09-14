@@ -1,19 +1,24 @@
+USE testdb;
+
 CREATE TABLE `myusers` (
 `userId` INT(11) NOT NULL AUTO_INCREMENT,
 `firstName` VARCHAR(50) NULL DEFAULT NULL,
 `lastName` VARCHAR(50) NULL DEFAULT NULL,
 `userName` VARCHAR(50) NULL DEFAULT NULL,
 PRIMARY KEY (`userId`)
-)
-ENGINE=InnoDB;
+) ENGINE=InnoDB;
 
 CREATE TABLE `mytasks` (
-`userId` INT(11) NULL DEFAULT NULL,
+`user_id` INT(11) NULL DEFAULT NULL,
 `taskId` INT(11) NOT NULL AUTO_INCREMENT,
 `title` VARCHAR(50) NULL DEFAULT NULL,
 `description` VARCHAR(50) NULL DEFAULT NULL,
-PRIMARY KEY (`taskId`),
-INDEX `FK_task_user` (`userId`),
-CONSTRAINT `FK_task_user` FOREIGN KEY (`userId`) REFERENCES `myusers` (`userId`)
-)
-ENGINE=InnoDB;
+PRIMARY KEY (`taskId`)
+) ENGINE=InnoDB;
+
+insert into myusers_mytasks
+
+CREATE TABLE `myusers_mytasks` (
+`user_id` INT(11) NULL DEFAULT NULL,
+`task_id` INT(11) NULL DEFAULT NULL
+) ENGINE=InnoDB;
