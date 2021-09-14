@@ -4,12 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
-
 import org.apache.log4j.Logger;
-
-import com.servicedao.dao.impl.mysqldao.MySQLTaskDAOImpl;
 
 /**
  * This class provides an instance of "DataSource" Object with configuration for
@@ -17,7 +13,7 @@ import com.servicedao.dao.impl.mysqldao.MySQLTaskDAOImpl;
  */
 public class DataSource {
 
-	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
+	static Logger log = Logger.getLogger(DataSource.class.getName());
 	private static DataSource instance = null;
 	private String jdbcDriver;
 	private String url;

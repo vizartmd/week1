@@ -11,7 +11,8 @@ public class MyAspect {
 
 	private Object[] callerArgs;
 
-	@Before("execution(* *.insert(..)) && @annotation(com.servicedao.annotations.AvailableForAspect)")
+//	@Before("execution(* *.insert(..))")
+	@Before("@annotation(com.servicedao.annotations.AvailableForAspect)")
 	public void logBefore(JoinPoint joinPoint)
 			throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException {
 		

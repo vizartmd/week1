@@ -3,16 +3,28 @@ package com.main;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
+
 import com.main.command.CommandInvoker;
-import com.main.command.GetByIdCommand;
-import com.main.command.InsertCommand;
+import com.main.command.taskcommand.TaskGetByIdCommand;
+import com.main.command.usercommand.UserGetByIdCommand;
+import com.main.command.usercommand.UserInsertCommand;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-import com.servicedao.enums.DatabaseTypes;
-import com.servicedao.service.impl.ServiceImpl;
 
 public class Main {
 
@@ -58,7 +70,7 @@ public class Main {
 		tasks.add((Task) task2);
 
 		user.setTasks(tasks);
-		InsertCommand insertCommand = new InsertCommand(DatabaseTypes.MYSQL, user);
+		UserInsertCommand insertCommand = new UserInsertCommand(user);
 		commandInvoker.execute(insertCommand);
 
 //		GetByIdCommand getByIdCommandUser = new GetByIdCommand(DatabaseTypes.MYSQL, 6, new User());

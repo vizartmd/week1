@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface DAO<T> {
 
-	public void insert(T t);
+	T getById(int id);
 
-	public T getById(int id, T t); 
+	List<T> getAll();
 
-	public void update(T t);
+	void insert(T t);
 
-	public void deleteById(int id, T t);
+	void update(T t);
 
-	public List<T> getAll(T t);
+	void deleteById(int id);
 }

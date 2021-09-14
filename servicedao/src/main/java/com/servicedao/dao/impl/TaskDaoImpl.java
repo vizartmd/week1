@@ -1,39 +1,22 @@
-package com.servicedao.dao.impl.mysqldao;
+package com.servicedao.dao.impl;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import com.servicedao.dao.TaskDao;
 import com.servicedao.domain.Task;
 import com.servicedao.hibernate.SessionUtil;
 
-public class MySQLTaskDAOImpl extends SessionUtil {
+public class TaskDaoImpl  extends SessionUtil implements TaskDao {
+	
+	static Logger log = Logger.getLogger(TaskDaoImpl.class.getName());
 
-	static Logger log = Logger.getLogger(MySQLTaskDAOImpl.class.getName());
-
-	public void insert(Task task) {
-		Session session = openTransactionSession();
-		try {
-	        session.save(task);
-	        log.info("Task has been inserted successfully!");
-		}
-		catch (IllegalStateException e) {
-			session.getTransaction().rollback();
-			log.warn("Task not inserted! " + e.getMessage());
-		} finally {
-	        closeTransactionSession();
-		}
-	}
-
+	@Override
 	public Task getById(int id) {
 		Session session = openTransactionSession();
 		Task task = null;
 		try {
-//			Query query = session.createQuery("from Task t where t.id = :id");
-//			query.setParameter("id", id);
-//			task = (Task) query.getSingleResult();
 			task = session.get(Task.class, id);
 	        log.info("Task by id: " + id + " has been found successfully");
 		}
@@ -46,6 +29,40 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 		return task;
 	}
 
+	@Override
+	public List<Task> getAll() {
+		Session session = openTransactionSession();
+		List<Task> tasks = null;
+		try {
+			tasks = session.createQuery("from Task", Task.class).list();
+			log.info("List of tasks has been recieved successfully!");
+		}
+		catch (IllegalStateException e) {
+			session.getTransaction().rollback();
+			log.warn("Task list not received!" + e.getMessage());
+		} finally {
+	        closeTransactionSession();
+		}
+		return tasks;
+	}
+
+	@Override
+	public void insert(Task task) {
+		Session session = openTransactionSession();
+		try {
+	        session.save(task);
+	        log.info("Task has been inserted successfully!");
+		}
+		catch (IllegalStateException e) {
+			session.getTransaction().rollback();
+			log.warn("Task not inserted! " + e.getMessage());
+		} finally {
+	        closeTransactionSession();
+		}
+		
+	}
+
+	@Override
 	public void update(Task task) {
 		Session session = openTransactionSession();
 		try {
@@ -65,36 +82,23 @@ public class MySQLTaskDAOImpl extends SessionUtil {
 		}
 	}
 
-	public void deleteById(int taskId) {
+	@Override
+	public void deleteById(int id) {
 		Session session = openTransactionSession();
 		try {
 			session = openTransactionSession();
 			Query query = session.createQuery("delete from Task t where t.taskId = :taskId");
-			query.setParameter("taskId", taskId);
+			query.setParameter("taskId", id);
 			query.executeUpdate();
-	        log.info("Task with id: " + taskId + " has been deleted successfully!");
+	        log.info("Task with id: " + id + " has been deleted successfully!");
 		}
 		catch (IllegalStateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task with id: " + taskId + " not deleted! " + e.getMessage());
+			log.warn("Task with id: " + id + " not deleted! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
+		
 	}
 
-	public List<Task> getAll() {
-		Session session = openTransactionSession();
-		List<Task> tasks = null;
-		try {
-			tasks = session.createQuery("from Task", Task.class).list();
-			log.info("List of tasks has been recieved successfully!");
-		}
-		catch (IllegalStateException e) {
-			session.getTransaction().rollback();
-			log.warn("Task list not received!" + e.getMessage());
-		} finally {
-	        closeTransactionSession();
-		}
-		return tasks;
-	}
 }
