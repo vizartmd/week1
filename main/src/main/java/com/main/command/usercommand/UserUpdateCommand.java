@@ -4,6 +4,7 @@ import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.Service;
+import com.servicedao.service.UserService;
 import com.servicedao.service.impl.TaskServiceImpl;
 import com.servicedao.service.impl.UserServiceImpl;
 
@@ -14,7 +15,7 @@ import com.servicedao.service.impl.UserServiceImpl;
  */
 public class UserUpdateCommand implements Command {
 
-	private Service<User> service;
+	private UserService service;
 	User user;
 	
 	public UserUpdateCommand(User user) {

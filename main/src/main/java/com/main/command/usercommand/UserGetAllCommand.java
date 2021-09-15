@@ -5,6 +5,7 @@ import java.util.List;
 import com.main.command.Command;
 import com.servicedao.domain.User;
 import com.servicedao.service.Service;
+import com.servicedao.service.UserService;
 import com.servicedao.service.impl.UserServiceImpl;
 
 /**
@@ -14,7 +15,7 @@ import com.servicedao.service.impl.UserServiceImpl;
  */
 public class UserGetAllCommand implements Command {
 
-	private Service<User>  service;
+	private UserService service;
 	private List<User> list;
 	
 	public UserGetAllCommand() {

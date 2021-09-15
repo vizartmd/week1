@@ -3,6 +3,7 @@ package com.main.command.taskcommand;
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.service.Service;
+import com.servicedao.service.TaskService;
 import com.servicedao.service.impl.TaskServiceImpl;
 
 /**
@@ -12,7 +13,7 @@ import com.servicedao.service.impl.TaskServiceImpl;
  */
 public class TaskUpdateCommand implements Command {
 
-	private Service<Task> service;
+	private TaskService service;
 	Task task;
 	
 	public TaskUpdateCommand(Task task) {
