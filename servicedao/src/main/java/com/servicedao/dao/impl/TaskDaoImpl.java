@@ -3,6 +3,7 @@ package com.servicedao.dao.impl;
 import java.util.List;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import com.servicedao.dao.TaskDao;
 import com.servicedao.domain.Task;
@@ -20,7 +21,7 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			task = session.get(Task.class, id);
 	        log.info("Task by id: " + id + " has been found successfully");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task with id: " + id + " not found! " + e.getMessage());
 		} finally {
@@ -37,7 +38,7 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			tasks = session.createQuery("from Task", Task.class).list();
 			log.info("List of tasks has been recieved successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task list not received!" + e.getMessage());
 		} finally {
@@ -53,7 +54,7 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 	        session.save(task);
 	        log.info("Task has been inserted successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task not inserted! " + e.getMessage());
 		} finally {
@@ -74,7 +75,7 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			query.executeUpdate();
 	        log.info("Task has been updated successfully!");
 		}
-		catch (Exception e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task not updated! " + e.getMessage());
 		} finally {
@@ -92,7 +93,7 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			query.executeUpdate();
 	        log.info("Task with id: " + id + " has been deleted successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("Task with id: " + id + " not deleted! " + e.getMessage());
 		} finally {

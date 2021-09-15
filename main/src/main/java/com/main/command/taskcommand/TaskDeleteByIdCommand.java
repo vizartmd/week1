@@ -15,8 +15,8 @@ public class TaskDeleteByIdCommand implements Command {
 	private Service<Task> service;
 	private int id;
 	
-	public TaskDeleteByIdCommand(TaskServiceImpl taskServiceImpl, int id) {
-		this.service = taskServiceImpl;
+	public TaskDeleteByIdCommand(int id) {
+		this.service = TaskServiceImpl.getInstance();
 		this.id = id;
 	}
 

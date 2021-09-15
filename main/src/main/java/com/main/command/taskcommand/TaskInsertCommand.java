@@ -15,12 +15,12 @@ public class TaskInsertCommand implements Command {
 	private Service<Task> service;
 	Task task;
 
-	public TaskInsertCommand(TaskServiceImpl taskServiceImpl, Task task) {
-		this.service = taskServiceImpl;
+	public TaskInsertCommand(Task task) {
+		this.service = TaskServiceImpl.getInstance();
 		this.task = task;
 	}
 
 	public void execute() {
-		service.insert(task);
+		 service.insert(task);
 	}
 }

@@ -15,13 +15,13 @@ public class TaskUpdateCommand implements Command {
 	private Service<Task> service;
 	Task task;
 	
-	public TaskUpdateCommand(TaskServiceImpl taskServiceImpl, Task task) {
-		this.service = taskServiceImpl;
+	public TaskUpdateCommand(Task task) {
+		this.service = TaskServiceImpl.getInstance();
 		this.task = task;
 	}
 
 	@Override
 	public void execute() {
 		service.update(task);
-	}
+	} 
 }

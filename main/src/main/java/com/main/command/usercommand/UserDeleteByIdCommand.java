@@ -15,8 +15,8 @@ public class UserDeleteByIdCommand implements Command {
 	private Service<User> service;
 	private int id;
 	
-	public UserDeleteByIdCommand(UserServiceImpl userServiceImpl, int id) {
-		this.service = (Service<User>) userServiceImpl;
+	public UserDeleteByIdCommand(int id) {
+		this.service = UserServiceImpl.getInstance();
 		this.id = id;
 	}
 

@@ -14,12 +14,12 @@ import com.servicedao.service.impl.UserServiceImpl;
  */
 public class UserGetByIdCommand implements Command {
 
-	private UserServiceImpl userServiceImpl;
+	private Service<User> service;
 	private int id;
 	User user;
 	
 	public UserGetByIdCommand(int id) {
-		this.userServiceImpl = UserServiceImpl.getInstance();
+		this.service = UserServiceImpl.getInstance();
 		this.id = id;
 	}
 
@@ -29,7 +29,7 @@ public class UserGetByIdCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.user = userServiceImpl.getById(id);
+		this.user = service.getById(id);
 	}
 
 }

@@ -17,9 +17,8 @@ public class UserGetAllCommand implements Command {
 	private Service<User>  service;
 	private List<User> list;
 	
-	@SuppressWarnings("unchecked")
-	public UserGetAllCommand(UserServiceImpl userServiceImpl) {
-		this.service = (Service<User>) userServiceImpl;
+	public UserGetAllCommand() {
+		this.service = UserServiceImpl.getInstance();
 	}
 
 	public List<User> getAll() {
@@ -28,6 +27,6 @@ public class UserGetAllCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.list = service.getAll();
+		this.list = (List<User>) service.getAll();
 	}
 }

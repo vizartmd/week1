@@ -17,8 +17,8 @@ public class TaskGetAllCommand implements Command {
 	private Service<Task>  service;
 	private List<Task> list;
 	
-	public TaskGetAllCommand(TaskServiceImpl taskServiceImpl) {
-		this.service = taskServiceImpl;
+	public TaskGetAllCommand() {
+		this.service = TaskServiceImpl.getInstance();
 	}
 
 	public List<Task> getAll() {
@@ -27,6 +27,6 @@ public class TaskGetAllCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.list = service.getAll();
+		this.list = (List<Task>) service.getAll();
 	}
 }

@@ -14,15 +14,15 @@ import com.servicedao.service.impl.UserServiceImpl;
  */
 public class UserInsertCommand implements Command {
 	
-	private UserServiceImpl userServiceImpl;
+	private Service<User> service;
 	User user;
 
 	public UserInsertCommand(User user) {
-		this.userServiceImpl = UserServiceImpl.getInstance();
+		this.service = UserServiceImpl.getInstance();
 		this.user = user;
 	}
 
 	public void execute() {
-		userServiceImpl.insert(user);
+		service.insert(user);
 	}
 }

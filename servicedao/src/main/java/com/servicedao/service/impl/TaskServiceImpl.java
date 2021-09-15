@@ -44,9 +44,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public void update(Task t) {
+	public void update(Task task) {
 		logger.info("TaskService.update() method called");
-		taskDao.update(t);
+		taskDao.update(task);
 	}
 
 	@Override

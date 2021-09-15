@@ -12,12 +12,12 @@ import com.servicedao.service.impl.TaskServiceImpl;
  */
 public class TaskGetByIdCommand implements Command {
 
-	private TaskServiceImpl taskServiceImpl;
+	private Service<Task> service;
 	private int id;
 	Task task;
 	
 	public TaskGetByIdCommand(int id) {
-		this.taskServiceImpl = TaskServiceImpl.getInstance();
+		this.service = TaskServiceImpl.getInstance();
 		this.id = id;
 	}
 
@@ -27,7 +27,7 @@ public class TaskGetByIdCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.task = taskServiceImpl.getById(id);
+		this.task = (Task) service.getById(id);
 	}
 
 }

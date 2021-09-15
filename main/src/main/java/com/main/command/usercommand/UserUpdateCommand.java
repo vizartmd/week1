@@ -17,8 +17,8 @@ public class UserUpdateCommand implements Command {
 	private Service<User> service;
 	User user;
 	
-	public UserUpdateCommand(UserServiceImpl userServiceImpl, Task task) {
-		this.service = (Service<User>) userServiceImpl;
+	public UserUpdateCommand(User user) {
+		this.service = UserServiceImpl.getInstance();
 		this.user = user;
 	}
 

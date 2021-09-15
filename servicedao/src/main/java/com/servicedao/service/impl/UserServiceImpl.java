@@ -6,8 +6,9 @@ import com.servicedao.dao.UserDao;
 import com.servicedao.dao.impl.UserDaoImpl;
 import com.servicedao.domain.User;
 import com.servicedao.service.TaskService;
+import com.servicedao.service.UserService;
 
-public class UserServiceImpl implements UserDao {
+public class UserServiceImpl implements UserService {
 
 	private Logger logger;
 	private UserDao userDao;

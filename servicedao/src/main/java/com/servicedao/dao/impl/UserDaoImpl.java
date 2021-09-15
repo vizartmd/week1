@@ -3,6 +3,7 @@ package com.servicedao.dao.impl;
 import java.util.List;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import com.servicedao.annotations.AvailableForAspect;
 import com.servicedao.dao.UserDao;
@@ -18,14 +19,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		Session session = openTransactionSession();
 		User user = null;
 		try {
-//			Query query = session.createQuery("from User u where u.userId = :userId");
-//			query.setParameter("userId", userId);
-//			user = (User) query.getSingleResult();
 			user = session.get(User.class, id);
 	        log.info("User by id: " + id + " has been found successfully");
 	        return user;
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("User with id: " + id + " not found! Message: " + e.getMessage());
 		} finally {
@@ -43,7 +41,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 			users = (List<User>) session.createQuery("from User", User.class).list();
 			log.info("User list was recieved successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("User list not received! Message: " + e.getMessage());
 		} finally {
@@ -60,7 +58,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 	        session.save(user);
 	        log.info("User has been inserted successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("User not inserted! Message: " + e.getMessage());
 		} finally {
@@ -76,7 +74,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 	        session.update(user);
 	        log.info("User has been updated successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("User not updated! " + e.getMessage());
 		} finally {
@@ -93,7 +91,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 			query.executeUpdate();
 	        log.info("User has been deleted successfully!");
 		}
-		catch (IllegalStateException e) {
+		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			log.warn("User not deleted! Message: " + e.getMessage());
 		} finally {
