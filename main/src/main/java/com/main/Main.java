@@ -42,7 +42,6 @@ public class Main {
 		String lastName_scann = scanner.nextLine();
 		System.out.println("Enter userName");
 		String userName_scann = scanner.nextLine();
-
 		User user = new User();
 		user.setFirstName(firstName_scann);
 		user.setLastName(lastName_scann);
