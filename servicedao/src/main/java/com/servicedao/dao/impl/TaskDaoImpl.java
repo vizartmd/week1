@@ -11,7 +11,27 @@ import com.servicedao.hibernate.SessionUtil;
 
 public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 	
-	static Logger log = Logger.getLogger(TaskDaoImpl.class.getName());
+	private Logger logger;
+	private TaskDao taskDao;
+
+	private TaskDaoImpl() {
+	}
+
+	private final static class SingletonHolder {
+		private final static TaskDaoImpl INSTANCE = new TaskDaoImpl();
+	}
+
+	public static TaskDaoImpl getInstance() {
+		TaskDaoImpl taskDaoImpl = SingletonHolder.INSTANCE;
+		
+		if (taskDaoImpl.logger == null) {
+			taskDaoImpl.logger = Logger.getLogger(TaskDaoImpl.class);
+		}
+		if (taskDaoImpl.taskDao == null) {
+			taskDaoImpl.taskDao = SingletonHolder.INSTANCE;
+		}
+		return taskDaoImpl;
+	}
 
 	@Override
 	public Task getById(int id) {
@@ -19,11 +39,11 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 		Task task = null;
 		try {
 			task = session.get(Task.class, id);
-	        log.info("Task by id: " + id + " has been found successfully");
+			logger.info("Task by id: " + id + " has been found successfully");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task with id: " + id + " not found! " + e.getMessage());
+			logger.warn("Task with id: " + id + " not found! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -36,11 +56,11 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 		List<Task> tasks = null;
 		try {
 			tasks = session.createQuery("from Task", Task.class).list();
-			log.info("List of tasks has been recieved successfully!");
+			logger.info("List of tasks has been recieved successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task list not received!" + e.getMessage());
+			logger.warn("Task list not received!" + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -52,11 +72,11 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 		Session session = openTransactionSession();
 		try {
 	        session.save(task);
-	        log.info("Task has been inserted successfully!");
+	        logger.info("Task has been inserted successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task not inserted! " + e.getMessage());
+			logger.warn("Task not inserted! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -73,11 +93,11 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			query.setParameter("description", task.getDescription());
 			query.setParameter("taskId", task.getTaskId());
 			query.executeUpdate();
-	        log.info("Task has been updated successfully!");
+			logger.info("Task has been updated successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task not updated! " + e.getMessage());
+			logger.warn("Task not updated! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -91,11 +111,11 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 			Query query = session.createQuery("delete from Task t where t.taskId = :taskId");
 			query.setParameter("taskId", id);
 			query.executeUpdate();
-	        log.info("Task with id: " + id + " has been deleted successfully!");
+			logger.info("Task with id: " + id + " has been deleted successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("Task with id: " + id + " not deleted! " + e.getMessage());
+			logger.warn("Task with id: " + id + " not deleted! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}

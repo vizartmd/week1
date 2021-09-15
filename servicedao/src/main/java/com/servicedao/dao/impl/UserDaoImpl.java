@@ -12,7 +12,27 @@ import com.servicedao.hibernate.SessionUtil;
 
 public class UserDaoImpl extends SessionUtil implements UserDao {
 	
-	static Logger log = Logger.getLogger(TaskDaoImpl.class.getName());
+	private Logger logger;
+	private UserDao userDao;
+
+	private UserDaoImpl() {
+	}
+
+	private final static class SingletonHolder {
+		private final static UserDaoImpl INSTANCE = new UserDaoImpl();
+	}
+
+	public static UserDaoImpl getInstance() {
+		UserDaoImpl userDaoImpl = SingletonHolder.INSTANCE;
+		
+		if (userDaoImpl.logger == null) {
+			userDaoImpl.logger = Logger.getLogger(UserDaoImpl.class);
+		}
+		if (userDaoImpl.userDao == null) {
+			userDaoImpl.userDao = new UserDaoImpl();
+		}
+		return userDaoImpl;
+	}
 
 	@Override
 	public User getById(int id) {
@@ -20,12 +40,12 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		User user = null;
 		try {
 			user = session.get(User.class, id);
-	        log.info("User by id: " + id + " has been found successfully");
+			logger.info("User by id: " + id + " has been found successfully");
 	        return user;
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("User with id: " + id + " not found! Message: " + e.getMessage());
+			logger.warn("User with id: " + id + " not found! Message: " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -39,11 +59,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		List<User> users = null;
 		try {
 			users = (List<User>) session.createQuery("from User", User.class).list();
-			log.info("User list was recieved successfully!");
+			logger.info("User list was recieved successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("User list not received! Message: " + e.getMessage());
+			logger.warn("User list not received! Message: " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -56,11 +76,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		Session session = openTransactionSession();
 		try {
 	        session.save(user);
-	        log.info("User has been inserted successfully!");
+	        logger.info("User has been inserted successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("User not inserted! Message: " + e.getMessage());
+			logger.warn("User not inserted! Message: " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -72,11 +92,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		Session session = openTransactionSession();
 		try {
 	        session.update(user);
-	        log.info("User has been updated successfully!");
+	        logger.info("User has been updated successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("User not updated! " + e.getMessage());
+			logger.warn("User not updated! " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}
@@ -89,11 +109,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 			Query query = session.createQuery("delete from User u where u.id = :id");
 			query.setParameter("id", id);
 			query.executeUpdate();
-	        log.info("User has been deleted successfully!");
+			logger.info("User has been deleted successfully!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
-			log.warn("User not deleted! Message: " + e.getMessage());
+			logger.warn("User not deleted! Message: " + e.getMessage());
 		} finally {
 	        closeTransactionSession();
 		}

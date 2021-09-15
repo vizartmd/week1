@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 			userService.logger = Logger.getLogger(TaskService.class);
 		}
 		if (userService.userDao == null) {
-			userService.userDao = new UserDaoImpl();
+			userService.userDao =  UserDaoImpl.getInstance();
 		}
 		return userService;
 	}

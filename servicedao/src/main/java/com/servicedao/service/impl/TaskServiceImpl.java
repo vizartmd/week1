@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
 			taskService.logger = Logger.getLogger(TaskService.class);
 		}
 		if (taskService.taskDao == null) {
-			taskService.taskDao = new TaskDaoImpl();
+			taskService.taskDao = (TaskDao) SingletonHolder.INSTANCE;
 		}
 		return taskService;
 	}
