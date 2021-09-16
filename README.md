@@ -1,2 +1,2 @@
-### Task for the week3, Java internship
+### Task for the week2, Java internship
 
