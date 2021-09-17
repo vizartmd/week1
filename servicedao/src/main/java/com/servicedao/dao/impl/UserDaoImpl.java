@@ -70,7 +70,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		return users;
 	}
 
-	@AvailableForAspect
+//	@AvailableForAspect
 	@Override
 	public void insert(User user) {
 		Session session = openTransactionSession();
