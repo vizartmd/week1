@@ -7,7 +7,7 @@ package com.main.command;
  */
 public class CommandInvoker{
 
-	public void execute(Command command) {
+	public  void execute(Command command) {
 		command.execute();
 	}
 

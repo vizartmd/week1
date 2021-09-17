@@ -1,85 +1,167 @@
 package com.main;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
 import java.util.Scanner;
-import java.util.Set;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
-
 import com.main.command.CommandInvoker;
-import com.main.command.taskcommand.TaskGetByIdCommand;
-import com.main.command.usercommand.UserGetByIdCommand;
-import com.main.command.usercommand.UserInsertCommand;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
 public class Main {
 
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchFieldException,
-			SecurityException, NoSuchMethodException, InvocationTargetException {
-
+	public static void main(String[] args) throws InterruptedException {
 		BasicConfigurator.configure();
+		System.out.println("Main thread started...");
+		
 		CommandInvoker commandInvoker = new CommandInvoker();
-
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Enter User first name");
+		System.out.println("Enter User first name\n");
 		String firstName_scann = scanner.nextLine();
-		System.out.println("Enter User last name");
+		System.out.println("Enter User last name\n");
 		String lastName_scann = scanner.nextLine();
-		System.out.println("Enter userName");
+		System.out.println("Enter userName\n");
 		String userName_scann = scanner.nextLine();
 		User user = new User();
 		user.setFirstName(firstName_scann);
 		user.setLastName(lastName_scann);
 		user.setUserName(userName_scann);
 
-		System.out.println("Enter title for task 1");
-		String task1_title = scanner.nextLine();
-		System.out.println("Enter description for task 1");
-		String task1_description = scanner.nextLine();
-		System.out.println("Enter title for task 2");
-		String task2_title = scanner.nextLine();
-		System.out.println("Enter description for task 2");
-		String task2_description = scanner.nextLine();
+		System.out.println("Enter title for task 1\n");
+		String task_title = scanner.nextLine();
+		System.out.println("Enter description for task 1\n");
+		String task_description = scanner.nextLine();
 
-		Task task1 = new Task();
-		task1.setTitle(task1_title);
-		task1.setDescription(task1_description);
+		Task task = new Task();
+		task.setTitle(task_title);
+		task.setDescription(task_description);
 
-		Task task2 = new Task();
-		task2.setTitle(task2_title);
-		task2.setDescription(task2_description);
+		
+		CreateUser createUser = new CreateUser("Thread CreateUser", user);
+		createUser.start();
+		try {
+			createUser.join();
+		} catch (InterruptedException e) {
 
-		Set<Task> tasks = new HashSet<Task>();
-		tasks.add((Task) task1);
-		tasks.add((Task) task2);
+			System.out.printf("%s has been interrupted", createUser.getName());
+		}
+		
+		AsignTaskToUser asignTaskToUser = new AsignTaskToUser("Thread  AsignTaskToUser", user, task);
+		asignTaskToUser.start();
+		try {
+			asignTaskToUser.join();
+		} catch (InterruptedException e) {
 
-		user.setTasks(tasks);
-		UserInsertCommand insertCommand = new UserInsertCommand(user);
-		commandInvoker.execute(insertCommand);
+			System.out.printf("%s has been interrupted", asignTaskToUser.getName());
+		}
+		
+		ShowAllUsers showAllUsers = new ShowAllUsers("Thread  ShowAllUsers");
+		showAllUsers.start();
+		try {
+			showAllUsers.join();
+		} catch (InterruptedException e) {
 
-//		GetByIdCommand getByIdCommandUser = new GetByIdCommand(DatabaseTypes.MYSQL, 6, new User());
-//		commandInvoker.execute(getByIdCommandUser);
-//		User user1 = (User) getByIdCommandUser.getItem();
-//		System.out.println(user1);
-//
-//		GetByIdCommand getByIdCommandTask = new GetByIdCommand(DatabaseTypes.MYSQL, 10, new Task());
-//		commandInvoker.execute(getByIdCommandTask);
-//		Task task = (Task) getByIdCommandTask.getItem();
-//		System.out.println(task);
+			System.out.printf("%s has been interrupted", showAllUsers.getName());
+		}
+		
+		ShowAllUsersTasks showAllUsersTasks = new ShowAllUsersTasks("Thread  ShowAllUsersTasks", user);
+		showAllUsersTasks.start();
+		try {
+			showAllUsersTasks.join();
+		} catch (InterruptedException e) {
+
+			System.out.printf("%s has been interrupted", showAllUsersTasks.getName());
+		}
+		System.out.println("Main thread finished...");
+
+	}
+}
+
+class CreateUser extends Thread {
+	User user;
+
+	CreateUser(String name, User user) {
+		super(name);
+		this.user = user;
+	}
+
+	public void run() {
+
+		System.out.printf("%s started... \n", Thread.currentThread().getName());
+		try {
+			System.out.println("Create the user: " + user);
+			System.out.println("Here will be inserted the UserInsertCommand");
+//			UserInsertCommand userInsertCommand = new UserInsertCommand(user);
+//			CommandInvoker commandInvoker = new CommandInvoker();
+//			commandInvoker.execute(userInsertCommand);
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			System.out.println("Thread has been interrupted");
+		}
+		System.out.printf("%s finished... \n", Thread.currentThread().getName());
+	}
+}
+
+class AsignTaskToUser extends Thread {
+	User user;
+	Task task;
+	
+	AsignTaskToUser(String name, User user, Task task) {
+		super(name);
+		this.user = user;
+		this.task = task;
+	}
+
+	public void run() {
+
+		System.out.printf("%s started... \n", Thread.currentThread().getName());
+		try {
+			System.out.println("Asign the task " + task + " to the user...");
+			System.out.println("Here will be inserted the UserAddTaskCommand");
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			System.out.println("Thread has been interrupted");
+		}
+		System.out.printf("%s finished... \n", Thread.currentThread().getName());
+	}
+}
+
+class ShowAllUsers extends Thread {
+	
+	ShowAllUsers(String name) {
+		super(name);
+	}
+
+	public void run() {
+
+		System.out.printf("%s started... \n", Thread.currentThread().getName());
+		try {
+			System.out.println("Show all users...");
+			System.out.println("Here will be inserted the UserGetAllCommand");
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			System.out.println("Thread has been interrupted");
+		}
+		System.out.printf("%s finished... \n", Thread.currentThread().getName());
+	}
+}
+
+class ShowAllUsersTasks extends Thread {
+	User user;
+	
+	ShowAllUsersTasks(String name, User user) {
+		super(name);
+	}
+
+	public void run() {
+
+		System.out.printf("%s started... \n", Thread.currentThread().getName());
+		try {
+			System.out.println("Show all user's tasks...");
+			System.out.println("Here will be inserted the UserGetAllTasksCommand");
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			System.out.println("Thread has been interrupted");
+		}
+		System.out.printf("%s finished... \n", Thread.currentThread().getName());
 	}
 }

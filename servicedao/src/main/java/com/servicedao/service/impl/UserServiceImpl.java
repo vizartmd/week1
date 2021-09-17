@@ -5,13 +5,12 @@ import org.apache.log4j.Logger;
 import com.servicedao.dao.UserDao;
 import com.servicedao.dao.impl.UserDaoImpl;
 import com.servicedao.domain.User;
-import com.servicedao.service.TaskService;
 import com.servicedao.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
 	private Logger logger;
-	private UserDao userDao;
+	private static UserDao userDao;
 
 	private UserServiceImpl() {
 	}
@@ -24,10 +23,10 @@ public class UserServiceImpl implements UserService {
 		UserServiceImpl userService = SingletonHolder.INSTANCE;
 
 		if (userService.logger == null) {
-			userService.logger = Logger.getLogger(TaskService.class);
+			userService.logger = Logger.getLogger(UserService.class);
 		}
-		if (userService.userDao == null) {
-			userService.userDao =  UserDaoImpl.getInstance();
+		if (UserServiceImpl.userDao == null) {
+			UserServiceImpl.userDao = UserDaoImpl.getInstance();
 		}
 		return userService;
 	}
