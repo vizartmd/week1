@@ -1,23 +1,13 @@
 package com.main;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.apache.log4j.BasicConfigurator;
-
-import com.main.command.CommandInvoker;
-import com.main.command.usercommand.TaskAddToUserCommand;
-import com.main.command.usercommand.UserInsertCommand;
 import com.main.multithreading.ThreadAssignTaskToUser;
-import com.main.multithreading.ThreadCreateTask;
 import com.main.multithreading.ThreadCreateUser;
-import com.main.multithreading.ThreadShowAllTasks;
-import com.main.multithreading.ThreadShowAllUsers;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
@@ -58,10 +48,10 @@ public class Main {
 		ThreadAssignTaskToUser threadAssignTaskToUser = new ThreadAssignTaskToUser(main.task, main.user.getUserName());
 		Future createTask = executorService.submit(threadAssignTaskToUser);
 		createTask.get();
-		List<Callable<Void>> list = new ArrayList<>();
-		list.add(new ThreadShowAllUsers().newCallable());
-		list.add(new ThreadShowAllTasks().newCallable());
-		executorService.invokeAll(list);
+//		List<Callable<Void>> list = new ArrayList<>();
+//		list.add(new ThreadShowAllUsers().newCallable());
+//		list.add(new ThreadShowAllTasks().newCallable());
+//		executorService.invokeAll(list);
 		executorService.shutdown();
 
 //		List<User> userList = (List<User>) ((Future) new ThreadShowAllUsers().newCallable()).get();
