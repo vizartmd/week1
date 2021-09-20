@@ -1,11 +1,10 @@
 package com.main.command.usercommand;
 
+import org.apache.log4j.Logger;
+
 import com.main.command.Command;
-import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-import com.servicedao.service.Service;
 import com.servicedao.service.UserService;
-import com.servicedao.service.impl.TaskServiceImpl;
 import com.servicedao.service.impl.UserServiceImpl;
 
 /**
@@ -14,6 +13,8 @@ import com.servicedao.service.impl.UserServiceImpl;
  * the TaskServiceImpl class from the service layer and send a new Task as a parameter.
  */
 public class UserInsertCommand implements Command {
+	
+	Logger logger = Logger.getLogger(UserInsertCommand.class);
 	
 	private UserService service;
 	User user;
@@ -24,6 +25,7 @@ public class UserInsertCommand implements Command {
 	}
 
 	public void execute() {
+		logger.info("UserInsertCommand execute(" + user +")");
 		service.insert(user);
 	}
 }

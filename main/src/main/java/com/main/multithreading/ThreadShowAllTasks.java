@@ -6,7 +6,7 @@ import com.main.command.CommandInvoker;
 import com.main.command.taskcommand.TaskGetAllCommand;
 import com.servicedao.domain.Task;
 
-public class ThreadShowAllTasks {
+public class ThreadShowAllTasks extends Thread {
 
 	TaskGetAllCommand taskGetAllCommand;
 	CommandInvoker commandInvoker;

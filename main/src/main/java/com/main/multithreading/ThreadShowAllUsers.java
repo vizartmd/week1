@@ -6,7 +6,7 @@ import com.main.command.CommandInvoker;
 import com.main.command.usercommand.UserGetAllCommand;
 import com.servicedao.domain.User;
 
-public class ThreadShowAllUsers {
+public class ThreadShowAllUsers extends Thread {
 
 	UserGetAllCommand userGetAllCommand;
 	CommandInvoker commandInvoker;

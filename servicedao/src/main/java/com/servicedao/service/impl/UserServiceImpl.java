@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import com.servicedao.dao.UserDao;
 import com.servicedao.dao.impl.UserDaoImpl;
+import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 import com.servicedao.service.UserService;
 
@@ -58,6 +59,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteById(int id) {
 		logger.info("UserService.deleteById() method called");
+		userDao.deleteById(id);
+	}
+
+	@Override
+	public void AddTaskToUser(Task task, String userName) {
+		logger.info("UserService.taskAddToUser() method called");
+		userDao.AddTaskToUser(task, userName);
 	}
 
 }
