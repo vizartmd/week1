@@ -1,5 +1,6 @@
 package com.main.command.taskcommand;
 
+import org.apache.log4j.Logger;
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.service.TaskService;
@@ -11,6 +12,8 @@ import com.servicedao.service.impl.TaskServiceImpl;
  * the TaskServiceImpl class from the service layer
  */
 public class TaskGetByIdCommand implements Command {
+	
+	Logger logger = Logger.getLogger(TaskGetByIdCommand.class);
 
 	private TaskService service;
 	private int id;
@@ -27,7 +30,8 @@ public class TaskGetByIdCommand implements Command {
 
 	@Override
 	public void execute() {
-		this.task = (Task) service.getById(id);
+		logger.info("TaskGetByIdCommand execute(taskId: " + id +")");
+		this.task = (Task) service.findById(id);
 	}
 
 }

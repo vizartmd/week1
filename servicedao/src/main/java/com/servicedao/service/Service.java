@@ -6,7 +6,7 @@ public interface Service<T> {
 
 	void insert(T t);
 
-	T getById(int id);
+	T findById(int id);
 
 	void update(T t);
 

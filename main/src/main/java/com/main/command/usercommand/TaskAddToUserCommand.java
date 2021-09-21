@@ -21,7 +21,7 @@ public class TaskAddToUserCommand implements Command {
 	}
 
 	public void execute() {
-		logger.info("TaskAddToUserCommand execute(task: " + task + " , user: " + userName + ")");
+		logger.info("TaskAddToUserCommand execute(task: " + task + " , userName: " + userName + ")");
 		 service.AddTaskToUser(task, userName);
 	}
 	

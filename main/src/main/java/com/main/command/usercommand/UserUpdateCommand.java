@@ -1,5 +1,7 @@
 package com.main.command.usercommand;
 
+import org.apache.log4j.Logger;
+
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
@@ -14,6 +16,8 @@ import com.servicedao.service.impl.UserServiceImpl;
  * the UserServiceImpl class from the service layer and update User object
  */
 public class UserUpdateCommand implements Command {
+	
+	Logger logger = Logger.getLogger(UserUpdateCommand.class);
 
 	private UserService service;
 	User user;
@@ -25,6 +29,7 @@ public class UserUpdateCommand implements Command {
 
 	@Override
 	public void execute() {
+		logger.info("UserUpdateCommand execute(" + user +")");
 		service.update(user);
 	}
 }

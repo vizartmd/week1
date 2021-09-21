@@ -1,5 +1,6 @@
 package com.main.command.taskcommand;
 
+import org.apache.log4j.Logger;
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.service.TaskService;
@@ -12,6 +13,8 @@ import com.servicedao.service.impl.TaskServiceImpl;
  */
 public class TaskInsertCommand implements Command {
 	
+	Logger logger = Logger.getLogger(TaskInsertCommand.class);
+	
 	private TaskService service;
 	Task task;
 
@@ -21,6 +24,7 @@ public class TaskInsertCommand implements Command {
 	}
 
 	public void execute() {
+		logger.info("UserInsertCommand execute(" + task +")");
 		 service.insert(task);
 	}
 }

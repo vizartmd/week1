@@ -1,17 +1,14 @@
 package com.servicedao.domain;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,7 +18,7 @@ public class Task {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "taskId")
+	@Column(name = "task_id", unique = true, nullable = false)
 	private int taskId;
 	
 	@Column(name = "title", unique = false, nullable = false, length = 100)
@@ -30,8 +27,9 @@ public class Task {
 	@Column(name = "description", unique = false, nullable = false, length = 250)
 	private String description;
 	
-	@ManyToMany(mappedBy="tasks", fetch=FetchType.EAGER)
-	private Set<User> users = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public Task() {
 	}
@@ -45,6 +43,20 @@ public class Task {
 		this.taskId = taskId;
 		this.title = title;
 		this.description = description;
+	}
+
+	public Task(int user_id, int taskId, String title, String description) {
+		this.taskId = taskId;
+		this.title = title;
+		this.description = description;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getTaskId() {
@@ -72,30 +84,8 @@ public class Task {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(description, taskId, title);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Task other = (Task) obj;
-		return Objects.equals(description, other.description) && taskId == other.taskId
-				&& Objects.equals(title, other.title);
-	}
-
-	@Override
 	public String toString() {
 		return "Task [taskId=" + taskId + ", title=" + title + ", description=" + description + "]";
 	}
-
-	
-
-	
 	
 }

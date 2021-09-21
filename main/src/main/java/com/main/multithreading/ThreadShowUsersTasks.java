@@ -6,20 +6,21 @@ import java.util.concurrent.Callable;
 import org.apache.log4j.Logger;
 
 import com.main.command.CommandInvoker;
-import com.main.command.taskcommand.TaskGetAllCommand;
+import com.main.command.taskcommand.TaskGetUsersTasksCommand;
 import com.servicedao.domain.Task;
 
-public class ThreadShowAllTasks extends Thread {
+public class ThreadShowUsersTasks {
 	
-	Logger logger = Logger.getLogger(ThreadShowAllTasks.class);
+	Logger logger = Logger.getLogger(ThreadShowUsersTasks.class);
 
-	TaskGetAllCommand taskGetAllCommand;
+	TaskGetUsersTasksCommand taskGetUsersTasksCommand;
 	CommandInvoker commandInvoker;
 	List<Task> tasks;
+	int userId;;
 
-	public ThreadShowAllTasks() {
-		this.taskGetAllCommand = new TaskGetAllCommand();
+	public ThreadShowUsersTasks(int userId) {
 		this.commandInvoker = new CommandInvoker();
+		this.userId = userId;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -27,15 +28,16 @@ public class ThreadShowAllTasks extends Thread {
 		return new Callable() {
 			@Override
 			public Object call() throws Exception {
-				logger.info("ThreadShowAllTasks call()");
-				commandInvoker.execute(taskGetAllCommand);
+				logger.info("ThreadShowUsersTasks call()");
+				taskGetUsersTasksCommand = new TaskGetUsersTasksCommand(userId);
+				commandInvoker.execute(taskGetUsersTasksCommand);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return tasks = taskGetAllCommand.getAll();
+				return tasks = taskGetUsersTasksCommand.getUsersTask();
 			}
 		};
 	}

@@ -1,8 +1,8 @@
 package com.main.command.taskcommand;
 
+import org.apache.log4j.Logger;
 import com.main.command.Command;
 import com.servicedao.domain.Task;
-import com.servicedao.service.Service;
 import com.servicedao.service.TaskService;
 import com.servicedao.service.impl.TaskServiceImpl;
 
@@ -12,6 +12,8 @@ import com.servicedao.service.impl.TaskServiceImpl;
  * the TaskServiceImpl class from the service layer and update Task object
  */
 public class TaskUpdateCommand implements Command {
+	
+	Logger logger = Logger.getLogger(TaskUpdateCommand.class);
 
 	private TaskService service;
 	Task task;
@@ -23,6 +25,7 @@ public class TaskUpdateCommand implements Command {
 
 	@Override
 	public void execute() {
+		logger.info("TaskUpdateCommand execute(" + task +")");
 		service.update(task);
 	} 
 }

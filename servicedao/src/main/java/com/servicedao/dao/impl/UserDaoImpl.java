@@ -1,18 +1,13 @@
 package com.servicedao.dao.impl;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
-
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import com.servicedao.annotations.AvailableForAspect;
-import com.servicedao.dao.DAO;
-import com.servicedao.dao.TaskDao;
 import com.servicedao.dao.UserDao;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
@@ -43,12 +38,15 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 	}
 
 	@Override
-	public User getById(int id) {
+	public User findById(int id) {
 		Session session = openTransactionSession();
+		List<User> users = null;
 		User user = null;
 		try {
-			user = session.get(User.class, id);
-			logger.info("User by id: " + id + " has been found successfully");
+			Criteria criteria = (Criteria) session.createCriteria(User.class);
+			users = criteria.list();
+			user = users.stream().filter(u -> u.getUserId() == id).findAny().get();
+			logger.info("User by id: " + id + " has been found successfully " + user);
 			return user;
 		} catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
@@ -60,12 +58,14 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		return user;
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<User> getAll() {
 		Session session = openTransactionSession();
 		List<User> users = null;
 		try {
-			users = (List<User>) session.createQuery("from User", User.class).list();
+			Criteria criteria = (Criteria) session.createCriteria(User.class);
+			users = criteria.list();
 			logger.info("User list was recieved successfully!");
 		} catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
@@ -110,7 +110,7 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 	public void deleteById(int id) {
 		Session session = openTransactionSession();
 		try {
-			Query query = session.createQuery("delete from User u where u.id = :id");
+			Query query = session.createQuery("delete from User u where u.userId = :id");
 			query.setParameter("id", id);
 			query.executeUpdate();
 			logger.info("User has been deleted successfully!");
@@ -128,20 +128,23 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		List<User> users = null;
 		Set<Task> tasks = null;
 		User user = null;
-		
+
 		try {
 			System.out.println("in taskAddToUser() ");
+			logger.info("in taskAddToUser() ");
 			users = getAll();
 			for (User myUser : users) {
 				if (myUser.getUserName().equals(userName)) {
-					System.out.println("user first name : " + myUser.getFirstName());
-					Set<Task>userTasks = myUser.getTasks();
+					logger.info("user first name : " + myUser.getFirstName());
+					Set<Task> userTasks = myUser.getTasks();
 					if (userTasks != null) {
 						userTasks.add(task);
+						System.out.println("userTasks: " + myUser.getTasks());
 					} else {
 						userTasks = new HashSet<Task>();
 						userTasks.add(task);
 						myUser.setTasks(userTasks);
+						System.out.println("userTasks: " + myUser.getTasks());
 					}
 					update(myUser);
 					logger.info("Task was added to user!");
@@ -155,4 +158,11 @@ public class UserDaoImpl extends SessionUtil implements UserDao {
 		}
 	}
 
+	@Override
+	public Set<Task> getUsersTask(String userName) {
+		List<User> users = getAll();
+		Set<Task> userTasks = null;
+		User user = users.stream().filter(el -> el.getUserName() == userName).findFirst().get();
+		return userTasks = user.getTasks();
+	}
 }

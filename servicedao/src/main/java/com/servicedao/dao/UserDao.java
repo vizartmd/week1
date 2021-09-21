@@ -1,10 +1,14 @@
 package com.servicedao.dao;
 
+import java.util.Set;
+
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
 public interface UserDao extends DAO<User> {
 
 	void AddTaskToUser(Task task, String userName);
+	
+	Set<Task> getUsersTask(String userName);
 
 }

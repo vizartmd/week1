@@ -1,7 +1,7 @@
 package com.main.command.taskcommand;
 
 import java.util.List;
-
+import org.apache.log4j.Logger;
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.service.TaskService;
@@ -13,6 +13,8 @@ import com.servicedao.service.impl.TaskServiceImpl;
  * the TaskServiceImpl class from the service layer
  */
 public class TaskGetAllCommand implements Command {
+	
+	Logger logger = Logger.getLogger(TaskGetAllCommand.class);
 
 	private TaskService  service;
 	private List<Task> list;
@@ -27,6 +29,7 @@ public class TaskGetAllCommand implements Command {
 
 	@Override
 	public void execute() {
+		logger.info("TaskGetAllCommand execute()");
 		this.list = (List<Task>) service.getAll();
 	}
 }

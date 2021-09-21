@@ -33,9 +33,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getById(int id) {
+	public User findById(int id) {
 		logger.info("UserService.getById() method called");
-		return userDao.getById(id);
+		return userDao.findById(id);
 	}
 
 	@Override

@@ -38,9 +38,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public Task getById(int id) {
+	public Task findById(int id) {
 		logger.info("TaskService.getById() method called");
-		return taskDao.getById(id);
+		return taskDao.findById(id);
 	}
 
 	@Override
@@ -59,6 +59,12 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> getAll() {
 		logger.info("TaskService.getAll() method called");
 		return taskDao.getAll();
+	}
+
+	@Override
+	public List<Task> getUsersTask(int userId) {
+		logger.info("TaskService.getAll() method called");
+		return taskDao.getUsersTask(userId);
 	}
 
 }

@@ -3,6 +3,8 @@ package com.servicedao.hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.servicedao.domain.User;
+
 public class SessionUtil {
 
 	private Session session;

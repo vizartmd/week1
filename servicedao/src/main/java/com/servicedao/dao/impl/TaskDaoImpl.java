@@ -1,24 +1,31 @@
 package com.servicedao.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import com.servicedao.dao.TaskDao;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
-public class TaskDaoImpl  extends SessionUtil implements TaskDao {
+public class TaskDaoImpl  extends DAOimpl<Task> implements TaskDao {
 	
+	protected TaskDaoImpl(Class<Task> clazz) {
+		super(clazz);
+	}
+
 	private Logger logger;
 	private TaskDao taskDao;
 
-	private TaskDaoImpl() {
-	}
 
 	private final static class SingletonHolder {
-		private final static TaskDaoImpl INSTANCE = new TaskDaoImpl();
+		private final static TaskDaoImpl INSTANCE = new TaskDaoImpl(Task.class);
 	}
 
 	public static TaskDaoImpl getInstance() {
@@ -34,11 +41,14 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 	}
 
 	@Override
-	public Task getById(int id) {
+	public Task findById(int id) {
 		Session session = openTransactionSession();
+		List<Task> tasks = null;
 		Task task = null;
 		try {
-			task = session.get(Task.class, id);
+			Criteria criteria = (Criteria) session.getCriteriaBuilder().createQuery(Task.class);
+			tasks = criteria.list();
+			task = (Task) tasks.stream().filter(t -> t.getTaskId() == id).findFirst().get();
 			logger.info("Task by id: " + id + " has been found successfully");
 		}
 		catch (IllegalStateException | HibernateException e) {
@@ -55,8 +65,10 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 		Session session = openTransactionSession();
 		List<Task> tasks = null;
 		try {
-			tasks = session.createQuery("from Task", Task.class).list();
-			logger.info("List of tasks has been recieved successfully!");
+//			tasks = session.createQuery("from Task", Task.class).list();
+			Criteria criteria = (Criteria) session.getCriteriaBuilder().createQuery(Task.class);
+			tasks = criteria.list();
+			logger.info("List of tasks has been recieved successfully from criteria!");
 		}
 		catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
@@ -120,6 +132,25 @@ public class TaskDaoImpl  extends SessionUtil implements TaskDao {
 	        closeTransactionSession();
 		}
 		
+	}
+
+	@Override
+	public List<Task> getUsersTask(int userId) {
+		Session session = openTransactionSession();
+		List<Task> tasks = null;
+		List<Task> usersTasks = null;
+		try {
+			Criteria criteria = (Criteria) session.getCriteriaBuilder().createQuery(Task.class);
+			tasks = criteria.list(); 
+			logger.info("Task list was recieved successfully from criteria!");
+			logger.info("List of userId: " + userId + " tasks was recieved successfully from criteria! " + usersTasks);
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("User list not received! Message: " + e.getMessage());
+		}finally {
+			closeTransactionSession();
+		}
+		return tasks;
 	}
 
 }

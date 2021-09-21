@@ -1,5 +1,7 @@
 package com.main.command.usercommand;
 
+import org.apache.log4j.Logger;
+
 import com.main.command.Command;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
@@ -14,6 +16,8 @@ import com.servicedao.service.impl.UserServiceImpl;
  * the TaskServiceImpl class from the service layer
  */
 public class UserGetByIdCommand implements Command {
+	
+	Logger logger = Logger.getLogger(UserGetByIdCommand.class);
 
 	private UserService service;
 	private int id;
@@ -24,13 +28,14 @@ public class UserGetByIdCommand implements Command {
 		this.id = id;
 	}
 
-	public User getItem() {
+	public User getUser() {
 		return user;
 	}
 
 	@Override
 	public void execute() {
-		this.user = service.getById(id);
+		logger.info("UserGetByIdCommand execute(userId: " + id +")");
+		this.user = service.findById(id);
 	}
 
 }

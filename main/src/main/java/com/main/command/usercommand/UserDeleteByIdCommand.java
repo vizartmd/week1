@@ -1,5 +1,7 @@
 package com.main.command.usercommand;
 
+import org.apache.log4j.Logger;
+
 import com.main.command.Command;
 import com.servicedao.domain.User;
 import com.servicedao.service.Service;
@@ -12,6 +14,8 @@ import com.servicedao.service.impl.UserServiceImpl;
  * the UserServiceImpl class from the service layer
  */
 public class UserDeleteByIdCommand implements Command {
+	
+	Logger logger = Logger.getLogger(UserDeleteByIdCommand.class);
 
 	private UserService service;
 	private int id;
@@ -23,6 +27,7 @@ public class UserDeleteByIdCommand implements Command {
 
 	@Override
 	public void execute() {
+		logger.info("UserDeleteByIdCommand execute(userId: " + id + ")");
 		service.deleteById(id);
 	}
 	

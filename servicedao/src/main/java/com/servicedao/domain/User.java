@@ -9,9 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,21 +18,20 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userId")
+	@Column(name = "user_id", unique = true, nullable = false)
 	private int userId;
 
-	@Column(name = "firstName", unique = false, nullable = false, length = 100)
+	@Column(name = "first_name", unique = false, nullable = false, length = 50)
 	private String firstName;
 
-	@Column(name = "lastName", unique = false, nullable = false, length = 100)
+	@Column(name = "last_name", unique = false, nullable = false, length = 50)
 	private String lastName;
 
-	@Column(name = "userName", unique = true, nullable = false, length = 100)
+	@Column(name = "user_name", unique = true, nullable = false, length = 50)
 	private String userName;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_tasks", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
-	private Set<Task> tasks = new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<Task> tasks;
 
 	public User() {
 	}
@@ -46,21 +42,13 @@ public class User {
 		this.lastName = lastName;
 		this.userName = userName;
 	}
-
-	public User(String firstName, String lastName, String userName, Set<Task> tasks) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.tasks = tasks;
-	}
-
-	public User(int userId, String firstName, String lastName, String userName, Set<Task> tasks) {
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.tasks = tasks;
+	
+	public void addTaskToUser(Task task) {
+		if (tasks == null) {
+			tasks = new HashSet<>();
+		}
+		tasks.add(task);
+		task.setUser(this);
 	}
 
 	public int getUserId() {
