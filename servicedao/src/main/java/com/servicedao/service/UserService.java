@@ -5,6 +5,6 @@ import com.servicedao.domain.User;
 
 public interface UserService extends Service<User> {
 
-	void AddTaskToUser(Task task, String userName);
+	void addTaskToUser(Task task, String userName);
 	
 }

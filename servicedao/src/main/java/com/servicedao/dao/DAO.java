@@ -2,6 +2,11 @@ package com.servicedao.dao;
 
 import java.util.List;
 
+/**
+ * generic DAO<T> interface
+ * @author vrobu1
+ * @version 1.0
+ */
 public interface DAO<T> {
 
 	T findById(int id);
@@ -12,5 +17,7 @@ public interface DAO<T> {
 
 	void update(T t);
 
+	void delete(T t);
+	
 	void deleteById(int id);
 }

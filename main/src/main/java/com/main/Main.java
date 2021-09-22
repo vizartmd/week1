@@ -2,21 +2,14 @@ package com.main;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import org.apache.log4j.BasicConfigurator;
-import com.main.command.CommandInvoker;
-import com.main.command.taskcommand.TaskGetUsersTasksCommand;
-import com.main.command.usercommand.UserGetByIdCommand;
 import com.main.multithreading.ThreadAssignTaskToUser;
 import com.main.multithreading.ThreadCreateUser;
-import com.main.multithreading.ThreadShowAllTasks;
 import com.main.multithreading.ThreadShowAllUsers;
 import com.main.multithreading.ThreadShowUsersTasks;
-import com.servicedao.dao.impl.UserDaoImpl;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
@@ -52,6 +45,7 @@ public class Main {
 		ThreadCreateUser threadCreateUser = new ThreadCreateUser(user);
 		executorService.submit(threadCreateUser).get();
 		ThreadAssignTaskToUser threadAssignTaskToUser = new ThreadAssignTaskToUser(task, user.getUserName());
+		executorService.submit(threadAssignTaskToUser).get();
 		List<User> myUsers = (List<User>) executorService.submit(new ThreadShowAllUsers().newCallable()).get();
 		List<Task> myTasks = (List<Task>) executorService.submit(new ThreadShowUsersTasks(user.getUserId()).newCallable()).get();
 		System.out.println(myUsers);

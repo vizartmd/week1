@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
 			taskService.logger = Logger.getLogger(TaskService.class);
 		}
 		if (taskService.taskDao == null) {
-			taskService.taskDao = TaskDaoImpl.getInstance();
+			taskService.taskDao = (TaskDao) TaskDaoImpl.getInstance();
 		}
 		return taskService;
 	}
@@ -59,12 +59,6 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> getAll() {
 		logger.info("TaskService.getAll() method called");
 		return taskDao.getAll();
-	}
-
-	@Override
-	public List<Task> getUsersTask(int userId) {
-		logger.info("TaskService.getAll() method called");
-		return taskDao.getUsersTask(userId);
 	}
 
 }

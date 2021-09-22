@@ -6,15 +6,15 @@ import com.servicedao.domain.Task;
 import com.servicedao.service.UserService;
 import com.servicedao.service.impl.UserServiceImpl;
 
-public class TaskAddToUserCommand implements Command {
+public class AddTaskToUserCommand implements Command {
 	
-	Logger logger = Logger.getLogger(TaskAddToUserCommand.class);
+	Logger logger = Logger.getLogger(AddTaskToUserCommand.class);
 
 	private UserService service;
 	Task task;
 	String userName;
 
-	public TaskAddToUserCommand(Task task, String userName) {
+	public AddTaskToUserCommand(Task task, String userName) {
 		this.service = UserServiceImpl.getInstance();
 		this.task = task;
 		this.userName = userName;

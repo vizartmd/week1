@@ -1,61 +1,91 @@
 package com.servicedao.dao.impl;
 
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import com.servicedao.dao.DAO;
+import com.servicedao.domain.Task;
 import com.servicedao.hibernate.SessionUtil;
 
-public abstract class DAOimpl<T> extends SessionUtil implements DAO<T> {
-	
-	Logger logger = Logger.getLogger(DAOimpl.class);
-	private Class<T> clazz;
+/**
+ * generic DAOimpl<T> class 
+ * @author vrobu1
+ * @version 1.0
+ */
+public class DAOimpl<T> extends SessionUtil implements DAO<T> {
 
-    protected DAOimpl(Class<T> clazz) {
-        this.clazz = clazz;
+	Class<T> clazz;
+
+	private Session session;
+
+	protected DAOimpl(Class<T> clazz) {
+		this.clazz = clazz;
+	}
+	
+	@Override
+	public T findById(int id) {
+        T t = null;
+        try {
+        	session = openTransactionSession();
+            t = (T) session.find(clazz, id);
+        } catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+        } finally {
+            closeTransactionSession();
+        }
+        return t;
     }
 
 	@Override
-	public T findById(int id) {
-		Session session = openTransactionSession();
-        T t = session.get(clazz, id);
-        closeTransactionSession();
-		return null;
-	}
-
-	@Override
 	public List<T> getAll() {
-		Session session = openTransactionSession();
-
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = builder.createQuery(clazz);
-        criteriaQuery.from(clazz);
-        List<T> ts = session.createQuery(criteriaQuery).getResultList();
-
-        session.close();
-        return ts;
+		List<T> objects = null;
+		try {
+			session = openTransactionSession();
+			Query query = session.createQuery("from " + clazz.getName());
+			objects = query.list();
+		} catch (HibernateException e) {
+			System.out.println(e);
+		} finally {
+			closeTransactionSession();
+		}
+		return objects;
 	}
 
 	@Override
 	public void insert(T t) {
-		Session session = openTransactionSession();
-        session.saveOrUpdate(t);
-        closeTransactionSession();
+		session = openTransactionSession();
+		session.saveOrUpdate(t);
+		closeTransactionSession();
 	}
 
 	@Override
-	public void update(Object t) {
-		Session session = openTransactionSession();
-        session.update(t);
-        closeTransactionSession();
+	public void update(T t) {
+		session = openTransactionSession();
+		session.update(t);
+		closeTransactionSession();
+	}
+
+	@Override
+	public void delete(T t) {
+		session = openTransactionSession();
+		session.delete(t);
+		closeTransactionSession();
 	}
 
 	@Override
 	public void deleteById(int id) {
-		Session session =  openTransactionSession();
-        session.delete(id);
-        closeTransactionSession();
+		T t = null;
+        try {
+        	session = openTransactionSession();
+            t = (T) session.find(clazz, id);
+            System.out.println("t = " + t);
+            session.delete(t);
+        } catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+        } finally {
+            closeTransactionSession();
+        }
 	}
 }

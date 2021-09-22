@@ -1,5 +1,6 @@
 package com.servicedao.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tasks")
-public class Task { 
+public class Task implements Serializable{ 
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
