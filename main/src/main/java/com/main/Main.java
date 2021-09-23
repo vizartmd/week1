@@ -1,59 +1,76 @@
 package com.main;
 
 import java.util.List;
-import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.BasicConfigurator;
-import com.main.multithreading.ThreadAssignTaskToUser;
+import org.apache.log4j.Logger;
+import com.main.multithreading.ThreadAssignTasksToUser;
 import com.main.multithreading.ThreadCreateUser;
 import com.main.multithreading.ThreadShowAllUsers;
-import com.main.multithreading.ThreadShowUsersTasks;
+import com.main.multithreading.ThreadShowUsersTasksByUserId;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
+import com.servicedao.utils.CollectInfo;
 
 public class Main {
-	private static User user;
-	private static Task task;
 
-	public static void collectInfo() {
-		System.out.println("Programm started...");
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter information about the new user and the new task for him!");
-		System.out.println("Enter first name");
-		String firstName = scanner.nextLine();
-		System.out.println("Enter last name");
-		String lastName = scanner.nextLine();
-		System.out.println("Enter username");
-		String userName = scanner.nextLine();
-	    Main.user = new User(firstName, lastName, userName);
-		System.out.println("Enter task title");
-		String title = scanner.nextLine();
-		System.out.println("Enter task description");
-		String description = scanner.nextLine();
-		task = new Task(title, description);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) throws InterruptedException, ExecutionException   {
+	public static void main(String[] args) {
+
 		BasicConfigurator.configure();
-		Main.collectInfo();
-		
+		Logger logger = Logger.getLogger(Main.class);
+		logger.info("Starting");
+
 		ExecutorService executorService = Executors.newFixedThreadPool(4);
-		
+
+		User user = CollectInfo.createUser();
+		Set<Task> tasks = CollectInfo.createTask();
+
 		ThreadCreateUser threadCreateUser = new ThreadCreateUser(user);
-		executorService.submit(threadCreateUser).get();
-		ThreadAssignTaskToUser threadAssignTaskToUser = new ThreadAssignTaskToUser(task, user.getUserName());
-		executorService.submit(threadAssignTaskToUser).get();
-		List<User> myUsers = (List<User>) executorService.submit(new ThreadShowAllUsers().newCallable()).get();
-		List<Task> myTasks = (List<Task>) executorService.submit(new ThreadShowUsersTasks(user.getUserId()).newCallable()).get();
-		System.out.println(myUsers);
-		System.out.println(myTasks);
-		
+		try {
+			executorService.submit(threadCreateUser).get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		ThreadAssignTasksToUser threadAssignTasksToUser = new ThreadAssignTasksToUser(tasks, user.getUserName());
+		try {
+			executorService.submit(threadAssignTasksToUser).get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		Set<User> myUsers = null;
+		try {
+			myUsers = (Set<User>) executorService.submit(new ThreadShowAllUsers().newCallable()).get();
+			List<Integer> usersId = CollectInfo.getUsersIds(myUsers);
+			System.out.println("All user's ID: " + usersId);
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		Set<Task> myTasks = null;
+		Integer userId = 0;
+		try {
+			userId = CollectInfo.selectUserIdFromExistingUsers();
+			myTasks = (Set<Task>) executorService.submit(new ThreadShowUsersTasksByUserId(userId).newCallable()).get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Tasks of user by ID: " + userId + " -> " + myTasks);
+
 		executorService.shutdown();
+		try {
+			if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+				executorService.shutdown();
+			}
+		} catch (InterruptedException e) {
+			executorService.shutdown();
+		}
 
 		System.out.println("Finished");
 	}
 }
-

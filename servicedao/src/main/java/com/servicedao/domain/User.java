@@ -101,12 +101,15 @@ public class User implements Serializable{
 	}
 
 	public void setTasks(Set<Task> tasks) {
+		if (tasks == null) {
+			this.tasks = null;
+		}
 		this.tasks = tasks;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userId =" + userId + ", firstName =" + firstName + ", lastName =" + lastName + ", userName ="
+		return "\nUser [userId =" + userId + ", firstName =" + firstName + ", lastName =" + lastName + ", userName ="
 				+ userName + "]";
 	}
 

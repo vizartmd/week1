@@ -1,7 +1,6 @@
 package com.main.multithreading;
 
 import org.apache.log4j.Logger;
-
 import com.main.command.CommandInvoker;
 import com.main.command.taskcommand.TaskInsertCommand;
 import com.servicedao.domain.Task;
@@ -24,12 +23,6 @@ public class ThreadCreateTask extends Thread {
 	public void run() {
 		logger.info("ThreadAssignTaskToUser run()");
 		commandInvoker.execute(taskInsertCommand);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

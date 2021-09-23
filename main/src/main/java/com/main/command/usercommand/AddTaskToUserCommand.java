@@ -10,19 +10,19 @@ public class AddTaskToUserCommand implements Command {
 	
 	Logger logger = Logger.getLogger(AddTaskToUserCommand.class);
 
-	private UserService service;
+	private UserService userService;
 	Task task;
 	String userName;
 
 	public AddTaskToUserCommand(Task task, String userName) {
-		this.service = UserServiceImpl.getInstance();
+		this.userService = UserServiceImpl.getInstance();
 		this.task = task;
 		this.userName = userName;
 	}
 
 	public void execute() {
-		logger.info("TaskAddToUserCommand execute(task: " + task + " , userName: " + userName + ")");
-		 service.AddTaskToUser(task, userName);
+		logger.info("AddTaskToUserCommand execute(task: " + task + " , userName: " + userName + ")");
+		userService.addTaskToUserByUserName(task, userName);
 	}
 	
 }

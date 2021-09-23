@@ -1,26 +1,24 @@
 package com.main.multithreading;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
-
 import org.apache.log4j.Logger;
-
 import com.main.command.CommandInvoker;
-import com.main.command.taskcommand.TaskGetUsersTasksCommand;
+import com.main.command.taskcommand.TaskGetUsersTasksByUserNameCommand;
 import com.servicedao.domain.Task;
 
-public class ThreadShowUsersTasks {
+public class ThreadShowUsersTasks  extends Thread {
 	
 	Logger logger = Logger.getLogger(ThreadShowUsersTasks.class);
 
-	TaskGetUsersTasksCommand taskGetUsersTasksCommand;
+	TaskGetUsersTasksByUserNameCommand taskGetUsersTasksByUserNameCommand;
 	CommandInvoker commandInvoker;
-	List<Task> tasks;
-	int userId;;
+	Set<Task> tasks;
+	String username;
 
-	public ThreadShowUsersTasks(int userId) {
+	public ThreadShowUsersTasks(String username) {
 		this.commandInvoker = new CommandInvoker();
-		this.userId = userId;
+		this.username = username;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -29,15 +27,9 @@ public class ThreadShowUsersTasks {
 			@Override
 			public Object call() throws Exception {
 				logger.info("ThreadShowUsersTasks call()");
-				taskGetUsersTasksCommand = new TaskGetUsersTasksCommand(userId);
-				commandInvoker.execute(taskGetUsersTasksCommand);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return tasks = taskGetUsersTasksCommand.getUsersTask();
+				taskGetUsersTasksByUserNameCommand = new TaskGetUsersTasksByUserNameCommand(username);
+				commandInvoker.execute(taskGetUsersTasksByUserNameCommand);
+				return tasks = taskGetUsersTasksByUserNameCommand.getUsersTask();
 			}
 		};
 	}

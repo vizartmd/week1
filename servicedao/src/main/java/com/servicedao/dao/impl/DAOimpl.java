@@ -1,12 +1,22 @@
 package com.servicedao.dao.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import com.servicedao.dao.DAO;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
 /**
@@ -16,9 +26,9 @@ import com.servicedao.hibernate.SessionUtil;
  */
 public class DAOimpl<T> extends SessionUtil implements DAO<T> {
 
-	Class<T> clazz;
-
+	private Class<T> clazz;
 	private Session session;
+	private CriteriaBuilder criteriaBuilder;
 
 	protected DAOimpl(Class<T> clazz) {
 		this.clazz = clazz;
@@ -26,66 +36,68 @@ public class DAOimpl<T> extends SessionUtil implements DAO<T> {
 	
 	@Override
 	public T findById(int id) {
-        T t = null;
-        try {
-        	session = openTransactionSession();
-            t = (T) session.find(clazz, id);
-        } catch (IllegalStateException | HibernateException e) {
-			session.getTransaction().rollback();
-        } finally {
-            closeTransactionSession();
-        }
-        return t;
+        return null;
     }
-
+	
 	@Override
-	public List<T> getAll() {
-		List<T> objects = null;
+	public Set<T> getAll() {
+		List<T> results = null;
+		Set<T> setItems = null;
 		try {
 			session = openTransactionSession();
-			Query query = session.createQuery("from " + clazz.getName());
-			objects = query.list();
-		} catch (HibernateException e) {
-			System.out.println(e);
+			criteriaBuilder = session.getCriteriaBuilder();
+			CriteriaQuery<T> cr = criteriaBuilder.createQuery(clazz);
+			Root<T> root = cr.from(clazz);
+			cr.select(root);
+			Query<T> query = session.createQuery(cr);
+			results = query.getResultList();
+			setItems = (Set<T>) new HashSet<>(results);
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
 		} finally {
 			closeTransactionSession();
 		}
-		return objects;
+		return (Set<T>) setItems;
 	}
 
 	@Override
 	public void insert(T t) {
 		session = openTransactionSession();
-		session.saveOrUpdate(t);
-		closeTransactionSession();
+		try {
+			session.save(t);
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+		} finally {
+			closeTransactionSession();
+		}
 	}
 
 	@Override
 	public void update(T t) {
 		session = openTransactionSession();
-		session.update(t);
-		closeTransactionSession();
+		try {
+			session.update(t);
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+		} finally {
+			closeTransactionSession();
+		}
 	}
 
 	@Override
 	public void delete(T t) {
 		session = openTransactionSession();
-		session.delete(t);
-		closeTransactionSession();
+		try {
+			session.delete(t);
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+		} finally {
+			closeTransactionSession();
+		}
 	}
 
 	@Override
 	public void deleteById(int id) {
-		T t = null;
-        try {
-        	session = openTransactionSession();
-            t = (T) session.find(clazz, id);
-            System.out.println("t = " + t);
-            session.delete(t);
-        } catch (IllegalStateException | HibernateException e) {
-			session.getTransaction().rollback();
-        } finally {
-            closeTransactionSession();
-        }
+		
 	}
 }

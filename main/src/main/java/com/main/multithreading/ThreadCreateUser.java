@@ -1,7 +1,6 @@
 package com.main.multithreading;
 
 import org.apache.log4j.Logger;
-
 import com.main.command.CommandInvoker;
 import com.main.command.usercommand.UserInsertCommand;
 import com.servicedao.domain.User;
@@ -25,9 +24,9 @@ public class ThreadCreateUser extends Thread {
 		logger.info("ThreadCreateUser run(), user = " + user);
 		commandInvoker.execute(userInsertCommand);
 		try {
-			Thread.sleep(500);
+			sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			logger.info(e.getMessage());
 			e.printStackTrace();
 		}
 	}

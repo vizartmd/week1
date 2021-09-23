@@ -1,6 +1,7 @@
 package com.main.command.usercommand;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -20,19 +21,19 @@ public class UserGetAllCommand implements Command {
 	Logger logger = Logger.getLogger(UserGetAllCommand.class);
 
 	private UserService service;
-	private List<User> list;
+	private Set<User> users;
 	
 	public UserGetAllCommand() {
 		this.service = UserServiceImpl.getInstance();
 	}
 
-	public List<User> getAll() {
-		return list;
+	public Set<User> getAll() {
+		return users;
 	}
 
 	@Override
 	public void execute() {
 		logger.info("UserGetAllCommand execute()");
-		this.list = (List<User>) service.getAll();
+		this.users = service.getAll();
 	}
 }

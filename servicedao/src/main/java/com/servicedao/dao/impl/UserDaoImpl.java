@@ -2,27 +2,24 @@ package com.servicedao.dao.impl;
 
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Query;
+import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import com.servicedao.dao.UserDao;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
 public class UserDaoImpl extends DAOimpl<User> {
-	
+
 	private Logger logger;
 	Session session;
 	private UserDaoImpl userDaoImpl;
-	
-	
+	private CriteriaBuilder cb;
+
 	protected UserDaoImpl(Class<User> clazz) {
 		super(clazz);
 	}
@@ -45,49 +42,40 @@ public class UserDaoImpl extends DAOimpl<User> {
 
 	@Override
 	public User findById(int id) {
-		User user = super.findById(id);
+		List<User> users = (List<User>) getAll();
+		User user = users.stream().filter(el -> el.getUserId() == id).findFirst().get();
 		return user;
 	}
-	
-	// ========== todo ============
-	public void deleteTasksByUserName(String userName) { 
-		session = openTransactionSession();
-		List<User> users = super.getAll();
-		User user = users.stream().filter(e -> e.getUserName().equals("serjik")).findFirst().get();
-		System.out.println("user: " + user);
-		System.out.println("user's tasks: " + user.getTasks());
-		user.setTasks(null);
-		System.out.println("user's tasks after null: " + user.getTasks());
-		closeTransactionSession();
-	}
-	
+
 	public User findByUserName(String userName) {
 		session = openTransactionSession();
-		User user = (User) session.createQuery("FROM User u WHERE u.userName =:userName ")
-				.setParameter("userName", userName).list().get(0);
-		closeTransactionSession();
+		User user = null;
+		cb = session.getCriteriaBuilder();
+		CriteriaQuery<User> query = cb.createQuery(User.class);
+		Root<User> root = query.from(User.class);
+		query.where(cb.equal(root.get("userName"), userName));
+		try {
+			session = openTransactionSession();
+			user = session.createQuery(query).getSingleResult();
+			logger.info("User has been found by userName successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("User was not foundby userName! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
 		return user;
 	}
 
 	@Override
-	public List<User> getAll() {
+	public Set<User> getAll() {
 		return super.getAll();
 	}
 
 //	@AvailableForAspect
 	@Override
 	public void insert(User user) {
-		session = openTransactionSession();
-		try {
-			session.save(user);
-			logger.info("User has been inserted successfully!");
-		} catch (IllegalStateException | HibernateException e) {
-			session.getTransaction().rollback();
-			logger.warn("User not inserted! Message: " + e.getMessage());
-		} finally {
-			closeTransactionSession();
-		}
-
+		super.insert(user);
 	}
 
 	@Override
@@ -100,16 +88,126 @@ public class UserDaoImpl extends DAOimpl<User> {
 		super.delete(user);
 	}
 
-	// ========== to check ============
 	@Override
 	public void deleteById(int id) {
-		super.deleteById(id);
+		cb = session.getCriteriaBuilder();
+		CriteriaDelete<User> delete = cb.createCriteriaDelete(User.class);
+		Root<User> e = delete.from(User.class);
+		delete.where(cb.equal(e.get("userId"), id));
+		try {
+			session = openTransactionSession();
+			session.createQuery(delete).executeUpdate();
+			logger.info("User has been deleted by id successfully!");
+		} catch (IllegalStateException | HibernateException ex) {
+			session.getTransaction().rollback();
+			logger.warn("Task has not added to user! Message: " + ex.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
 	}
 
-	// ========== to do ============
 	public void addTaskToUser(Task task, String userName) {
+		session = openTransactionSession();
+		try {
+			User user = findByUserName(userName);
+			user.addTaskToUser(task);
+			session.update(user);
+			logger.info("Task has been added to user successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Task has not added to user! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
+	}
 
-		
+	public void addTasksToUser(Set<Task> tasks, String userName) {
+		session = openTransactionSession();
+		try {
+			User user = findByUserName(userName);
+			user.addTasksToUser(tasks);
+			session.update(user);
+			logger.info("Set<Task> has been added to user successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Set<Task> has not added to user! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
+	}
+
+	public void deleteTasksByUserName(String userName) {
+		try {
+			User user = findByUserName(userName);
+			session = openTransactionSession();
+			user.setTasks(null);
+			session.saveOrUpdate(user);
+			logger.info("Tasks has been deleted from user successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Tasks has not deleted from user! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
+	}
+
+	public void addTaskToUserByUserName(Task task, String userName) {
+		try {
+			User user = findByUserName(userName);
+			user.addTaskToUser(task);
+			session = openTransactionSession();
+			session.saveOrUpdate(user);
+			logger.info("Task has been added to user successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Task has not added to user! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
+	}
+
+	public void addTasksToUserByUserName(Set<Task> tasks, String userName) {
+		try {
+			User user = findByUserName(userName);
+			user.addTasksToUser(tasks);
+			session = openTransactionSession();
+			session.saveOrUpdate(user);
+			logger.info("Tasks has been added to user successfully!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Tasks has not adde to user! Message: " + e.getMessage());
+		} finally {
+			closeTransactionSession();
+		}
+	}
+
+	public Set<Task> getUsersTaskByUserName(String userName) {
+		Set<Task> tasks = null;
+		try {
+			User user = findByUserName(userName);
+			tasks = user.getTasks();
+			logger.info("Tasks has been found successfully by userName!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Tasks has not found! Message: " + e.getMessage());
+		}
+		return tasks;
+	}
+
+	public Set<Task> getUsersTasksByUserId(int userId) {
+		TaskDaoImpl taskDaoImpl = TaskDaoImpl.getInstance();
+		Set<Task> allTasks = null;
+		Set<Task> tasksByUserId = null;
+		try {
+			allTasks = taskDaoImpl.getAll();
+			tasksByUserId = allTasks.stream().filter(t -> t.getUser().getUserId() == userId)
+					.collect(Collectors.toSet());
+			logger.info("Tasks has been found successfully by userName!");
+		} catch (IllegalStateException | HibernateException e) {
+			session.getTransaction().rollback();
+			logger.warn("Tasks has not found! Message: " + e.getMessage());
+		}
+		return tasksByUserId;
 	}
 
 }

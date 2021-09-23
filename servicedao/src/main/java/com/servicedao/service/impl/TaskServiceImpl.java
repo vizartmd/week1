@@ -1,19 +1,18 @@
 package com.servicedao.service.impl;
 
 import org.apache.log4j.Logger;
-import com.servicedao.dao.TaskDao;
+import com.servicedao.dao.DAOFactory;
+import com.servicedao.dao.DAOFactory.DaoType;
 import com.servicedao.service.TaskService;
-import java.util.List;
+import java.util.Set;
 import com.servicedao.dao.impl.TaskDaoImpl;
 import com.servicedao.domain.Task;
 
 public class TaskServiceImpl implements TaskService {
 
 	private Logger logger;
-	private TaskDao taskDao;
-
-	private TaskServiceImpl() {
-	}
+	private TaskDaoImpl taskDaoImpl;
+	private static DAOFactory dAOFactory;
 
 	private final static class SingletonHolder {
 		private final static TaskServiceImpl INSTANCE = new TaskServiceImpl();
@@ -21,44 +20,45 @@ public class TaskServiceImpl implements TaskService {
 
 	public static TaskServiceImpl getInstance() {
 		TaskServiceImpl taskService = SingletonHolder.INSTANCE;
+		dAOFactory = DAOFactory.getInstance();
 		
 		if (taskService.logger == null) {
 			taskService.logger = Logger.getLogger(TaskService.class);
 		}
-		if (taskService.taskDao == null) {
-			taskService.taskDao = (TaskDao) TaskDaoImpl.getInstance();
+		if (taskService.taskDaoImpl == null) {
+			taskService.taskDaoImpl = (TaskDaoImpl) dAOFactory.getDao(DaoType.TASKDAO);
 		}
 		return taskService;
 	}
 
 	@Override
 	public void insert(Task task) {
-		taskDao.insert(task);
+		taskDaoImpl.insert(task);
 		logger.info("TaskService.insert() method called");
 	}
 
 	@Override
 	public Task findById(int id) {
 		logger.info("TaskService.getById() method called");
-		return taskDao.findById(id);
+		return taskDaoImpl.findById(id);
 	}
 
 	@Override
 	public void update(Task task) {
 		logger.info("TaskService.update() method called");
-		taskDao.update(task);
+		taskDaoImpl.update(task);
 	}
 
 	@Override
 	public void deleteById(int id) {
 		logger.info("TaskService.deleteById() method called");
-		taskDao.deleteById(id);		
+		taskDaoImpl.deleteById(id);		
 	}
 
 	@Override
-	public List<Task> getAll() {
+	public Set<Task> getAll() {
 		logger.info("TaskService.getAll() method called");
-		return taskDao.getAll();
+		return taskDaoImpl.getAll();
 	}
 
 }

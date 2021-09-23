@@ -16,16 +16,16 @@ public class UserInsertCommand implements Command {
 	
 	Logger logger = Logger.getLogger(UserInsertCommand.class);
 	
-	private UserService service;
+	private UserService userService;
 	User user;
 
 	public UserInsertCommand(User user) {
-		this.service = UserServiceImpl.getInstance();
+		this.userService = UserServiceImpl.getInstance();
 		this.user = user;
 	}
 
 	public void execute() {
-		logger.info("UserInsertCommand execute(" + user +")");
-		service.insert(user);
+		logger.info("UserInsertCommand execute(), user: " + user);
+		userService.insert(user);
 	}
 }

@@ -1,6 +1,6 @@
 package com.servicedao.dao;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * generic DAO<T> interface
@@ -11,7 +11,7 @@ public interface DAO<T> {
 
 	T findById(int id);
 
-	List<T> getAll();
+	Set<T> getAll();
 
 	void insert(T t);
 

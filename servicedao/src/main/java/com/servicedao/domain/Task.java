@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,20 +16,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tasks")
-public class Task implements Serializable{ 
-	
+public class Task implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id", unique = true, nullable = false)
 	private int taskId;
-	
+
 	@Column(name = "title", unique = false, nullable = false, length = 100)
 	private String title;
-	
+
 	@Column(name = "description", unique = false, nullable = false, length = 250)
 	private String description;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH })
 	@JoinColumn(name = "user_id")
 	private User user;
 
@@ -51,7 +52,7 @@ public class Task implements Serializable{
 		this.title = title;
 		this.description = description;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -86,7 +87,7 @@ public class Task implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", title=" + title + ", description=" + description + "]";
+		return "\nTask [taskId=" + taskId + ", title=" + title + ", description=" + description + "]";
 	}
-	
+
 }

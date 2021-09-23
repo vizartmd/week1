@@ -1,10 +1,8 @@
 package com.main.multithreading;
 
 import org.apache.log4j.Logger;
-
 import com.main.command.CommandInvoker;
 import com.main.command.usercommand.AddTaskToUserCommand;
-import com.main.command.usercommand.TaskAddToUserCommand;
 import com.servicedao.domain.Task;
 
 public class ThreadAssignTaskToUser extends Thread {

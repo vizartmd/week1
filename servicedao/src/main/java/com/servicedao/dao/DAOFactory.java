@@ -7,7 +7,7 @@ public class DAOFactory {
 	
 	private static DAO<?> dao;
 	
-	private enum DaoType {
+	public enum DaoType {
 		TASKDAO, USERDAO;
 	}
 	
@@ -25,11 +25,9 @@ public class DAOFactory {
 	public static DAO<?> getDao(DaoType type) {
 		switch (type) {
 			case TASKDAO:
-				System.out.println("TASKDAO has been selected!");
 				dao = TaskDaoImpl.getInstance();
 				return dao;
 			case USERDAO:
-				System.out.println("USERDAO has been selected!");
 				dao = UserDaoImpl.getInstance();
 				return dao;
 		}

@@ -1,6 +1,6 @@
 package com.servicedao.service;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Service<T> {
 
@@ -12,5 +12,5 @@ public interface Service<T> {
 
 	void deleteById(int id);
 
-	public List<T> getAll();
+	public Set<T> getAll();
 }
