@@ -20,7 +20,7 @@ import com.servicedao.domain.User;
 import com.servicedao.hibernate.SessionUtil;
 
 /**
- * generic DAOimpl<T> class 
+ * generic DAOimpl class 
  * @author vrobu1
  * @version 1.0
  */

@@ -3,7 +3,7 @@ package com.servicedao.dao;
 import java.util.Set;
 
 /**
- * generic DAO<T> interface
+ * generic DAO interface
  * @author vrobu1
  * @version 1.0
  */

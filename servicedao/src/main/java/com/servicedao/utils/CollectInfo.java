@@ -18,11 +18,11 @@ public class CollectInfo {
 
 		System.out.println("Enter information about the new user and the new task for him!");
 		System.out.println("Enter first name");
-		String firstName = scanner.nextLine();
+		String firstName = scanner.nextLine() + "\n";
 		System.out.println("Enter last name");
-		String lastName = scanner.nextLine();
+		String lastName = scanner.nextLine() + "\n";
 		System.out.println("Enter userName");
-		String userName = scanner.nextLine();
+		String userName = scanner.nextLine() + "\n";
 		return new User(firstName, lastName, userName);
 
 	}
@@ -34,14 +34,14 @@ public class CollectInfo {
 		int taskCounter = 1;
 
 		countOfTasks = scanner.nextInt();
+		scanner.nextLine();
 		if (countOfTasks instanceof Integer) {
 			for (int i = 0; i < countOfTasks; i++) {
 				System.out.println("Create task number " + taskCounter);
 				System.out.println("Enter title for task " + taskCounter);
-				String firstTitle = scanner.nextLine();
-				scanner.nextLine();
+				String firstTitle = scanner.nextLine() + "\n";
 				System.out.println("Enter description for task " + taskCounter);
-				String firstDescription = scanner.nextLine();
+				String firstDescription = scanner.nextLine() + "\n";
 				taskCounter++;
 				Task task = new Task(firstTitle, firstDescription);
 				tasks.add(task);
@@ -51,6 +51,7 @@ public class CollectInfo {
 			return tasks;
 		} else {
 			logger.info("Please enter a number!");
+			createTask();
 		}
 
 		return tasks;
