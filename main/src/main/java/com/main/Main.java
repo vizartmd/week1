@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.BasicConfigurator;
@@ -29,45 +30,25 @@ public class Main {
 
 		User user = CollectInfo.createUser();
 		Set<Task> tasks = CollectInfo.createTask();
-
 		ThreadCreateUser threadCreateUser = new ThreadCreateUser(user);
-		try {
-			executorService.submit(threadCreateUser).get();
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
+		executorService.submit(threadCreateUser).get();
 
 		ThreadAssignTasksToUser threadAssignTasksToUser = new ThreadAssignTasksToUser(tasks, user.getUserName());
-		try {
-			executorService.submit(threadAssignTasksToUser).get();
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
+
+		executorService.submit(threadAssignTasksToUser).get();
 		Set<User> myUsers = null;
-		try {
-			myUsers = (Set<User>) executorService.submit(new ThreadShowAllUsers().newCallable()).get();
-			List<Integer> usersId = CollectInfo.getUsersIds(myUsers);
-			System.out.println("All user's ID: " + usersId);
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
+		myUsers = (Set<User>) executorService.submit(new ThreadShowAllUsers().newCallable()).get();
+		List<Integer> usersId = CollectInfo.getUsersIds(myUsers);
+		System.out.println("All user's ID: " + usersId);
 
 		Set<Task> myTasks = null;
 		Integer userId = 0;
-		try {
-			userId = CollectInfo.selectUserIdFromExistingUsers();
-			myTasks = (Set<Task>) executorService.submit(new ThreadShowUsersTasksByUserId(userId).newCallable()).get();
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Tasks of user by ID: " + userId + " -> " + myTasks);
+		userId = CollectInfo.selectUserIdFromExistingUsers();
+		myTasks = (Set<Task>) executorService.submit(new ThreadShowUsersTasksByUserId(userId).newCallable()).get();
 
+		System.out.println("Tasks of user by ID: " + userId + " -> " + myTasks);
 		executorService.shutdown();
-		try {
-			if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
-				executorService.shutdown();
-			}
-		} catch (InterruptedException e) {
+		if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
 			executorService.shutdown();
 		}
 

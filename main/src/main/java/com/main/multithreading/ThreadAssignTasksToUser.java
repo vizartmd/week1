@@ -26,12 +26,6 @@ public class ThreadAssignTasksToUser extends Thread {
 	public void run() {
 		logger.info("ThreadAssignTasksToUser run()");
 		commandInvoker.execute(addTasksToUserCommand);
-		try {
-			sleep(500);
-		} catch (InterruptedException e) {
-			logger.info(e.getMessage());
-			e.printStackTrace();
-		}
 	}
 	
 }

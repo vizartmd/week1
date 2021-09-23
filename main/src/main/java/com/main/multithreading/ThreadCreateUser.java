@@ -23,12 +23,6 @@ public class ThreadCreateUser extends Thread {
 	public void run() {
 		logger.info("ThreadCreateUser run(), user = " + user);
 		commandInvoker.execute(userInsertCommand);
-		try {
-			sleep(500);
-		} catch (InterruptedException e) {
-			logger.info(e.getMessage());
-			e.printStackTrace();
-		}
 	}
 
 }

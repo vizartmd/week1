@@ -10,7 +10,10 @@ import com.servicedao.dao.impl.TaskDaoImpl;
 import com.servicedao.dao.impl.UserDaoImpl;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-
+/*
+ * this class is intended only for short-term testing of the application,
+ *  it will be removed soon
+ */
 public class Test {
 
 	public static void main(String[] args) {
