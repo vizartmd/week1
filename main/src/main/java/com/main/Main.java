@@ -18,7 +18,7 @@ import com.main.multithreading.ThreadShowAllUsers;
 import com.main.multithreading.ThreadShowUsersTasksByUserId;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
-import com.servicedao.utils.CollectInfo;
+import com.utils.CollectInfo;
 
 public class Main {
 
