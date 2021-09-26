@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
-public class CollectInfo {
+public class CollectInfo {  
 	static Logger logger = Logger.getLogger(CollectInfo.class);
 	static Scanner scanner = new Scanner(System.in);
 

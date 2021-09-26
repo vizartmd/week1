@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import com.servicedao.annotations.AvailableForAspect;
 import com.servicedao.domain.Task;
 import com.servicedao.domain.User;
 
@@ -72,7 +73,7 @@ public class UserDaoImpl extends DAOimpl<User> {
 		return super.getAll();
 	}
 
-//	@AvailableForAspect
+	@AvailableForAspect
 	@Override
 	public void insert(User user) {
 		super.insert(user);
@@ -151,6 +152,7 @@ public class UserDaoImpl extends DAOimpl<User> {
 		}
 	}
 
+	@AvailableForAspect
 	public void addTaskToUserByUserName(Task task, String userName) {
 		try {
 			User user = findByUserName(userName);
@@ -166,9 +168,9 @@ public class UserDaoImpl extends DAOimpl<User> {
 		}
 	}
 
-	public void addTasksToUserByUserName(Set<Task> tasks, String userName) {
+	@AvailableForAspect
+	public void addTasksToUser(Set<Task> tasks, User user) {
 		try {
-			User user = findByUserName(userName);
 			user.addTasksToUser(tasks);
 			session = openTransactionSession();
 			session.saveOrUpdate(user);
@@ -180,7 +182,8 @@ public class UserDaoImpl extends DAOimpl<User> {
 			closeTransactionSession();
 		}
 	}
-
+	
+	@AvailableForAspect
 	public Set<Task> getUsersTaskByUserName(String userName) {
 		Set<Task> tasks = null;
 		try {
@@ -193,7 +196,8 @@ public class UserDaoImpl extends DAOimpl<User> {
 		}
 		return tasks;
 	}
-
+	
+	@AvailableForAspect
 	public Set<Task> getUsersTasksByUserId(int userId) {
 		TaskDaoImpl taskDaoImpl = TaskDaoImpl.getInstance();
 		Set<Task> allTasks = null;
@@ -202,7 +206,7 @@ public class UserDaoImpl extends DAOimpl<User> {
 			allTasks = taskDaoImpl.getAll();
 			tasksByUserId = allTasks.stream().filter(t -> t.getUser().getUserId() == userId)
 					.collect(Collectors.toSet());
-			logger.info("Tasks has been found successfully by userName!");
+			logger.info("Tasks has been found successfully by ID!");
 		} catch (IllegalStateException | HibernateException e) {
 			session.getTransaction().rollback();
 			logger.warn("Tasks has not found! Message: " + e.getMessage());

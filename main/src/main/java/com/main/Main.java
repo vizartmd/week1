@@ -36,7 +36,7 @@ public class Main {
 			ThreadCreateUser threadCreateUser = new ThreadCreateUser(user);
 			executorService.submit(threadCreateUser).get();
 
-			ThreadAssignTasksToUser threadAssignTasksToUser = new ThreadAssignTasksToUser(tasks, user.getUserName());
+			ThreadAssignTasksToUser threadAssignTasksToUser = new ThreadAssignTasksToUser(tasks, user);
 			executorService.submit(threadAssignTasksToUser).get();
 
 			Set<User> myUsers = null;

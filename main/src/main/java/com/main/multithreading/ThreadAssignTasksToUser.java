@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.main.command.CommandInvoker;
 import com.main.command.usercommand.AddTasksToUserCommand;
 import com.servicedao.domain.Task;
+import com.servicedao.domain.User;
 
 public class ThreadAssignTasksToUser extends Thread {
 
@@ -13,13 +14,13 @@ public class ThreadAssignTasksToUser extends Thread {
 	AddTasksToUserCommand addTasksToUserCommand;
 	CommandInvoker commandInvoker;
 	Set<Task> tasks;
-	String userName;
+	User user;
 
-	public ThreadAssignTasksToUser(Set<Task> tasks, String userName) {
-		this.addTasksToUserCommand = new AddTasksToUserCommand(tasks, userName);
+	public ThreadAssignTasksToUser(Set<Task> tasks, User user) {
+		this.addTasksToUserCommand = new AddTasksToUserCommand(tasks, user);
 		this.commandInvoker = new CommandInvoker();
 		this.tasks = tasks;
-		this.userName = userName;
+		this.user = user;
 	}
 
 	@Override

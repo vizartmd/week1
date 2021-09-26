@@ -8,7 +8,7 @@ public interface UserService extends Service<User> {
 
 	void addTaskToUserByUserName(Task task, String userName);
 	
-	void addTasksToUserByUserName(Set<Task> tasks, String userName);
+	void addTasksToUserByUserName(Set<Task> tasks, User user);
 	
 	Set<Task> getUsersTasksByUserName(String userName);
 	

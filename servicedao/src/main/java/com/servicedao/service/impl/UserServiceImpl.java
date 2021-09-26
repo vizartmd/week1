@@ -72,11 +72,6 @@ public class UserServiceImpl implements UserService {
 		userDaoImpl.addTaskToUserByUserName(task,userName);
 	}
 
-	public void addTasksToUserByUserName(Set<Task> tasks, String userName) {
-		logger.info("UserServiceImpl.addTasksToUserByUserName() method called");
-		userDaoImpl.addTasksToUserByUserName(tasks,userName);
-	}
-
 	public Set<Task> getUsersTasksByUserName(String userName) {
 		logger.info("UserService.getUsersTasksByUserName() method called");
 		return userDaoImpl.getUsersTaskByUserName(userName);
@@ -85,6 +80,12 @@ public class UserServiceImpl implements UserService {
 	public Set<Task> getUsersTasksByUserId(int userId) {
 		logger.info("UserService.getUsersTasksByUserId() method called");
 		return userDaoImpl.getUsersTasksByUserId(userId);
+	}
+
+	@Override
+	public void addTasksToUserByUserName(Set<Task> tasks, User user) {
+		logger.info("UserServiceImpl.addTasksToUserByUserName() method called");
+		userDaoImpl.addTasksToUser(tasks,user);
 	}
 
 }
