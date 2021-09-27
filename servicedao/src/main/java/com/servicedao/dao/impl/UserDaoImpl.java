@@ -152,7 +152,6 @@ public class UserDaoImpl extends DAOimpl<User> {
 		}
 	}
 
-	@AvailableForAspect
 	public void addTaskToUserByUserName(Task task, String userName) {
 		try {
 			User user = findByUserName(userName);
@@ -183,7 +182,6 @@ public class UserDaoImpl extends DAOimpl<User> {
 		}
 	}
 	
-	@AvailableForAspect
 	public Set<Task> getUsersTaskByUserName(String userName) {
 		Set<Task> tasks = null;
 		try {
@@ -197,7 +195,6 @@ public class UserDaoImpl extends DAOimpl<User> {
 		return tasks;
 	}
 	
-	@AvailableForAspect
 	public Set<Task> getUsersTasksByUserId(int userId) {
 		TaskDaoImpl taskDaoImpl = TaskDaoImpl.getInstance();
 		Set<Task> allTasks = null;
