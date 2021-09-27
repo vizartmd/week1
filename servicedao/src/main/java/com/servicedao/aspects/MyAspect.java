@@ -17,8 +17,6 @@ import com.servicedao.email.MailSender;
 @Aspect
 public class MyAspect {
 
-	private Object[] callerArgs;
-
 //	@Before("execution(* *.addTasksToUser(..))")
 	@Before("execution(* *.*(..)) && @annotation(com.servicedao.annotations.AvailableForAspect)")
 	public void logBefore(JoinPoint joinPoint)
@@ -26,9 +24,8 @@ public class MyAspect {
 		final MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		final String methodName = signature.getName();
 		if (methodName.equals("addTasksToUser")) {
-			System.out.println("methodName from aspect = " + methodName);
 			Parameter[] parameters = signature.getMethod().getParameters();
-			callerArgs = joinPoint.getArgs();
+			Object[] callerArgs = joinPoint.getArgs();
 			Set<Task> tasks = null;
 			User user = null;
 			for (Object o : callerArgs) {
@@ -38,7 +35,6 @@ public class MyAspect {
 					tasks = (Set<Task>) o;
 				}
 			}
-			callerArgs = joinPoint.getArgs();
 			String mail = EmailUtil.UserStringFormatter(tasks, user);
 			MailSender.sendEmail(mail, user.getUserName());
 		}
